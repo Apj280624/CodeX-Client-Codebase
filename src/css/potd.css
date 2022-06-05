@@ -1,0 +1,55 @@
+.problem-section {
+  padding-top: 80px;
+}
+
+.problem-header {
+  padding-bottom: 80px;
+}
+
+.problem-heading {
+  font-size: 3.5rem;
+  text-align: center;
+  color: white;
+}
+
+.problem-goal {
+  font-family: var(--desc-font);
+  text-align: center;
+  color: white;
+}
+
+.problem-col1 {
+  text-align: center;
+  color: white;
+}
+
+.problem-col2 {
+  padding-left: 0;
+  padding-right: 6%;
+}
+
+.problem-col2-div {
+  background-color: var(--light-purple);
+  border-radius: 24px;
+  text-align: left;
+  color: white;
+  padding: 6% 8% 6% 8%;
+}
+
+.problem-image {
+  width: 60%;
+}
+
+.problem-name-div {
+  height: 200px;
+}
+
+.problem-name {
+  font-size: 2.4rem;
+}
+
+.solve-button {
+  color: white;
+  width: 40%;
+  background-color: var(--dark-purple);
+}

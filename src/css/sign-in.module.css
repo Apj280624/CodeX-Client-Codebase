@@ -1,0 +1,33 @@
+.form {
+  margin-top: 160px;
+}
+
+.inputDiv {
+  margin: 15px;
+}
+
+.buttonDiv {
+  margin: 40px 15px 40px 15px;
+}
+
+.temp {
+  display: inline;
+  width: fit-content;
+}
+
+.textDiv {
+  text-align: center;
+  margin-top: 60px;
+}
+
+.fpText {
+  display: inline;
+  color: white;
+  cursor: pointer;
+  margin: 2px;
+}
+
+.dotText {
+  color: white;
+  display: inline;
+}

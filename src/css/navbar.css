@@ -1,0 +1,61 @@
+.container-fluid {
+  padding: 0; /* removing the default padding  */
+}
+
+/* Navbar ***************************************************************************************************************   */
+
+.navbar-custom {
+  background-color: var(--dark-purple);
+  color: white;
+  padding: 0.5% 2% 0.5% 2%;
+  vertical-align: middle;
+}
+
+.navbar-dark .navbar-nav .nav-link {
+  color: white;
+  font-family: var(--desc-font);
+  margin: 0 10px 0 10px;
+}
+
+.custom-brand {
+  font-size: 2rem;
+  vertical-align: middle;
+  font-weight: 600;
+}
+
+.logo {
+  width: 2.5rem;
+  margin: 5px; /* to keep it centered vertically  */
+}
+
+.login-button {
+  background-color: var(--light-purple);
+  color: white;
+  margin-bottom: 0px;
+  font-family: var(--desc-font);
+  font-weight: 600;
+}
+
+.alignment {
+  padding-top: 0;
+  padding-bottom: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.nav-btn1 {
+  background-color: var(--light-purple);
+  color: white;
+  margin-bottom: 0px;
+  font-family: var(--desc-font);
+  font-weight: var(--login-btn-fwt);
+  margin-right: 6px;
+}
+
+.nav-btn2 {
+  background-color: var(--light-purple);
+  color: white;
+  margin-bottom: 0px;
+  font-family: var(--desc-font);
+  font-weight: var(--login-btn-fwt);
+}

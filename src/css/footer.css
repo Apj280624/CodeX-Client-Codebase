@@ -1,0 +1,22 @@
+.footer {
+  height: 360px;
+  padding: 100px 0 50px 0;
+  text-align: center;
+  color: white;
+}
+
+.footer-heading {
+  padding-bottom: 10px;
+}
+
+.footer-tab {
+  font-family: var(--desc-font);
+  color: white;
+  text-decoration: none;
+  display: block;
+  padding: 2px;
+}
+
+.footer-tab:hover {
+  color: grey;
+}

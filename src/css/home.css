@@ -1,0 +1,10 @@
+:root {
+  --dark-purple: #131022;
+  --light-purple: #7026b9;
+  --desc-font: "Montserrat";
+  --login-btn-fwt: 600;
+}
+
+body {
+  background-color: var(--dark-purple);
+}
