@@ -1,0 +1,63 @@
+.heading {
+  color: white;
+  font-family: var(--heading-font);
+  margin-top: 40px;
+}
+
+.signInDiv {
+  margin-top: 100px;
+}
+
+.signUpDiv {
+  margin-top: 40px;
+}
+
+.inputDiv {
+  margin: 15px 0 15px 0;
+  text-align: center;
+}
+
+.otpDiv {
+  width: 32%;
+  margin: auto;
+}
+
+.otpButton {
+  background-color: var(--light-purple);
+  color: white;
+  margin-left: 1%;
+  width: 67%;
+  height: 50px;
+  border-radius: 10px;
+  border: 0;
+  font-family: var(--desc-font);
+  font-weight: var(--login-btn-fwt);
+}
+
+.buttonDiv {
+  margin: 40px 0 40px 0;
+  text-align: center;
+}
+
+/* button div has margin on all 4 sides which pushes down the text div */
+.textDiv {
+  text-align: center;
+}
+
+.fpText {
+  display: inline;
+  color: white;
+  cursor: pointer;
+  margin: 2px;
+  font-weight: var(--login-btn-fwt);
+  text-decoration: none;
+}
+
+.fpText:hover {
+  color: var(--link-hover-color);
+}
+
+.dotText {
+  color: white;
+  display: inline;
+}

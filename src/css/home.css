@@ -1,8 +1,10 @@
 :root {
   --dark-purple: #131022;
   --light-purple: #7026b9;
+  --heading-font: "Montserrat";
   --desc-font: "Montserrat";
   --login-btn-fwt: 600;
+  --link-hover-color: var(--light-purple);
 }
 
 body {
