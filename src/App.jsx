@@ -7,6 +7,7 @@ import DSA from "./routes/DSA";
 import InterviewExperiences from "./routes/InterviewExperiences";
 import SignIn from "./routes/SignIn";
 import SignUp from "./routes/SignUp";
+import ForgotPassword from "./routes/ForgotPassword";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         />
         <Route path="/sign-in" element={<SignIn />} />
         <Route path="/sign-up" element={<SignUp />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
       </Routes>
     </BrowserRouter>
   );

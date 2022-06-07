@@ -28,10 +28,14 @@
   margin-left: 1%;
   width: 67%;
   height: 50px;
-  border-radius: 10px;
+  border-radius: var(--login-btn-border-rad);
   border: 0;
   font-family: var(--desc-font);
   font-weight: var(--login-btn-fwt);
+}
+
+.otpButton:hover {
+  color: var(--light-button-hover-color);
 }
 
 .buttonDiv {

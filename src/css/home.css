@@ -5,6 +5,8 @@
   --desc-font: "Montserrat";
   --login-btn-fwt: 600;
   --link-hover-color: var(--light-purple);
+  --light-button-hover-color: var(--dark-purple);
+  --login-btn-border-rad: 8px;
 }
 
 body {

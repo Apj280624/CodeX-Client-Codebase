@@ -11,3 +11,5 @@ routes: .jsx
 design variables -----------------------------------------------------------------------------------------
 
 hover link color
+
+light button hover color -> hover color for light purple colored button
