@@ -1,10 +1,12 @@
 /*
  validate lengths of each fields
+ todo: perform trims on strings
 */
 
-const maxLen = 40;
+const maxNameLen = 40;
 const minPassLen = 2; // 6 for production
 const maxPassLen = 16;
+const maxCollegeNameLen = 60;
 
 function getValidObject() {
   return {
@@ -20,24 +22,24 @@ function getInValidObject(result, description) {
   };
 }
 
-function validateName(name) {
+function validateName(name, what, maxLen) {
   if (name.length > maxLen) {
     return getInValidObject(
       false,
-      `Length of name should not exceed ${maxLen}`
+      `Length of ${what} should not exceed ${maxLen}`
     );
   } else if (name.length === 0) {
-    return getInValidObject(false, "Name is not valid");
+    return getInValidObject(false, `${what} is not valid`);
   }
 
   return getValidObject();
 }
 
 function validateEmailAddress(emailAddress) {
-  if (emailAddress.length > maxLen) {
+  if (emailAddress.length > maxNameLen) {
     return getInValidObject(
       false,
-      `Length of email address should not exceed ${maxLen}`
+      `Length of email address should not exceed ${maxNameLen}`
     );
   } else if (emailAddress.length === 0 || !emailAddress.includes("@")) {
     return getInValidObject(false, "Email Address is not valid");
@@ -53,22 +55,13 @@ function validatePassword(password) {
       `Length of password should not exceed ${maxPassLen}`
     );
   } else if (password.length < minPassLen) {
-    return getInValidObject(false, "Please choose a stronger password");
+    return getInValidObject(
+      false,
+      `Length of password should be atleast ${minPassLen}`
+    );
   }
 
   // make more checks for password like @,uppercase,lower,numbers
-
-  return getValidObject();
-}
-
-function validateConfirmedPassword(password, confirmedPassword) {
-  // if it comes here this means password is valid, so no need to validate confirmedpassword only check for equality
-  if (password !== confirmedPassword) {
-    return getInValidObject(
-      false,
-      "Password and confirmed password donot match"
-    );
-  }
 
   return getValidObject();
 }
@@ -86,28 +79,41 @@ function validateOTP(OTP) {
 //////////////////////////////////////////// signup validation ///////////////////////////////////////////
 
 function validateSignUpCredentials(userCredentials) {
-  const nameObject = validateName(userCredentials.name);
-  if (!nameObject.res) {
-    return nameObject;
+  const firstNameObject = validateName(
+    userCredentials.firstName,
+    "First name",
+    maxNameLen
+  );
+  if (!firstNameObject.res) {
+    return firstNameObject;
   }
 
-  const emailAdressObject = validateEmailAddress(userCredentials.email);
-  if (!emailAdressObject.res) {
-    return emailAdressObject;
+  const lastNameObject = validateName(
+    userCredentials.lastName,
+    "Last name",
+    maxNameLen
+  );
+  if (!lastNameObject.res) {
+    return lastNameObject;
+  }
+
+  const collegeNameObject = validateName(
+    userCredentials.collegeName,
+    "College name",
+    maxCollegeNameLen
+  );
+  if (!collegeNameObject.res) {
+    return collegeNameObject;
+  }
+
+  const emailAddressObject = validateEmailAddress(userCredentials.emailAddress);
+  if (!emailAddressObject.res) {
+    return emailAddressObject;
   }
 
   const passwordObject = validatePassword(userCredentials.password);
   if (!passwordObject.res) {
     return passwordObject;
-  }
-
-  const confirmedPasswordObject = validateConfirmedPassword(
-    userCredentials.password,
-    userCredentials.confirmedPassword
-  );
-
-  if (!confirmedPasswordObject.res) {
-    return confirmedPasswordObject;
   }
 
   const OTPObject = validateOTP(userCredentials.OTP);
@@ -122,7 +128,7 @@ function validateSignUpCredentials(userCredentials) {
 //////////////////////////////////////////// signin validation ///////////////////////////////////////////
 
 function validateSignInCredentials(userCredentials) {
-  const emailAdressObject = validateEmailAddress(userCredentials.email);
+  const emailAdressObject = validateEmailAddress(userCredentials.emailAddress);
   if (!emailAdressObject.res) {
     return emailAdressObject;
   }
@@ -139,18 +145,14 @@ function validateSignInCredentials(userCredentials) {
 //////////////////////////////////////////// forgot password validation ///////////////////////////////////////////
 
 function validateForgotPasswordCredentials(userCredentials) {
+  const emailAdressObject = validateEmailAddress(userCredentials.emailAddress);
+  if (!emailAdressObject.res) {
+    return emailAdressObject;
+  }
+
   const passwordObject = validatePassword(userCredentials.password);
   if (!passwordObject.res) {
     return passwordObject;
-  }
-
-  const confirmedPasswordObject = validateConfirmedPassword(
-    userCredentials.password,
-    userCredentials.confirmedPassword
-  );
-
-  if (!confirmedPasswordObject.res) {
-    return confirmedPasswordObject;
   }
 
   const OTPObject = validateOTP(userCredentials.OTP);
@@ -166,4 +168,5 @@ export {
   validateSignUpCredentials,
   validateSignInCredentials,
   validateForgotPasswordCredentials,
+  validateEmailAddress,
 };

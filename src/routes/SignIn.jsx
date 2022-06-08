@@ -2,17 +2,21 @@ import React, { useState } from "react";
 import CredentialInput from "../components/CredentialInput";
 import CredentialButton from "../components/CredentialButton";
 import UserAuth from "../css/user-auth.module.css";
+import PasswordInput from "../components/PasswordInput";
 import { Link } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 // my modules
 import { validateSignInCredentials } from "../utilities/UserAuthUtility.js";
-import { SERVER_ORIGIN } from "../utilities/FrontendVarsUtility.js";
+import { SERVER_ORIGIN } from "../utilities/ClientVarsUtility.js";
+import Toast, { toastOptions } from "../components/Toast.js";
 
 const axios = require("axios").default;
 
 function SignIn() {
   const [userCredentials, setUserCredentials] = useState({
-    email: "",
+    emailAddress: "",
     password: "",
   });
 
@@ -22,16 +26,17 @@ function SignIn() {
       ...updatedField,
     }));
 
-    console.log(userCredentials);
+    // console.log(userCredentials);
   }
 
-  async function signUserIn() {
+  async function requestServerToSignUserIn() {
     // console.log(userCredentials);
     // first validate at front end, don't bother the server unnecessarily
     const { res, desc } = await validateSignInCredentials(userCredentials);
-    console.log(desc);
+    // console.log(desc);
     if (!res) {
       // show toast for desc
+      toast(desc, toastOptions);
     } else {
       // request sign in, request token from server
       // try {
@@ -52,20 +57,18 @@ function SignIn() {
           <CredentialInput
             type="email"
             placeholder="Email address"
-            name="email"
+            name="emailAddress"
+            width="32%"
             onChange={updateUserCredentials}
           />
         </div>
-        <div className={UserAuth.inputDiv}>
-          <CredentialInput
-            type="password"
-            placeholder="Password"
-            name="password"
-            onChange={updateUserCredentials}
-          />
-        </div>
+        <PasswordInput name="password" onChange={updateUserCredentials} />
         <div className={UserAuth.buttonDiv}>
-          <CredentialButton text="Sign In" onClick={signUserIn} />
+          <CredentialButton
+            text="Sign Up"
+            onClick={requestServerToSignUserIn}
+            width="32%"
+          />
         </div>
         <div className={UserAuth.textDiv}>
           <Link to="/forgot-password" className={UserAuth.fpText}>
@@ -76,6 +79,7 @@ function SignIn() {
             Sign Up
           </Link>
         </div>
+        <Toast />
       </div>
     </div>
   );

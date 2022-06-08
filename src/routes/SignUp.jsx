@@ -1,21 +1,31 @@
 import React, { useState } from "react";
 import CredentialInput from "../components/CredentialInput";
 import CredentialButton from "../components/CredentialButton";
+import PasswordInput from "../components/PasswordInput";
 import UserAuth from "../css/user-auth.module.css";
 import { Link } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 // my modules
-import { validateSignUpCredentials } from "../utilities/UserAuthUtility.js";
-import { SERVER_ORIGIN } from "../utilities/FrontendVarsUtility.js";
+import {
+  validateSignUpCredentials,
+  validateEmailAddress,
+} from "../utilities/UserAuthUtility.js";
+import { SERVER_ORIGIN } from "../utilities/ClientVarsUtility.js";
+import Toast, { toastOptions } from "../components/Toast.js";
 
 const axios = require("axios").default;
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 function SignUp() {
   const [userCredentials, setUserCredentials] = useState({
-    name: "",
-    email: "",
+    firstName: "",
+    lastName: "",
+    collegeName: "",
+    emailAddress: "",
     password: "",
-    confirmedPassword: "",
     OTP: "",
   });
 
@@ -29,22 +39,36 @@ function SignUp() {
   }
 
   async function requestServerToSendOTP() {
-    // try {
-    //   const response = await axios.get(SERVER_ORIGIN + "/otp");
-    //   console.log(response);
-    //   // show toast
-    // } catch (error) {
-    //   console.error(error);
-    // }
+    // console.log(userCredentials.emailAddress);
+    const { res, desc } = await validateEmailAddress(
+      userCredentials.emailAddress
+    );
+    if (!res) {
+      // show toast
+      // console.log(desc);
+      toast(desc, toastOptions);
+    } else {
+      try {
+        const response = await axios.put(SERVER_ORIGIN + "/votp", {
+          email: userCredentials.emailAddress,
+        });
+        console.log(response.data);
+        toast("OTP has been sent successfully", toastOptions);
+        // show toast
+      } catch (error) {
+        console.log(error.response.data);
+      }
+    }
   }
 
-  async function signUserUp() {
+  async function requestServerToSignUserUp() {
     // console.log(userCredentials);
     // first validate at front end, don't bother the server unnecessarily
     const { res, desc } = await validateSignUpCredentials(userCredentials);
     // console.log(desc);
     if (!res) {
       // show toast for desc
+      toast(desc, toastOptions);
     } else {
       // request sign up, but first verify the otp at server side
       // try {
@@ -62,11 +86,30 @@ function SignUp() {
       <div className="">
         <h1 className={UserAuth.heading}>Join CodeX today</h1>
         <div className={UserAuth.signUpDiv}>
+          <div className={UserAuth.otpDiv}>
+            <CredentialInput
+              type="text"
+              placeholder="First name"
+              name="firstName"
+              width="49.5%"
+              onChange={updateUserCredentials}
+            />
+            <div className={UserAuth.otpBtnHalfInputDiv}>
+              <CredentialInput
+                type="text"
+                placeholder="Last name"
+                name="lastName"
+                width="49.5%"
+                onChange={updateUserCredentials}
+              />
+            </div>
+          </div>
           <div className={UserAuth.inputDiv}>
             <CredentialInput
               type="text"
-              placeholder="Full name"
-              name="name"
+              placeholder="College name"
+              name="collegeName"
+              width="32%"
               onChange={updateUserCredentials}
             />
           </div>
@@ -74,45 +117,36 @@ function SignUp() {
             <CredentialInput
               type="email"
               placeholder="Email address"
-              name="email"
+              name="emailAddress"
+              width="32%"
               onChange={updateUserCredentials}
             />
           </div>
-          <div className={UserAuth.inputDiv}>
-            <CredentialInput
-              type="password"
-              placeholder="Password"
-              name="password"
-              onChange={updateUserCredentials}
-            />
-          </div>
-          <div className={UserAuth.inputDiv}>
-            <CredentialInput
-              type="password"
-              placeholder="Confirm password"
-              name="confirmedPassword"
-              onChange={updateUserCredentials}
-            />
-          </div>
+          <PasswordInput name="password" onChange={updateUserCredentials} />
 
           <div className={UserAuth.otpDiv}>
             <CredentialInput
               type="text"
               placeholder="OTP"
               name="OTP"
+              width="32%"
               onChange={updateUserCredentials}
             />
-            <button
-              type="button"
-              className={UserAuth.otpButton}
-              onClick={requestServerToSendOTP}
-            >
-              Send OTP
-            </button>
+            <div className={UserAuth.otpBtnHalfInputDiv}>
+              <CredentialButton
+                text="Send OTP"
+                onClick={requestServerToSendOTP}
+                width="67%"
+              />
+            </div>
           </div>
 
           <div className={UserAuth.buttonDiv}>
-            <CredentialButton text="Sign Up" onClick={signUserUp} />
+            <CredentialButton
+              text="Sign Up"
+              onClick={requestServerToSignUserUp}
+              width="32%"
+            />
           </div>
 
           <div className={UserAuth.textDiv}>
@@ -121,6 +155,7 @@ function SignUp() {
             </Link>
           </div>
         </div>
+        <Toast />
       </div>
     </div>
   );

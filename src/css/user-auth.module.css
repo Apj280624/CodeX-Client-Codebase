@@ -17,21 +17,14 @@
   text-align: center;
 }
 
-.otpDiv {
+.passwordDiv {
   width: 32%;
-  margin: auto;
+  margin: 15px auto 15px auto;
 }
 
-.otpButton {
-  background-color: var(--light-purple);
-  color: white;
-  margin-left: 1%;
-  width: 67%;
-  height: 50px;
-  border-radius: var(--login-btn-border-rad);
-  border: 0;
-  font-family: var(--desc-font);
-  font-weight: var(--login-btn-fwt);
+.otpDiv {
+  width: 32%;
+  margin: 15px auto 15px auto;
 }
 
 .otpButton:hover {
@@ -63,5 +56,10 @@
 
 .dotText {
   color: white;
+  display: inline;
+}
+
+.otpBtnHalfInputDiv {
+  margin-left: 1%;
   display: inline;
 }

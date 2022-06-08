@@ -12,9 +12,14 @@ function CredentialInput(props) {
     props.onChange({ [props.name]: evt.target.value });
   }
 
+  const inlineStyle = {
+    width: props.width,
+  };
+
   return (
     <input
       className={styles.credentialInput}
+      style={inlineStyle}
       type={props.type}
       placeholder={props.placeholder}
       value={inputValue}
