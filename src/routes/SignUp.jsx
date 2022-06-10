@@ -12,7 +12,7 @@ import {
   validateSignUpCredentials,
   validateEmailAddress,
 } from "../utilities/UserAuthUtility.js";
-import { SERVER_ORIGIN } from "../utilities/ClientVarsUtility.js";
+import { SERVER_ORIGIN, routes } from "../utilities/ClientVarsUtility.js";
 import Toast, { toastOptions } from "../components/Toast.js";
 
 const axios = require("axios").default;
@@ -49,14 +49,14 @@ function SignUp() {
       toast(desc, toastOptions);
     } else {
       try {
-        const response = await axios.put(SERVER_ORIGIN + "/votp", {
-          email: userCredentials.emailAddress,
+        const response = await axios.put(SERVER_ORIGIN + routes.VOTP, {
+          emailAddress: userCredentials.emailAddress,
         });
-        console.log(response.data);
-        toast("OTP has been sent successfully", toastOptions);
-        // show toast
+        // console.log(response.data);
+        toast(response.data, toastOptions);
       } catch (error) {
-        console.log(error.response.data);
+        // console.log(error.response.data);
+        // toast(error.response.data, toastOptions);
       }
     }
   }
@@ -67,17 +67,20 @@ function SignUp() {
     const { res, desc } = await validateSignUpCredentials(userCredentials);
     // console.log(desc);
     if (!res) {
-      // show toast for desc
       toast(desc, toastOptions);
     } else {
-      // request sign up, but first verify the otp at server side
-      // try {
-      //   const response = await axios.get(SERVER_ORIGIN + "/sign-up");
-      //   console.log(response);
-      //   // show toast
-      // } catch (error) {
-      //   console.error(error);
-      // }
+      // console.log("sign up sent");
+      try {
+        const response = await axios.post(
+          SERVER_ORIGIN + routes.SIGN_UP,
+          userCredentials
+        );
+        // console.log(response);
+        toast(response.data, toastOptions);
+      } catch (error) {
+        console.log(error);
+        toast(error.response.data, toastOptions);
+      }
     }
   }
 
@@ -150,7 +153,7 @@ function SignUp() {
           </div>
 
           <div className={UserAuth.textDiv}>
-            <Link to="/sign-in" className={UserAuth.fpText}>
+            <Link to={routes.SIGN_IN} className={UserAuth.fpText}>
               Sign In
             </Link>
           </div>

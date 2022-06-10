@@ -99,7 +99,7 @@ function ForgotPassword() {
           />
         </div>
         <div className={UserAuth.textDiv}>
-          <Link to="/sign-in" className={UserAuth.fpText}>
+          <Link to="/auth/sign-in" className={UserAuth.fpText}>
             Sign In
           </Link>
         </div>

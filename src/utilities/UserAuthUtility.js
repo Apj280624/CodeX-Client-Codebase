@@ -3,10 +3,7 @@
  todo: perform trims on strings
 */
 
-const maxNameLen = 40;
-const minPassLen = 2; // 6 for production
-const maxPassLen = 16;
-const maxCollegeNameLen = 60;
+import { vars } from "./ClientVarsUtility.js";
 
 function getValidObject() {
   return {
@@ -36,10 +33,10 @@ function validateName(name, what, maxLen) {
 }
 
 function validateEmailAddress(emailAddress) {
-  if (emailAddress.length > maxNameLen) {
+  if (emailAddress.length > vars.maxEmailAddressLen) {
     return getInValidObject(
       false,
-      `Length of email address should not exceed ${maxNameLen}`
+      `Length of email address should not exceed ${vars.maxEmailAddressLen}`
     );
   } else if (emailAddress.length === 0 || !emailAddress.includes("@")) {
     return getInValidObject(false, "Email Address is not valid");
@@ -49,15 +46,15 @@ function validateEmailAddress(emailAddress) {
 }
 
 function validatePassword(password) {
-  if (password.length > maxPassLen) {
+  if (password.length > vars.maxPassLen) {
     return getInValidObject(
       false,
-      `Length of password should not exceed ${maxPassLen}`
+      `Length of password should not exceed ${vars.maxPassLen}`
     );
-  } else if (password.length < minPassLen) {
+  } else if (password.length < vars.minPassLen) {
     return getInValidObject(
       false,
-      `Length of password should be atleast ${minPassLen}`
+      `Length of password should be atleast ${vars.minPassLen}`
     );
   }
 
@@ -82,7 +79,7 @@ function validateSignUpCredentials(userCredentials) {
   const firstNameObject = validateName(
     userCredentials.firstName,
     "First name",
-    maxNameLen
+    vars.maxNameLen
   );
   if (!firstNameObject.res) {
     return firstNameObject;
@@ -91,7 +88,7 @@ function validateSignUpCredentials(userCredentials) {
   const lastNameObject = validateName(
     userCredentials.lastName,
     "Last name",
-    maxNameLen
+    vars.maxNameLen
   );
   if (!lastNameObject.res) {
     return lastNameObject;
@@ -100,7 +97,7 @@ function validateSignUpCredentials(userCredentials) {
   const collegeNameObject = validateName(
     userCredentials.collegeName,
     "College name",
-    maxCollegeNameLen
+    vars.maxCollegeNameLen
   );
   if (!collegeNameObject.res) {
     return collegeNameObject;

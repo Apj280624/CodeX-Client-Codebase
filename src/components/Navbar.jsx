@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "../css/navbar.css";
+import { routes } from "../utilities/ClientVarsUtility";
 
 function MyNavbar() {
   // pick token from browser and set the loggedin status and button data
@@ -52,9 +53,9 @@ function MyNavbar() {
               </li>
 
               <li className="nav-item active">
-                <a className="nav-link" href="#cta">
+                <Link to={routes.INTERVIEW_EXPERIENCES} className="nav-link">
                   Interview Experiences
-                </a>
+                </Link>
               </li>
 
               <li className="nav-item active">
@@ -72,7 +73,7 @@ function MyNavbar() {
                     Account
                   </Link>
                 ) : (
-                  <Link to="/sign-in" className="nav-btn1 btn">
+                  <Link to="/auth/sign-in" className="nav-btn1 btn">
                     Sign In
                   </Link>
                 )}
@@ -83,7 +84,7 @@ function MyNavbar() {
                     Sign Out
                   </Link>
                 ) : (
-                  <Link to="/sign-up" className="nav-btn2 btn">
+                  <Link to="/auth/sign-up" className="nav-btn2 btn">
                     Sign Up
                   </Link>
                 )}

@@ -20,9 +20,9 @@ function App() {
           path="/interview-experiences"
           element={<InterviewExperiences />}
         />
-        <Route path="/sign-in" element={<SignIn />} />
-        <Route path="/sign-up" element={<SignUp />} />
-        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/auth/sign-in" element={<SignIn />} />
+        <Route path="/auth/sign-up" element={<SignUp />} />
+        <Route path="/auth/forgot-password" element={<ForgotPassword />} />
       </Routes>
     </BrowserRouter>
   );

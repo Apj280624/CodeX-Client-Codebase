@@ -9,12 +9,18 @@ import "react-toastify/dist/ReactToastify.css";
 
 // my modules
 import { validateSignInCredentials } from "../utilities/UserAuthUtility.js";
-import { SERVER_ORIGIN } from "../utilities/ClientVarsUtility.js";
+import { SERVER_ORIGIN, routes } from "../utilities/ClientVarsUtility.js";
 import Toast, { toastOptions } from "../components/Toast.js";
 
 const axios = require("axios").default;
 
 function SignIn() {
+  /*
+  one case could be if the user is already signed in and tries to come to the sign in route, in such case we can
+   check if the user is signed in and redirect him to the interview experience route before even rendering the
+   sign in component
+  */
+
   const [userCredentials, setUserCredentials] = useState({
     emailAddress: "",
     password: "",
@@ -38,14 +44,22 @@ function SignIn() {
       // show toast for desc
       toast(desc, toastOptions);
     } else {
-      // request sign in, request token from server
-      // try {
-      //   const response = await axios.get(SERVER_ORIGIN + "/sign-in");
-      //   console.log(response);
-      //   // show toast
-      // } catch (error) {
-      //   console.error(error);
-      // }
+      try {
+        const response = await axios.post(
+          SERVER_ORIGIN + routes.SIGN_IN,
+          userCredentials
+        );
+        // console.log(response.data);
+        if (response.data.token) {
+          // console.log(response.data.token);
+          localStorage.setItem("token", response.data.token); // store or replace token on client side
+          toast(response.data.statusText);
+          // navigate after signing in
+        }
+      } catch (error) {
+        console.log(error);
+        toast(error.response.data);
+      }
     }
   }
 
@@ -65,17 +79,17 @@ function SignIn() {
         <PasswordInput name="password" onChange={updateUserCredentials} />
         <div className={UserAuth.buttonDiv}>
           <CredentialButton
-            text="Sign Up"
+            text="Sign In"
             onClick={requestServerToSignUserIn}
             width="32%"
           />
         </div>
         <div className={UserAuth.textDiv}>
-          <Link to="/forgot-password" className={UserAuth.fpText}>
+          <Link to={routes.FORGOT_PASSWORD} className={UserAuth.fpText}>
             Forgot password
           </Link>
           <p className={UserAuth.dotText}> • </p>
-          <Link to="/sign-up" className={UserAuth.fpText}>
+          <Link to={routes.SIGN_UP} className={UserAuth.fpText}>
             Sign Up
           </Link>
         </div>
