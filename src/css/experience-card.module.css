@@ -1,0 +1,39 @@
+.outerDiv {
+  /* margin: auto; */
+  /* height: 200px; */
+  background-color: var(--light-purple);
+  border-radius: var(--contri-btn-border-rad);
+  padding: 20px 10px 10px 10px;
+  margin-top: 12px;
+  margin-bottom: 12px;
+  background-color: var(--dark-purple);
+  border: 1px solid var(--light-purple);
+}
+
+.commonText {
+  color: white;
+}
+
+.companyText {
+  text-align: center;
+  font-size: var(--sub-title-fsz);
+  font-weight: var(--big-desc-fwt);
+  font-family: var(--heading-font);
+  margin-bottom: 0;
+}
+
+.yearText {
+  /* margin-top: 0; */
+  text-align: center;
+  font-family: var(--desc-font);
+}
+
+.authorText {
+  margin-top: 30px;
+
+  text-align: center;
+  font-family: var(--desc-font);
+  font-size: var(--desc-fsz);
+  font-weight: var(--big-desc-fwt);
+  font-family: var(--heading-font);
+}

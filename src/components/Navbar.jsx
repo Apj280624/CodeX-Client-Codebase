@@ -5,7 +5,7 @@ import { routes } from "../utilities/ClientVarsUtility";
 
 function MyNavbar() {
   // pick token from browser and set the loggedin status and button data
-  // use link for relative paths and anchor tags for absolute ones like an external link
+  // use link for relative paths and anchor tags for absolute ones like an external link, set routes using vars
 
   const [isLoggedIn, setIsLoggedIn] = useState(!true);
 

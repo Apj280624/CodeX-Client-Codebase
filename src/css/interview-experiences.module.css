@@ -1,7 +1,18 @@
-.contribute-card-extra-div-intex {
+.contributeCardExtraDivIntex {
+  /* border: 2px solid red; */
+  width: 82%;
+  margin: auto;
   margin-top: 150px;
 }
 
-.search-bar-extra-div-intex {
+.searchBarExtraDivIntex {
   margin-top: 120px;
+}
+
+.bottomDiv {
+  width: 82%;
+  margin: auto;
+  margin-top: 100px;
+  margin-bottom: 100px;
+  text-align: center;
 }

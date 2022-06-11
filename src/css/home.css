@@ -7,6 +7,18 @@
   --link-hover-color: var(--light-purple);
   --light-button-hover-color: var(--dark-purple);
   --login-btn-border-rad: 8px;
+  --contri-btn-border-rad: 14px;
+
+  --big-title-fsz: 3.5rem;
+  --title-fsz: 3rem;
+  --sub-title-fsz: 2.4rem;
+  --big-desc-fsz: 1.5rem;
+  --desc-fsz: 1rem;
+
+  --big-title-fwt: 700;
+  --title-fwt: 600;
+  --sub-title-fwt: 500;
+  --big-desc-fwt: 400;
 }
 
 body {

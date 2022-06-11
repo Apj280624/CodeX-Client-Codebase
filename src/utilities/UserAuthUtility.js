@@ -32,6 +32,55 @@ function validateName(name, what, maxLen) {
   return getValidObject();
 }
 
+// function validateCollegeName(collegeName) {
+//   const availableCollegeNames = ["LNCT", "LNCTS", "LNCTE"];
+//   if (!availableCollegeNames.includes(collegeName)) {
+//     return getInValidObject(
+//       false,
+//       "College name should be LNCT, LNCTS OR LNCTE"
+//     );
+//   }
+
+//   return getValidObject();
+// }
+
+// function validateBranchName(branchName) {
+//   const availableBranchNames = ["CS", "IT", "EC"];
+//   if (!availableBranchNames.includes(branchName)) {
+//     return getInValidObject(false, "Branch name should be CS, IT or EC");
+//   }
+
+//   return getValidObject();
+// }
+
+// function validateGraduationYear(graduationYear) {
+//   const availableGraduationYears = ["CS", "IT", "EC"];
+//   if (!availableBranchNames.includes(collegeName)) {
+//     return getInValidObject(false, "Branch name should be CS, IT or EC");
+//   }
+
+//   return getValidObject();
+// }
+
+function validCollegeBranchGraduation(name, what, available) {
+  if (!available.includes(name)) {
+    var desc = `${what} should match one of `;
+    var n = available.length; // assuming n>=2
+    for (var i = 0; i < n; i++) {
+      if (i < n - 2) {
+        desc += available[i] + ", ";
+      } else if (i === n - 2) {
+        desc += available[i] + " or ";
+      } else {
+        desc += available[i];
+      }
+    }
+    return getInValidObject(false, desc);
+  }
+
+  return getValidObject();
+}
+
 function validateEmailAddress(emailAddress) {
   if (emailAddress.length > vars.maxEmailAddressLen) {
     return getInValidObject(
@@ -94,13 +143,31 @@ function validateSignUpCredentials(userCredentials) {
     return lastNameObject;
   }
 
-  const collegeNameObject = validateName(
+  const collegeNameObject = validCollegeBranchGraduation(
     userCredentials.collegeName,
     "College name",
-    vars.maxCollegeNameLen
+    vars.availableCollegeNames
   );
   if (!collegeNameObject.res) {
     return collegeNameObject;
+  }
+
+  const branchNameObject = validCollegeBranchGraduation(
+    userCredentials.branchName,
+    "Branch name",
+    vars.availableBranchNames
+  );
+  if (!branchNameObject.res) {
+    return branchNameObject;
+  }
+
+  const graduationYearObject = validCollegeBranchGraduation(
+    userCredentials.graduationYear,
+    "Graduation year",
+    vars.availableGraduationYears
+  );
+  if (!graduationYearObject.res) {
+    return graduationYearObject;
   }
 
   const emailAddressObject = validateEmailAddress(userCredentials.emailAddress);

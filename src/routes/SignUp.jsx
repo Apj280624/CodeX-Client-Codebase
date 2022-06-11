@@ -24,6 +24,8 @@ function SignUp() {
     firstName: "",
     lastName: "",
     collegeName: "",
+    branchName: "",
+    graduationYear: "",
     emailAddress: "",
     password: "",
     OTP: "",
@@ -69,6 +71,7 @@ function SignUp() {
     if (!res) {
       toast(desc, toastOptions);
     } else {
+      console.log(userCredentials);
       // console.log("sign up sent");
       try {
         const response = await axios.post(
@@ -87,7 +90,7 @@ function SignUp() {
   return (
     <div>
       <div className="">
-        <h1 className={UserAuth.heading}>Join CodeX today</h1>
+        <p className={UserAuth.heading}>Join CodeX today</p>
         <div className={UserAuth.signUpDiv}>
           <div className={UserAuth.otpDiv}>
             <CredentialInput
@@ -107,15 +110,37 @@ function SignUp() {
               />
             </div>
           </div>
+
           <div className={UserAuth.inputDiv}>
             <CredentialInput
               type="text"
-              placeholder="College name"
+              placeholder="College name ( LNCT / LNCTS / LNCTE)"
               name="collegeName"
               width="32%"
               onChange={updateUserCredentials}
             />
           </div>
+
+          <div className={UserAuth.inputDiv}>
+            <CredentialInput
+              type="text"
+              placeholder="Branch name ( e.g. CS / IT / EC )"
+              name="branchName"
+              width="32%"
+              onChange={updateUserCredentials}
+            />
+          </div>
+
+          <div className={UserAuth.inputDiv}>
+            <CredentialInput
+              type="text"
+              placeholder="Graduation year ( e.g. 2022, 2023 )"
+              name="graduationYear"
+              width="32%"
+              onChange={updateUserCredentials}
+            />
+          </div>
+
           <div className={UserAuth.inputDiv}>
             <CredentialInput
               type="email"

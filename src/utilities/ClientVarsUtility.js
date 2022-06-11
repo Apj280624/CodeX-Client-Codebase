@@ -8,6 +8,9 @@ const vars = {
   maxPassLen: 16,
   maxCollegeNameLen: 60,
   maxEmailAddressLen: 400,
+  availableCollegeNames: ["LNCT", "LNCTS", "LNCTE"],
+  availableBranchNames: ["CS", "IT", "EC"],
+  availableGraduationYears: ["2021", "2022", "2023"],
 };
 
 // routes

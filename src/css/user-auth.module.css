@@ -1,7 +1,10 @@
 .heading {
   color: white;
   font-family: var(--heading-font);
-  margin-top: 40px;
+  margin-top: 50px;
+  font-size: var(--title-fsz);
+  font-weight: var(--title-fwt);
+  text-align: center;
 }
 
 .signInDiv {
@@ -10,6 +13,7 @@
 
 .signUpDiv {
   margin-top: 40px;
+  margin-bottom: 50px;
 }
 
 .inputDiv {
