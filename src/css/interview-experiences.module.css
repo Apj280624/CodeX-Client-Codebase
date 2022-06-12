@@ -1,6 +1,6 @@
 .contributeCardExtraDivIntex {
   /* border: 2px solid red; */
-  width: 82%;
+  width: var(--good-width);
   margin: auto;
   margin-top: 150px;
 }
@@ -10,9 +10,12 @@
 }
 
 .bottomDiv {
-  width: 82%;
+  width: var(--good-width);
   margin: auto;
   margin-top: 100px;
   margin-bottom: 100px;
   text-align: center;
 }
+
+/* mobile and tab ***************************************************************************************** */
+

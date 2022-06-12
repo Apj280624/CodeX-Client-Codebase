@@ -27,65 +27,34 @@
   margin-left: 10%;
 }
 
-/*  ********************************************************************************************************  */
+/* mobile and tab ***********************************************************************************************  */
 
-/* div display flex to centre h1 vertically */
-/* .contriDiv {
-  background-color: var(--light-purple);
-  border: 2px red solid;
-  height: 70%;
-  border-radius: var(--contri-btn-border-rad);
-  display: flex;
-} */
+@media (max-width: 767px) {
+  .commonText {
+    text-align: center;
+  }
 
-/* .ttx {
-  margin-top: 100px;
-  margin: 0;
+  .titleText {
+    font-size: 2rem;
+  }
+
+  .subTitleText {
+    font-size: 1rem;
+  }
+
+  .contriImage {
+    width: 40%;
+    margin: auto;
+    display: block;
+  }
+
+  .imageDiv {
+    text-align: center;
+  }
+
+  .contriImage:hover {
+    width: 30%;
+    margin: auto;
+    display: block;
+  }
 }
-
-.coll {
-  padding: 0;
-} 
-
-ttx for text, coll for divs
-
-*/
-
-/* .contribute-card-div {
-  width: 96%;
-
-  margin: auto;
-  background-color: transparent;
-  padding: 0;
-}
-
-.contribute-card-subdiv-1 {
-  width: 70%;
-
-  background-color: var(--dark-purple);
-  border: 2px solid var(--light-purple);
-  border-radius: var(--contri-btn-border-rad) 0 0 var(--contri-btn-border-rad);
-  color: white;
-  display: flex;
-  align-items: center;
-  margin: auto;
-}
-
-.contribute-card-subdiv-2 {
-  width: 30%;
-
-  background-color: var(--light-purple);
-  border: 2px solid var(--light-purple);
-  border-radius: 0 var(--contri-btn-border-rad) var(--contri-btn-border-rad) 0;
-  color: white;
-  display: flex;
-  align-items: center;
-}
-.d-text {
-  font-size: 1.2rem;
-  font-family: "Montserrat";
-}
-
-.contribute-text {
-  margin: auto;
-} */

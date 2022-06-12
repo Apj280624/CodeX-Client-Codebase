@@ -11,7 +11,7 @@ import "react-toastify/dist/ReactToastify.css";
 import {
   validateSignUpCredentials,
   validateEmailAddress,
-} from "../utilities/UserAuthUtility.js";
+} from "../utilities/ValidationUtility.js";
 import { SERVER_ORIGIN, routes } from "../utilities/ClientVarsUtility.js";
 import Toast, { toastOptions } from "../components/Toast.js";
 
@@ -71,8 +71,7 @@ function SignUp() {
     if (!res) {
       toast(desc, toastOptions);
     } else {
-      console.log(userCredentials);
-      // console.log("sign up sent");
+      // console.log(userCredentials);
       try {
         const response = await axios.post(
           SERVER_ORIGIN + routes.SIGN_UP,
@@ -81,7 +80,7 @@ function SignUp() {
         // console.log(response);
         toast(response.data, toastOptions);
       } catch (error) {
-        console.log(error);
+        // console.log(error);
         toast(error.response.data, toastOptions);
       }
     }
@@ -114,7 +113,7 @@ function SignUp() {
           <div className={UserAuth.inputDiv}>
             <CredentialInput
               type="text"
-              placeholder="College name ( LNCT / LNCTS / LNCTE)"
+              placeholder="College name ( only LNCT / LNCTS / LNCTE )"
               name="collegeName"
               width="32%"
               onChange={updateUserCredentials}
@@ -124,7 +123,7 @@ function SignUp() {
           <div className={UserAuth.inputDiv}>
             <CredentialInput
               type="text"
-              placeholder="Branch name ( e.g. CS / IT / EC )"
+              placeholder="Branch name ( e.g. CS, IT, EC etc )"
               name="branchName"
               width="32%"
               onChange={updateUserCredentials}
@@ -134,7 +133,7 @@ function SignUp() {
           <div className={UserAuth.inputDiv}>
             <CredentialInput
               type="text"
-              placeholder="Graduation year ( e.g. 2022, 2023 )"
+              placeholder="Graduation year ( e.g. 2022, 2023 etc )"
               name="graduationYear"
               width="32%"
               onChange={updateUserCredentials}

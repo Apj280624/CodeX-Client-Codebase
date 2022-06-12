@@ -1,16 +1,22 @@
 .footer {
-  height: 360px;
-  padding: 100px 0 50px 0;
+  /* background-color: var(--light-purple); */
+  /* height: 360px; */
+  margin-top: 60px;
+  padding: 40px 0 30px 0;
   text-align: center;
   color: white;
+  /* border: 2px solid red; */
+  font-family: var(--desc-font);
+  /* border-top: 2px solid var(--light-purple); */
 }
 
 .footer-heading {
+  font-size: var(--big-desc-fsz);
+  font-weight: var(--login-btn-fwt);
   padding-bottom: 10px;
 }
 
 .footer-tab {
-  font-family: var(--desc-font);
   color: white;
   text-decoration: none;
   display: block;
@@ -19,4 +25,9 @@
 
 .footer-tab:hover {
   color: grey;
+}
+
+.copyright-tab {
+  margin-top: 40px;
+  font-weight: var(--login-btn-fwt);
 }

@@ -7,7 +7,7 @@
   margin-top: 12px;
   margin-bottom: 12px;
   background-color: var(--dark-purple);
-  border: 1px solid var(--light-purple);
+  border: 2px solid var(--light-purple);
 }
 
 .commonText {
@@ -23,17 +23,14 @@
 }
 
 .yearText {
-  /* margin-top: 0; */
   text-align: center;
   font-family: var(--desc-font);
 }
 
 .authorText {
   margin-top: 30px;
-
   text-align: center;
   font-family: var(--desc-font);
   font-size: var(--desc-fsz);
   font-weight: var(--big-desc-fwt);
-  font-family: var(--heading-font);
 }

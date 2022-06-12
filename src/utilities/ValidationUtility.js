@@ -5,6 +5,20 @@
 
 import { vars } from "./ClientVarsUtility.js";
 
+/////////////////////////////////////// TRIM OBJECTS ///////////////////////////////////////////
+
+// trims ending whitespaces from each string field in the object
+function trimObject(object) {
+  for (const property in object) {
+    // console.log(`${property}: ${object[property]}`);
+    object[property].trim();
+  }
+
+  return object;
+}
+
+///////////////////////////////////////// VALID, INVALID OBJECTS /////////////////////////////////////////////////
+
 function getValidObject() {
   return {
     res: true,
@@ -19,6 +33,8 @@ function getInValidObject(result, description) {
   };
 }
 
+///////////////////////////////////////// FIRST, LAST, COMPANY, ROLE NAME //////////////////////////////////////////////////
+
 function validateName(name, what, maxLen) {
   if (name.length > maxLen) {
     return getInValidObject(
@@ -32,37 +48,9 @@ function validateName(name, what, maxLen) {
   return getValidObject();
 }
 
-// function validateCollegeName(collegeName) {
-//   const availableCollegeNames = ["LNCT", "LNCTS", "LNCTE"];
-//   if (!availableCollegeNames.includes(collegeName)) {
-//     return getInValidObject(
-//       false,
-//       "College name should be LNCT, LNCTS OR LNCTE"
-//     );
-//   }
+///////////////////////////////////////// COLLEGE, BRANCH, GRAD, MONTH, YEAR, DIFF ///////////////////////////////////////////
 
-//   return getValidObject();
-// }
-
-// function validateBranchName(branchName) {
-//   const availableBranchNames = ["CS", "IT", "EC"];
-//   if (!availableBranchNames.includes(branchName)) {
-//     return getInValidObject(false, "Branch name should be CS, IT or EC");
-//   }
-
-//   return getValidObject();
-// }
-
-// function validateGraduationYear(graduationYear) {
-//   const availableGraduationYears = ["CS", "IT", "EC"];
-//   if (!availableBranchNames.includes(collegeName)) {
-//     return getInValidObject(false, "Branch name should be CS, IT or EC");
-//   }
-
-//   return getValidObject();
-// }
-
-function validCollegeBranchGraduation(name, what, available) {
+function validateFromAvailable(name, what, available) {
   if (!available.includes(name)) {
     var desc = `${what} should match one of `;
     var n = available.length; // assuming n>=2
@@ -81,6 +69,8 @@ function validCollegeBranchGraduation(name, what, available) {
   return getValidObject();
 }
 
+///////////////////////////////////////////////// EMAIL ////////////////////////////////////////////////////
+
 function validateEmailAddress(emailAddress) {
   if (emailAddress.length > vars.maxEmailAddressLen) {
     return getInValidObject(
@@ -93,6 +83,8 @@ function validateEmailAddress(emailAddress) {
 
   return getValidObject();
 }
+
+//////////////////////////////////////////////// PASSWORD //////////////////////////////////////////////////
 
 function validatePassword(password) {
   if (password.length > vars.maxPassLen) {
@@ -112,6 +104,8 @@ function validatePassword(password) {
   return getValidObject();
 }
 
+///////////////////////////////////////////////// OTP //////////////////////////////////////////////////////
+
 function validateOTP(OTP) {
   if (OTP.length !== 6) {
     return getInValidObject(false, "Length of the OTP should be 6");
@@ -122,9 +116,28 @@ function validateOTP(OTP) {
   return getValidObject();
 }
 
-//////////////////////////////////////////// signup validation ///////////////////////////////////////////
+////////////////////////////////////////// EXPERIENCE AND TIPS ////////////////////////////////////////////
+
+function validateExpTip(text, what, maxLen) {
+  if (text.length > maxLen) {
+    return getInValidObject(
+      false,
+      `Length of ${what} should not exceed ${maxLen}`
+    );
+  } else if (text.length === 0) {
+    return getInValidObject(false, `${what} should not be empty`);
+  }
+
+  // add valiators like number of words
+
+  return getValidObject();
+}
+
+//////////////////////////////////////////// SIGNUP VALIDATION ///////////////////////////////////////////
 
 function validateSignUpCredentials(userCredentials) {
+  userCredentials = trimObject(userCredentials);
+
   const firstNameObject = validateName(
     userCredentials.firstName,
     "First name",
@@ -143,7 +156,7 @@ function validateSignUpCredentials(userCredentials) {
     return lastNameObject;
   }
 
-  const collegeNameObject = validCollegeBranchGraduation(
+  const collegeNameObject = validateFromAvailable(
     userCredentials.collegeName,
     "College name",
     vars.availableCollegeNames
@@ -152,7 +165,7 @@ function validateSignUpCredentials(userCredentials) {
     return collegeNameObject;
   }
 
-  const branchNameObject = validCollegeBranchGraduation(
+  const branchNameObject = validateFromAvailable(
     userCredentials.branchName,
     "Branch name",
     vars.availableBranchNames
@@ -161,7 +174,7 @@ function validateSignUpCredentials(userCredentials) {
     return branchNameObject;
   }
 
-  const graduationYearObject = validCollegeBranchGraduation(
+  const graduationYearObject = validateFromAvailable(
     userCredentials.graduationYear,
     "Graduation year",
     vars.availableGraduationYears
@@ -189,9 +202,11 @@ function validateSignUpCredentials(userCredentials) {
   return getValidObject();
 }
 
-//////////////////////////////////////////// signin validation ///////////////////////////////////////////
+//////////////////////////////////////////// SIGNIN VALIDATION ///////////////////////////////////////////
 
 function validateSignInCredentials(userCredentials) {
+  userCredentials = trimObject(userCredentials);
+
   const emailAdressObject = validateEmailAddress(userCredentials.emailAddress);
   if (!emailAdressObject.res) {
     return emailAdressObject;
@@ -206,9 +221,11 @@ function validateSignInCredentials(userCredentials) {
   return getValidObject();
 }
 
-//////////////////////////////////////////// forgot password validation ///////////////////////////////////////////
+//////////////////////////////////////////// FORGOT PASSWORD VALIDATION ///////////////////////////////////////////
 
 function validateForgotPasswordCredentials(userCredentials) {
+  userCredentials = trimObject(userCredentials);
+
   const emailAdressObject = validateEmailAddress(userCredentials.emailAddress);
   if (!emailAdressObject.res) {
     return emailAdressObject;
@@ -228,9 +245,83 @@ function validateForgotPasswordCredentials(userCredentials) {
   return getValidObject();
 }
 
+////////////////////////////////////////  CONTRIBUTION DETAILS VALIDATION //////////////////////////////////////
+
+function validateContributionDetails(contributionDetails) {
+  contributionDetails = trimObject(contributionDetails);
+
+  const companyNameObject = validateName(
+    contributionDetails.companyName,
+    "Company name",
+    vars.maxCompanyNameLen
+  );
+  if (!companyNameObject.res) {
+    return companyNameObject;
+  }
+
+  const roleNameObject = validateName(
+    contributionDetails.roleName,
+    "Role name",
+    vars.maxRoleNameLen
+  );
+  if (!roleNameObject.res) {
+    return roleNameObject;
+  }
+
+  const monthNameObject = validateFromAvailable(
+    contributionDetails.monthName,
+    "Month name",
+    vars.availableMonthNames
+  );
+  if (!monthNameObject.res) {
+    return monthNameObject;
+  }
+
+  const yearObject = validateFromAvailable(
+    contributionDetails.year,
+    "Year",
+    vars.availableYears
+  );
+  if (!yearObject.res) {
+    return yearObject;
+  }
+
+  const difficultyObject = validateFromAvailable(
+    contributionDetails.difficulty,
+    "Difficulty",
+    vars.availableDifficulties
+  );
+  if (!difficultyObject.res) {
+    return difficultyObject;
+  }
+
+  const experienceObject = validateExpTip(
+    contributionDetails.experience,
+    "Interview experience",
+    vars.maxExperienceLen
+  );
+  if (!experienceObject.res) {
+    return experienceObject;
+  }
+
+  const tipObject = validateExpTip(
+    contributionDetails.tip,
+    "Tip",
+    vars.maxTipLen
+  );
+  if (!tipObject.res) {
+    return tipObject;
+  }
+
+  return getValidObject();
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 export {
   validateSignUpCredentials,
   validateSignInCredentials,
   validateForgotPasswordCredentials,
   validateEmailAddress,
+  validateContributionDetails,
 };

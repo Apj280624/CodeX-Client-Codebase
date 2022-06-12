@@ -3,23 +3,28 @@ import CredentialInput from "../components/CredentialInput";
 import CredentialButton from "../components/CredentialButton";
 import UserAuth from "../css/user-auth.module.css";
 import PasswordInput from "../components/PasswordInput";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 // my modules
-import { validateSignInCredentials } from "../utilities/UserAuthUtility.js";
+import { validateSignInCredentials } from "../utilities/ValidationUtility.js";
 import { SERVER_ORIGIN, routes } from "../utilities/ClientVarsUtility.js";
 import Toast, { toastOptions } from "../components/Toast.js";
 
 const axios = require("axios").default;
 
-function SignIn() {
-  /*
+/*
   one case could be if the user is already signed in and tries to come to the sign in route, in such case we can
    check if the user is signed in and redirect him to the interview experience route before even rendering the
    sign in component
+
+   if anyone comes and logs in successfully redirect him to the backward page
+
   */
+
+function SignIn() {
+  const navigate = useNavigate();
 
   const [userCredentials, setUserCredentials] = useState({
     emailAddress: "",
@@ -54,7 +59,7 @@ function SignIn() {
           // console.log(response.data.token);
           localStorage.setItem("token", response.data.token); // store or replace token on client side
           toast(response.data.statusText);
-          // navigate after signing in
+          navigate(routes.INTERVIEW_EXPERIENCES);
         }
       } catch (error) {
         console.log(error);

@@ -12,13 +12,17 @@
   --big-title-fsz: 3.5rem;
   --title-fsz: 3rem;
   --sub-title-fsz: 2.4rem;
-  --big-desc-fsz: 1.5rem;
+  --big-desc-fsz: 1.6rem;
   --desc-fsz: 1rem;
 
   --big-title-fwt: 700;
   --title-fwt: 600;
   --sub-title-fwt: 500;
   --big-desc-fwt: 400;
+
+  --good-width: 80%;
+
+  --nav_h: 50px;
 }
 
 body {

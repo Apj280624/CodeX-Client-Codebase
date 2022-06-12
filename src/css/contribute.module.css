@@ -1,0 +1,83 @@
+.loaderDiv {
+  margin-top: 220px;
+  text-align: center;
+}
+
+.commonText {
+  color: white;
+}
+
+.commonDiv {
+  width: var(--good-width);
+  margin: auto;
+}
+
+.headingText {
+  font-family: var(--heading-font);
+  font-size: var(--title-fsz);
+  font-weight: var(--title-fwt);
+  text-align: center;
+  margin-top: 150px;
+}
+
+.alertText {
+  font-family: var(--desc-font);
+  font-size: var(--big-desc-fsz);
+  font-weight: var(--big-desc-fwt);
+  text-align: center;
+  margin-top: 10px;
+}
+
+.inputDiv {
+  margin-top: 12px;
+  margin-bottom: 12px;
+}
+
+.detailsDiv {
+  text-align: center;
+  /* width: var(--good-width);
+  margin: auto; */
+  margin-top: 80px;
+}
+
+.noteText {
+  font-family: var(--desc-font);
+  font-weight: var(--sub-title-fwt);
+  color: white;
+  width: 100%;
+  text-align: left;
+  margin: 40px auto 0 auto;
+  /* padding: 15px; */
+}
+
+.noteDiv {
+  /* width: var(--good-width);
+  margin: auto; */
+}
+
+.contentDiv {
+  text-align: center;
+  /* width: var(--good-width);
+  margin: auto; */
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.contentTextArea {
+  width: 100%;
+  background-color: transparent;
+  color: white;
+  font-size: var(--big-desc-fsz);
+  padding: 3%;
+  border: 2px solid var(--light-purple);
+  border-radius: var(--contri-btn-border-rad);
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+/* resize: none; to disable the resize option on the bottom right in textarea */
+
+.contentTextArea:focus {
+  outline: none;
+}
+/* remove default input white color border which occurs on click */
