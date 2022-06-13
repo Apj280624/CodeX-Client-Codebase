@@ -36,13 +36,6 @@ function Contribute() {
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
 
-  // const axiosConfig = {
-  //   headers: {
-  //     "Content-Type": "application/json;charset=UTF-8",
-  //     "Access-Control-Allow-Origin": "*",
-  //   },
-  // }
-
   function generateAxiosConfig(token) {
     const axiosConfig = {
       headers: {
@@ -64,7 +57,7 @@ function Contribute() {
       setIsLoading(false); // user can access contribute page
     } catch (error) {
       // either token is invalid or session expired
-      // console.error(error);
+      // console.log(error);
       navigate(routes.SIGN_IN); // redirect to sign in page
     }
   }
@@ -88,6 +81,7 @@ function Contribute() {
     monthName: "",
     year: "",
     difficulty: "",
+    opportunity: "",
     experience: "",
     tip: "",
   });
@@ -108,7 +102,7 @@ function Contribute() {
       toast(desc, toastOptions);
     } else {
       try {
-        console.log(contributionDetails);
+        // console.log(contributionDetails);
         const token = localStorage.getItem("token"); // pass token with contribution using generateAxiosConfig
         const response = await axios.post(
           SERVER_ORIGIN + routes.CONTRIBUTE,
@@ -200,10 +194,11 @@ function Contribute() {
             </div>
             <div className="col-lg-6">
               <div className={contri.inputDiv}>
-                <CredentialButton
-                  text="Contribute Experience"
+                <CredentialInput
+                  name="opportunity"
+                  placeholder="Opportunity / Program ( e.g. Off campus, Martians etc ) *"
                   width="100%"
-                  onClick={requestServerToContribute}
+                  onChange={updateContributionDetails}
                 />
               </div>
             </div>
@@ -221,22 +216,31 @@ function Contribute() {
       </div>
 
       <div className={`${contri.contentDiv} ${contri.commonDiv}`}>
-        <TextArea
-          name="experience"
-          rows="8"
-          placeholder="Interview Experience here"
-          onChange={updateContributionDetails}
-        />
-        <TextArea
-          name="tip"
-          rows="4"
-          placeholder="Concluding Tips here"
-          onChange={updateContributionDetails}
-        />
+        <div className="container">
+          <TextArea
+            name="experience"
+            rows="8"
+            placeholder="Interview Experience"
+            onChange={updateContributionDetails}
+          />
+          <TextArea
+            name="tip"
+            rows="4"
+            placeholder="Concluding Tips"
+            onChange={updateContributionDetails}
+          />
+        </div>
+        <div className={contri.contriButtonDiv}>
+          <div className="container">
+            <CredentialButton
+              text="Contribute Experience"
+              width="100%"
+              height="100px"
+              onClick={requestServerToContribute}
+            />
+          </div>
+        </div>
       </div>
-
-      <Footer />
-      <Toast />
     </div>
   );
 

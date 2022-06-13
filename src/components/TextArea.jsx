@@ -14,7 +14,7 @@ function TextArea(props) {
 
   return (
     <div>
-      <div className="container">
+      <div className="">
         <textarea
           className={contri.contentTextArea}
           rows={props.rows}

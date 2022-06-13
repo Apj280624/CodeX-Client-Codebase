@@ -1,6 +1,7 @@
 .loaderDiv {
   margin-top: 220px;
   text-align: center;
+  margin-bottom: 360px;
 }
 
 .commonText {
@@ -23,9 +24,9 @@
 .alertText {
   font-family: var(--desc-font);
   font-size: var(--big-desc-fsz);
-  font-weight: var(--big-desc-fwt);
+  font-weight: var(-big-desc-fwt);
   text-align: center;
-  margin-top: 10px;
+  /* margin-top: 10px; */
 }
 
 .inputDiv {
@@ -81,3 +82,8 @@
   outline: none;
 }
 /* remove default input white color border which occurs on click */
+
+.contriButtonDiv {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}

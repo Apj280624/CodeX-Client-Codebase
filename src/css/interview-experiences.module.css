@@ -9,6 +9,12 @@
   margin-top: 120px;
 }
 
+.loaderDiv {
+  margin-top: 220px;
+  text-align: center;
+  margin-bottom: 360px;
+}
+
 .bottomDiv {
   width: var(--good-width);
   margin: auto;
@@ -18,4 +24,3 @@
 }
 
 /* mobile and tab ***************************************************************************************** */
-

@@ -12,6 +12,7 @@ const vars = {
   maxEmailAddressLen: 400,
   maxCompanyNameLen: 60,
   maxRoleNameLen: 40,
+  maxOpportunityLen: 40,
   maxExperienceLen: 10000,
   maxTipLen: 2000,
   availableCollegeNames: ["LNCT", "LNCTS", "LNCTE"],
@@ -46,7 +47,12 @@ const routes = {
   CONTRIBUTE: "/contribute",
   VOTP: "/auth/votp",
   FOTP: "/auth/fotp",
-  VERIFY_TOKEN: "/verify-token"
+  VERIFY_TOKEN: "/verify-token",
+  CONTRIBUTIONS: "/contributions",
 };
+
+/*
+to get all interview experiences on 
+*/
 
 export { SERVER_ORIGIN, routes, vars };

@@ -11,7 +11,7 @@ import { vars } from "./ClientVarsUtility.js";
 function trimObject(object) {
   for (const property in object) {
     // console.log(`${property}: ${object[property]}`);
-    object[property].trim();
+    object[property] = object[property].trim();
   }
 
   return object;
@@ -135,8 +135,9 @@ function validateExpTip(text, what, maxLen) {
 
 //////////////////////////////////////////// SIGNUP VALIDATION ///////////////////////////////////////////
 
-function validateSignUpCredentials(userCredentials) {
-  userCredentials = trimObject(userCredentials);
+function validateSignUpCredentials(constUserCredentials) {
+  // the user credentials passed as an arguement are const and we cannot trim a const object so we use this way
+  let userCredentials = trimObject(constUserCredentials);
 
   const firstNameObject = validateName(
     userCredentials.firstName,
@@ -204,8 +205,9 @@ function validateSignUpCredentials(userCredentials) {
 
 //////////////////////////////////////////// SIGNIN VALIDATION ///////////////////////////////////////////
 
-function validateSignInCredentials(userCredentials) {
-  userCredentials = trimObject(userCredentials);
+function validateSignInCredentials(constUserCredentials) {
+  // the user credentials passed as an arguement are const and we cannot trim a const object so we use this way
+  let userCredentials = trimObject(constUserCredentials);
 
   const emailAdressObject = validateEmailAddress(userCredentials.emailAddress);
   if (!emailAdressObject.res) {
@@ -223,8 +225,9 @@ function validateSignInCredentials(userCredentials) {
 
 //////////////////////////////////////////// FORGOT PASSWORD VALIDATION ///////////////////////////////////////////
 
-function validateForgotPasswordCredentials(userCredentials) {
-  userCredentials = trimObject(userCredentials);
+function validateForgotPasswordCredentials(constUserCredentials) {
+  // the user credentials passed as an arguement are const and we cannot trim a const object so we use this way
+  let userCredentials = trimObject(constUserCredentials);
 
   const emailAdressObject = validateEmailAddress(userCredentials.emailAddress);
   if (!emailAdressObject.res) {
@@ -247,8 +250,12 @@ function validateForgotPasswordCredentials(userCredentials) {
 
 ////////////////////////////////////////  CONTRIBUTION DETAILS VALIDATION //////////////////////////////////////
 
-function validateContributionDetails(contributionDetails) {
-  contributionDetails = trimObject(contributionDetails);
+function validateContributionDetails(constContributionDetails) {
+  console.log(constContributionDetails);
+  // the user credentials passed as an arguement are const and we cannot trim a const object so we use this way
+  let contributionDetails = trimObject(constContributionDetails);
+
+  console.log(contributionDetails);
 
   const companyNameObject = validateName(
     contributionDetails.companyName,
@@ -293,6 +300,15 @@ function validateContributionDetails(contributionDetails) {
   );
   if (!difficultyObject.res) {
     return difficultyObject;
+  }
+
+  const opportunityObject = validateName(
+    contributionDetails.opportunity,
+    "Opportunity",
+    vars.maxOpportunityLen
+  );
+  if (!opportunityObject.res) {
+    return opportunityObject;
   }
 
   const experienceObject = validateExpTip(

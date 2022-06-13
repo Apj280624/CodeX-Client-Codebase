@@ -9,6 +9,7 @@ import SignIn from "./routes/SignIn";
 import SignUp from "./routes/SignUp";
 import ForgotPassword from "./routes/ForgotPassword";
 import Contribute from "./routes/Contribute";
+import ParticularExperience from "./routes/ParticularExperience";
 
 function App() {
   return (
@@ -20,6 +21,10 @@ function App() {
         <Route
           path="/interview-experiences"
           element={<InterviewExperiences />}
+        />
+        <Route
+          path="/interview-experiences/:id"
+          element={<ParticularExperience />}
         />
         <Route path="/auth/sign-in" element={<SignIn />} />
         <Route path="/auth/sign-up" element={<SignUp />} />

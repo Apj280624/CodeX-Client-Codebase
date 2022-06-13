@@ -16,15 +16,17 @@
 
 .companyText {
   text-align: center;
-  font-size: var(--sub-title-fsz);
-  font-weight: var(--big-desc-fwt);
+  font-size: 2rem;
+  font-weight: var(--sub-title-fwt);
   font-family: var(--heading-font);
   margin-bottom: 0;
 }
 
 .yearText {
   text-align: center;
+  font-size: 0.8rem;
   font-family: var(--desc-font);
+  margin: 0;
 }
 
 .authorText {
