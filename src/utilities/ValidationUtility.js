@@ -250,15 +250,15 @@ function validateForgotPasswordCredentials(constUserCredentials) {
 
 ////////////////////////////////////////  CONTRIBUTION DETAILS VALIDATION //////////////////////////////////////
 
-function validateContributionDetails(constContributionDetails) {
-  console.log(constContributionDetails);
+function validateInterviewExperience(constInterviewExperience) {
+  // console.log(constInterviewExperience);
   // the user credentials passed as an arguement are const and we cannot trim a const object so we use this way
-  let contributionDetails = trimObject(constContributionDetails);
+  let interviewExperience = trimObject(constInterviewExperience);
 
-  console.log(contributionDetails);
+  // console.log(interviewExperience);
 
   const companyNameObject = validateName(
-    contributionDetails.companyName,
+    interviewExperience.companyName,
     "Company name",
     vars.maxCompanyNameLen
   );
@@ -267,7 +267,7 @@ function validateContributionDetails(constContributionDetails) {
   }
 
   const roleNameObject = validateName(
-    contributionDetails.roleName,
+    interviewExperience.roleName,
     "Role name",
     vars.maxRoleNameLen
   );
@@ -276,7 +276,7 @@ function validateContributionDetails(constContributionDetails) {
   }
 
   const monthNameObject = validateFromAvailable(
-    contributionDetails.monthName,
+    interviewExperience.monthName,
     "Month name",
     vars.availableMonthNames
   );
@@ -285,7 +285,7 @@ function validateContributionDetails(constContributionDetails) {
   }
 
   const yearObject = validateFromAvailable(
-    contributionDetails.year,
+    interviewExperience.year,
     "Year",
     vars.availableYears
   );
@@ -294,7 +294,7 @@ function validateContributionDetails(constContributionDetails) {
   }
 
   const difficultyObject = validateFromAvailable(
-    contributionDetails.difficulty,
+    interviewExperience.difficulty,
     "Difficulty",
     vars.availableDifficulties
   );
@@ -303,7 +303,7 @@ function validateContributionDetails(constContributionDetails) {
   }
 
   const opportunityObject = validateName(
-    contributionDetails.opportunity,
+    interviewExperience.opportunity,
     "Opportunity",
     vars.maxOpportunityLen
   );
@@ -312,7 +312,7 @@ function validateContributionDetails(constContributionDetails) {
   }
 
   const experienceObject = validateExpTip(
-    contributionDetails.experience,
+    interviewExperience.experience,
     "Interview experience",
     vars.maxExperienceLen
   );
@@ -321,7 +321,7 @@ function validateContributionDetails(constContributionDetails) {
   }
 
   const tipObject = validateExpTip(
-    contributionDetails.tip,
+    interviewExperience.tip,
     "Tip",
     vars.maxTipLen
   );
@@ -339,5 +339,5 @@ export {
   validateSignInCredentials,
   validateForgotPasswordCredentials,
   validateEmailAddress,
-  validateContributionDetails,
+  validateInterviewExperience,
 };

@@ -10,9 +10,9 @@ import { routes } from "../utilities/ClientVarsUtility.js";
 
 function ContributeCard() {
   return (
-    <div>
-      <div className="container">
-        <div class="row">
+    <div className="">
+      <div className="container-fluid">
+        <div className="row">
           <div className="col-lg-8 col-md-8">
             <p
               className={`${contriCard.titleText} "sefkjn" ${contriCard.commonText}`}
@@ -28,7 +28,7 @@ function ContributeCard() {
             </p>
           </div>
           <div className="col-lg-4 col-md-4">
-            <div className={contriCard.imgDiv}>
+            <div className="">
               <Link to={routes.CONTRIBUTE}>
                 <img
                   alt="contribute-img"

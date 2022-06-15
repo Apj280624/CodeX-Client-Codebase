@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import CredentialInput from "../components/CredentialInput";
 import CredentialButton from "../components/CredentialButton";
 import UserAuth from "../css/user-auth.module.css";
 import PasswordInput from "../components/PasswordInput";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -25,6 +25,7 @@ const axios = require("axios").default;
 
 function SignIn() {
   const navigate = useNavigate();
+  const location = useLocation();
 
   const [userCredentials, setUserCredentials] = useState({
     emailAddress: "",
@@ -68,16 +69,25 @@ function SignIn() {
     }
   }
 
+  // useEffect(() => {
+  //   window.onpopstate = (e) => {
+  //     toast("back", toastOptions);
+  //     navigate(routes.HOME);
+  //   };
+  // }, [location]);
+
   return (
     <div>
-      <h1 className={UserAuth.heading}>Sign In to CodeX</h1>
+      <div className={UserAuth.headingDiv}>
+        <p className={UserAuth.heading}>Sign In to CodeX</p>
+      </div>
       <div className={UserAuth.signInDiv}>
         <div className={UserAuth.inputDiv}>
           <CredentialInput
             type="email"
             placeholder="Email address"
             name="emailAddress"
-            width="32%"
+            width="100%"
             onChange={updateUserCredentials}
           />
         </div>
@@ -86,7 +96,7 @@ function SignIn() {
           <CredentialButton
             text="Sign In"
             onClick={requestServerToSignUserIn}
-            width="32%"
+            width="100%"
           />
         </div>
         <div className={UserAuth.textDiv}>
@@ -98,8 +108,8 @@ function SignIn() {
             Sign Up
           </Link>
         </div>
-        <Toast />
       </div>
+      <Toast />
     </div>
   );
 }

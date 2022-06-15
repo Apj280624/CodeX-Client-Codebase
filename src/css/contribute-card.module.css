@@ -20,7 +20,7 @@
   transition: all 0.4s ease-in-out;
 }
 
-/* transition to animate image slowly  */
+/* transition property: to animate image slowly  */
 
 .contriImage:hover {
   width: 80%;
@@ -43,7 +43,7 @@
   }
 
   .contriImage {
-    width: 40%;
+    width: 30%;
     margin: auto;
     display: block;
   }
@@ -53,7 +53,7 @@
   }
 
   .contriImage:hover {
-    width: 30%;
+    width: 25%;
     margin: auto;
     display: block;
   }

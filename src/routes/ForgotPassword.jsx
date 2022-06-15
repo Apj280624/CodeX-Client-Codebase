@@ -59,17 +59,17 @@ function ForgotPassword() {
 
   return (
     <div>
-      <h1 className={UserAuth.heading}>Forgot your password ?</h1>
-      <h1 style={{ marginTop: "20px" }} className={UserAuth.heading}>
-        Let's figure it out
-      </h1>
+      <div className={UserAuth.headingDiv}>
+        <p className={UserAuth.heading}>Forgot your password ?</p>
+        <p className={UserAuth.heading}>Let's figure it out</p>
+      </div>
       <div className={UserAuth.signUpDiv}>
         <div className={UserAuth.inputDiv}>
           <CredentialInput
             type="email"
             placeholder="Email address"
             name="emailAddress"
-            width="32%"
+            width="100%"
             onChange={updateUserCredentials}
           />
         </div>
@@ -95,7 +95,7 @@ function ForgotPassword() {
           <CredentialButton
             text="Update password"
             onClick={requestServerToUpdatePassword}
-            width="32%"
+            width="100%"
           />
         </div>
         <div className={UserAuth.textDiv}>

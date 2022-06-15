@@ -1,19 +1,28 @@
 .heading {
   color: white;
   font-family: var(--heading-font);
-  margin-top: 50px;
   font-size: var(--title-fsz);
   font-weight: var(--title-fwt);
   text-align: center;
 }
 
+.headingDiv {
+  margin: auto;
+  margin-top: 50px;
+  width: 90%;
+}
+
 .signInDiv {
-  margin-top: 100px;
+  margin: auto;
+  margin-top: 50px;
+  width: 400px;
 }
 
 .signUpDiv {
-  margin-top: 40px;
-  margin-bottom: 50px;
+  margin: auto;
+  margin-top: 50px;
+  margin-bottom: 100px;
+  width: 400px;
 }
 
 .inputDiv {
@@ -22,12 +31,12 @@
 }
 
 .passwordDiv {
-  width: 32%;
+  width: 100%;
   margin: 15px auto 15px auto;
 }
 
 .otpDiv {
-  width: 32%;
+  width: 100%;
   margin: 15px auto 15px auto;
 }
 
@@ -66,4 +75,23 @@
 .otpBtnHalfInputDiv {
   margin-left: 1%;
   display: inline;
+}
+
+/* mobile and tab ***************************************************************************************** */
+
+/* @media (min-width: 768px) and (max-width: 1080px) {
+  .signInDiv {
+  }
+} */
+
+@media (max-width: 600px) {
+  .signInDiv {
+    width: var(--tab-good-width);
+    /* reduce text size */
+  }
+
+  .signUpDiv {
+    width: var(--tab-good-width);
+    /* reduce text size */
+  }
 }

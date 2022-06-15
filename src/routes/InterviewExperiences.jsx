@@ -27,23 +27,24 @@ function InterviewExperiences() {
   // when loading return a loader and when its loaded return cards
 
   const [isLoading, setIsLoading] = useState(true);
-  const [arrayOfContributionDetails, setArrayOfContributionDetails] = useState(
-    []
-  );
+  const [arrayOfInterviewExperiences, setArrayOfInterviewExperiences] =
+    useState([]);
 
-  async function requestServerToGetContributionDetails() {
+  async function requestServerToGetInterviewExperiences() {
     try {
-      const response = await axios.get(SERVER_ORIGIN + routes.CONTRIBUTIONS);
-      await setIsLoading(false); // set loading to false, and fill cards with data
-      console.log(response.data.arrayOfContributionDetails);
-      setArrayOfContributionDetails(response.data.arrayOfContributionDetails);
+      const response = await axios.get(
+        SERVER_ORIGIN + routes.INTERVIEW_EXPERIENCES
+      );
+      setIsLoading(false); // set loading to false, and fill cards with data
+      // console.log(response.data.arrayOfInterviewExperiences);
+      setArrayOfInterviewExperiences(response.data.arrayOfInterviewExperiences);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   }
 
   useEffect(() => {
-    requestServerToGetContributionDetails();
+    requestServerToGetInterviewExperiences();
   }, []);
 
   const loader = (
@@ -54,20 +55,23 @@ function InterviewExperiences() {
 
   const element = (
     <div className={Intex.bottomDiv}>
-      <div className="container">
+      <div className="">
         <div className="row">
-          {arrayOfContributionDetails.map((contributionDetails) => (
-            <div key={contributionDetails._id} className="col-lg-4 col-md-6">
+          {arrayOfInterviewExperiences.map((interviewExperience) => (
+            <div key={interviewExperience._id} className="col-lg-4 col-md-6">
               <ExperienceCard
-                id={contributionDetails._id}
-                companyName={contributionDetails.companyName}
-                roleName={contributionDetails.roleName}
-                year={contributionDetails.year}
-                opportunity={contributionDetails.opportunity}
-                firstName={contributionDetails.firstName}
-                lastName={contributionDetails.lastName}
-                collegeName={contributionDetails.collegeName}
-                graduationYear={contributionDetails.graduationYear}
+                id={interviewExperience._id}
+                companyName={interviewExperience.companyName}
+                roleName={interviewExperience.roleName}
+                monthName={interviewExperience.monthName}
+                year={interviewExperience.year}
+                opportunity={interviewExperience.opportunity}
+                difficulty={interviewExperience.difficulty}
+                firstName={interviewExperience.firstName}
+                lastName={interviewExperience.lastName}
+                collegeName={interviewExperience.collegeName}
+                branchName={interviewExperience.branchName}
+                graduationYear={interviewExperience.graduationYear}
               />
             </div>
           ))}
@@ -92,134 +96,3 @@ function InterviewExperiences() {
 }
 
 export default InterviewExperiences;
-
-/*
-          <div className="col-lg-4">
-            <ExperienceCard />
-          </div>
-          <div className="col-lg-4">
-            <ExperienceCard />
-          </div>
-          <div className="col-lg-4">
-            <ExperienceCard />
-          </div>
-          <div className="col-lg-4">
-            <ExperienceCard />
-          </div>
-          <div className="col-lg-4">
-            <ExperienceCard />
-          </div>
-          <div className="col-lg-4">
-            <ExperienceCard />
-          </div>
-          <div className="col-lg-4">
-            <ExperienceCard />
-          </div>
-          <div className="col-lg-4">
-            <ExperienceCard />
-          </div>
-          <div className="col-lg-4">
-            <ExperienceCard />
-          </div>
-          <div className="col-lg-4">
-            <ExperienceCard />
-          </div>
-          <div className="col-lg-4">
-            <ExperienceCard />
-          </div>
-          <div className="col-lg-4">
-            <ExperienceCard />
-          </div> */
-
-// <div className={Intex.bottomDiv}>
-//         <div className="container">
-//           <div className="row">
-//             <div className="col-lg-4">
-//               <ExperienceCard />
-//             </div>
-//             <div className="col-lg-4">
-//               <ExperienceCard />
-//             </div>
-//             <div className="col-lg-4">
-//               <ExperienceCard />
-//             </div>
-//             <div className="col-lg-4">
-//               <ExperienceCard />
-//             </div>
-//             <div className="col-lg-4">
-//               <ExperienceCard />
-//             </div>
-//             <div className="col-lg-4">
-//               <ExperienceCard />
-//             </div>
-//             <div className="col-lg-4">
-//               <ExperienceCard />
-//             </div>
-//             <div className="col-lg-4">
-//               <ExperienceCard />
-//             </div>
-//             <div className="col-lg-4">
-//               <ExperienceCard />
-//             </div>
-//             <div className="col-lg-4">
-//               <ExperienceCard />
-//             </div>
-//             <div className="col-lg-4">
-//               <ExperienceCard />
-//             </div>
-//             <div className="col-lg-4">
-//               <ExperienceCard />
-//             </div>
-//           </div>
-//         </div>
-//       </div>
-
-// <div className={Intex.contributeCardExtraDivIntex}>
-//         <ContributeCard />
-//       </div>
-//       <div className={Intex.searchBarExtraDivIntex}>
-//         <SearchBar />
-//       </div>
-
-//       <div className={Intex.bottomDiv}>
-//         <div className="container">
-//           <div className="row">
-//             <div className="col-lg-4">
-//               <ExperienceCard />
-//             </div>
-//             <div className="col-lg-4">
-//               <ExperienceCard />
-//             </div>
-//             <div className="col-lg-4">
-//               <ExperienceCard />
-//             </div>
-//             <div className="col-lg-4">
-//               <ExperienceCard />
-//             </div>
-//             <div className="col-lg-4">
-//               <ExperienceCard />
-//             </div>
-//             <div className="col-lg-4">
-//               <ExperienceCard />
-//             </div>
-//             <div className="col-lg-4">
-//               <ExperienceCard />
-//             </div>
-//             <div className="col-lg-4">
-//               <ExperienceCard />
-//             </div>
-//             <div className="col-lg-4">
-//               <ExperienceCard />
-//             </div>
-//             <div className="col-lg-4">
-//               <ExperienceCard />
-//             </div>
-//             <div className="col-lg-4">
-//               <ExperienceCard />
-//             </div>
-//             <div className="col-lg-4">
-//               <ExperienceCard />
-//             </div>
-//           </div>
-//         </div>
-//       </div>

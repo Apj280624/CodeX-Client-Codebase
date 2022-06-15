@@ -9,7 +9,10 @@ import SignIn from "./routes/SignIn";
 import SignUp from "./routes/SignUp";
 import ForgotPassword from "./routes/ForgotPassword";
 import Contribute from "./routes/Contribute";
-import ParticularExperience from "./routes/ParticularExperience";
+import ReadExperience from "./routes/ReadExperience";
+import { routes } from "./utilities/ClientVarsUtility.js";
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 function App() {
   return (
@@ -22,10 +25,7 @@ function App() {
           path="/interview-experiences"
           element={<InterviewExperiences />}
         />
-        <Route
-          path="/interview-experiences/:id"
-          element={<ParticularExperience />}
-        />
+        <Route path={`${routes.READ}/:id`} element={<ReadExperience />} />
         <Route path="/auth/sign-in" element={<SignIn />} />
         <Route path="/auth/sign-up" element={<SignUp />} />
         <Route path="/auth/forgot-password" element={<ForgotPassword />} />

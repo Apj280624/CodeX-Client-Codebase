@@ -8,6 +8,7 @@
   margin-bottom: 12px;
   background-color: var(--dark-purple);
   border: 2px solid var(--light-purple);
+  cursor: pointer;
 }
 
 .commonText {

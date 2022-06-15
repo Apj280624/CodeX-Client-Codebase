@@ -10,25 +10,27 @@ import { routes } from "../utilities/ClientVarsUtility.js";
 function resizeObject(props) {
   let resizedObject = {
     companyName: props.companyName.substring(0, 12),
-    roleName: props.roleName.substring(0, 30),
+    roleName: props.roleName.substring(0, 28),
+    monthName: props.monthName,
     year: props.year,
     opportunity: props.opportunity.substring(0, 30),
-    fullName: (props.firstName + " " + props.lastName).substring(0, 18),
+    difficulty: props.difficulty,
+    fullName: (props.firstName + " " + props.lastName).substring(0, 15),
     collegeName: props.collegeName,
+    branchName: props.branchName,
     graduationYear: props.graduationYear.substring(2, 4),
   };
 
   if (props.companyName.length > 12) {
     resizedObject.companyName += "... ";
   }
-  if (props.roleName.length > 30) {
-    console.log(props.companyName);
+  if (props.roleName.length > 28) {
     resizedObject.roleName += "... ";
   }
   if (props.opportunity.length > 30) {
     resizedObject.opportunity += "... ";
   }
-  if ((props.firstName + " " + props.lastName).length > 18) {
+  if ((props.firstName + " " + props.lastName).length > 15) {
     resizedObject.fullName += "... ";
   }
 
@@ -42,7 +44,7 @@ function ExperienceCard(props) {
   function handleClick() {
     //  const navigate = useNavigate();
     const id = props.id;
-    navigate(routes.INTERVIEW_EXPERIENCES + `/${id}`);
+    navigate(`${routes.READ}/${id}`);
   }
 
   //  console.log(resizeObject);
@@ -58,7 +60,8 @@ function ExperienceCard(props) {
         <p
           className={`${experienceCard.yearText} ${experienceCard.commonText}`}
         >
-          {resizedObject.roleName}, {resizedObject.year}
+          {resizedObject.roleName}, {resizedObject.monthName}{" "}
+          {resizedObject.year}
         </p>
         <p
           className={`${experienceCard.yearText} ${experienceCard.commonText}`}
@@ -66,10 +69,15 @@ function ExperienceCard(props) {
           {resizedObject.opportunity}
         </p>
         <p
+          className={`${experienceCard.yearText} ${experienceCard.commonText}`}
+        >
+          {`Difficulty level: ${props.difficulty}⭐`}
+        </p>
+        <p
           className={`${experienceCard.authorText} ${experienceCard.commonText}`}
         >
-          {resizedObject.fullName}, {resizedObject.collegeName} '
-          {resizedObject.graduationYear}
+          {resizedObject.fullName}, {resizedObject.collegeName}{" "}
+          {resizedObject.branchName} '{resizedObject.graduationYear}
         </p>
       </div>
     </div>

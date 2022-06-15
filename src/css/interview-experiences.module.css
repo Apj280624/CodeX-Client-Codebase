@@ -10,13 +10,18 @@
 }
 
 .loaderDiv {
+  margin: auto;
+  width: var(--loader-div-width);
   margin-top: 220px;
   text-align: center;
   margin-bottom: 360px;
 }
 
 .bottomDiv {
-  width: var(--good-width);
+  /* border: 2px solid red; */
+  /* width: 100%;
+  padding: 0; */
+  width: 80%;
   margin: auto;
   margin-top: 100px;
   margin-bottom: 100px;
@@ -24,3 +29,13 @@
 }
 
 /* mobile and tab ***************************************************************************************** */
+
+@media (max-width: 767px) {
+  .bottomDiv {
+    width: var(--tab-good-width);
+  }
+
+  .contributeCardExtraDivIntex {
+    width: var(--tab-good-width);
+  }
+}

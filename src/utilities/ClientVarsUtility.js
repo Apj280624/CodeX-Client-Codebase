@@ -40,6 +40,7 @@ const vars = {
 // routes
 
 const routes = {
+  HOME: "/",
   SIGN_UP: "/auth/sign-up",
   SIGN_IN: "/auth/sign-in",
   FORGOT_PASSWORD: "/auth/forgot-password",
@@ -49,10 +50,21 @@ const routes = {
   FOTP: "/auth/fotp",
   VERIFY_TOKEN: "/verify-token",
   CONTRIBUTIONS: "/contributions",
+  READ: "/interview-experience/read",
 };
 
 /*
 to get all interview experiences on 
 */
 
-export { SERVER_ORIGIN, routes, vars };
+function generateAxiosConfigHeader(token) {
+  const axiosConfig = {
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  };
+
+  return axiosConfig;
+}
+
+export { SERVER_ORIGIN, routes, vars, generateAxiosConfigHeader };

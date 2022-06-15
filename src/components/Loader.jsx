@@ -7,7 +7,7 @@ import { vars } from "../utilities/ClientVarsUtility.js";
 function Loader() {
   return (
     <SpinnerInfinity
-      size="100"
+      size="100%"
       color={vars.darkPurple}
       secondaryColor={vars.lightPurple}
     />

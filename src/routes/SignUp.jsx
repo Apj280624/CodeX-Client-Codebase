@@ -88,102 +88,102 @@ function SignUp() {
 
   return (
     <div>
-      <div className="">
+      <div className={UserAuth.headingDiv}>
         <p className={UserAuth.heading}>Join CodeX today</p>
-        <div className={UserAuth.signUpDiv}>
-          <div className={UserAuth.otpDiv}>
+      </div>
+      <div className={UserAuth.signUpDiv}>
+        <div className={UserAuth.otpDiv}>
+          <CredentialInput
+            type="text"
+            placeholder="First name"
+            name="firstName"
+            width="49.5%"
+            onChange={updateUserCredentials}
+          />
+          <div className={UserAuth.otpBtnHalfInputDiv}>
             <CredentialInput
               type="text"
-              placeholder="First name"
-              name="firstName"
+              placeholder="Last name"
+              name="lastName"
               width="49.5%"
               onChange={updateUserCredentials}
             />
-            <div className={UserAuth.otpBtnHalfInputDiv}>
-              <CredentialInput
-                type="text"
-                placeholder="Last name"
-                name="lastName"
-                width="49.5%"
-                onChange={updateUserCredentials}
-              />
-            </div>
-          </div>
-
-          <div className={UserAuth.inputDiv}>
-            <CredentialInput
-              type="text"
-              placeholder="College name ( only LNCT / LNCTS / LNCTE )"
-              name="collegeName"
-              width="32%"
-              onChange={updateUserCredentials}
-            />
-          </div>
-
-          <div className={UserAuth.inputDiv}>
-            <CredentialInput
-              type="text"
-              placeholder="Branch name ( e.g. CS, IT, EC etc )"
-              name="branchName"
-              width="32%"
-              onChange={updateUserCredentials}
-            />
-          </div>
-
-          <div className={UserAuth.inputDiv}>
-            <CredentialInput
-              type="text"
-              placeholder="Graduation year ( e.g. 2022, 2023 etc )"
-              name="graduationYear"
-              width="32%"
-              onChange={updateUserCredentials}
-            />
-          </div>
-
-          <div className={UserAuth.inputDiv}>
-            <CredentialInput
-              type="email"
-              placeholder="Email address"
-              name="emailAddress"
-              width="32%"
-              onChange={updateUserCredentials}
-            />
-          </div>
-          <PasswordInput name="password" onChange={updateUserCredentials} />
-
-          <div className={UserAuth.otpDiv}>
-            <CredentialInput
-              type="text"
-              placeholder="OTP"
-              name="OTP"
-              width="32%"
-              onChange={updateUserCredentials}
-            />
-            <div className={UserAuth.otpBtnHalfInputDiv}>
-              <CredentialButton
-                text="Send OTP"
-                onClick={requestServerToSendOTP}
-                width="67%"
-              />
-            </div>
-          </div>
-
-          <div className={UserAuth.buttonDiv}>
-            <CredentialButton
-              text="Sign Up"
-              onClick={requestServerToSignUserUp}
-              width="32%"
-            />
-          </div>
-
-          <div className={UserAuth.textDiv}>
-            <Link to={routes.SIGN_IN} className={UserAuth.fpText}>
-              Sign In
-            </Link>
           </div>
         </div>
-        <Toast />
+
+        <div className={UserAuth.inputDiv}>
+          <CredentialInput
+            type="text"
+            placeholder="College name ( only LNCT / LNCTS / LNCTE )"
+            name="collegeName"
+            width="100%"
+            onChange={updateUserCredentials}
+          />
+        </div>
+
+        <div className={UserAuth.inputDiv}>
+          <CredentialInput
+            type="text"
+            placeholder="Branch name ( e.g. CS, IT, EC etc )"
+            name="branchName"
+            width="100%"
+            onChange={updateUserCredentials}
+          />
+        </div>
+
+        <div className={UserAuth.inputDiv}>
+          <CredentialInput
+            type="text"
+            placeholder="Graduation year ( e.g. 2022, 2023 etc )"
+            name="graduationYear"
+            width="100%"
+            onChange={updateUserCredentials}
+          />
+        </div>
+
+        <div className={UserAuth.inputDiv}>
+          <CredentialInput
+            type="email"
+            placeholder="Email address"
+            name="emailAddress"
+            width="100%"
+            onChange={updateUserCredentials}
+          />
+        </div>
+        <PasswordInput name="password" onChange={updateUserCredentials} />
+
+        <div className={UserAuth.otpDiv}>
+          <CredentialInput
+            type="text"
+            placeholder="OTP"
+            name="OTP"
+            width="49.5%"
+            onChange={updateUserCredentials}
+          />
+          <div className={UserAuth.otpBtnHalfInputDiv}>
+            <CredentialButton
+              text="Send OTP"
+              onClick={requestServerToSendOTP}
+              width="49.5%"
+            />
+          </div>
+        </div>
+
+        <div className={UserAuth.buttonDiv}>
+          <CredentialButton
+            text="Sign Up"
+            onClick={requestServerToSignUserUp}
+            width="100%"
+          />
+        </div>
+
+        <div className={UserAuth.textDiv}>
+          <Link to={routes.SIGN_IN} className={UserAuth.fpText}>
+            Sign In
+          </Link>
+        </div>
       </div>
+      <Toast />
     </div>
   );
 }

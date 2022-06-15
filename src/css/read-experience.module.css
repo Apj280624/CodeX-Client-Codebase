@@ -1,0 +1,101 @@
+.loaderDiv {
+  margin: auto;
+  width: var(--loader-div-width);
+  margin-top: 220px;
+  text-align: center;
+  margin-bottom: 360px;
+}
+
+.commonText {
+  color: white;
+  text-align: center;
+  font-family: var(--heading-font);
+  /* word-break: break-all; */
+  /* white-space: normal; */
+  /* white-space: wrap; */
+  /* word-break: break-all; */
+  overflow-wrap: break-word;
+}
+
+/* overflow-wrap: break-word; workf perfect as of now it also breaks if needed and add space and all */
+
+.companyText {
+  font-size: var(--title-fsz);
+  font-weight: var(--title-fwt);
+  margin-bottom: 0;
+}
+
+.roleText {
+  font-size: var(--desc-fsz);
+  font-weight: var(--big-desc-fwt);
+  margin-bottom: 0;
+}
+
+.nameText {
+  /* font-size: var(--big-desc-fsz); 
+   font-weight: var(--sub-title-fwt); */
+  font-size: var(--big-desc-fsz);
+  font-weight: var(-big-desc-fwt);
+  margin-top: 30px;
+}
+
+.outlineDiv {
+  border: 2px solid var(--light-purple);
+  border-radius: var(--contri-btn-border-rad);
+  padding: 20px;
+  /* background-color: var(--light-purple);*/
+  padding: 0;
+  padding: 20px 10px 10px 10px;
+}
+
+.contentText {
+  font-size: 1.2rem;
+  font-weight: var(-big-desc-fwt);
+  margin: auto;
+  margin-top: 40px;
+  text-align: left;
+  border: 2px solid var(--light-purple);
+  border-radius: var(--contri-btn-border-rad);
+  padding: 20px 20px 20px 20px;
+  white-space: pre-wrap;
+}
+
+/* white-space: pre-wrap; to remove scroller */
+
+.specialText {
+  font-weight: var(--title-fwt);
+}
+
+.allDiv {
+  width: var(--good-width);
+  margin: auto;
+  margin-top: 150px;
+  margin-bottom: 100px;
+}
+
+/* mobile and tab ***************************************************************************************** */
+
+@media (max-width: 767px) {
+  .companyText {
+    font-size: var(--tab-title-fsz);
+    font-weight: var(--tab-title-fwt);
+  }
+
+  .roleText {
+    font-size: var(--tab-desc-fsz);
+    font-weight: var(--tab-big-desc-fwt);
+  }
+
+  .nameText {
+    font-size: var(--tab-big-desc-fsz);
+    font-weight: var(-tab-big-desc-fwt);
+  }
+
+  .contentText {
+    font-size: 1rem;
+  }
+
+  .allDiv {
+    width: var(--tab-good-width);
+  }
+}
