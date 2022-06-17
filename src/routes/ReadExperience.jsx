@@ -10,30 +10,21 @@ import Footer from "../components/Footer.jsx";
 
 // my modules
 import { SERVER_ORIGIN, routes } from "../utilities/ClientVarsUtility.js";
+import {
+  generateAxiosConfigHeader,
+  getStars,
+  getGoodDate,
+} from "../utilities/ClientUtility.js";
 import Toast, { toastOptions } from "../components/Toast.js";
 
 const axios = require("axios").default;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-function getStars(n) {
-  var result = "";
-  for (var i = 0; i < n; i++) {
-    result += "⭐";
-  }
-
-  return result;
-}
-
-function getGoodDate(isoDateString) {
-  return isoDateString ? isoDateString.substr(0, 10) : isoDateString;
-}
-
 function ReadExperience() {
   const [isLoading, setIsLoading] = useState(true);
+  const [isSignedIn, setIsSignedIn] = useState(false);
   const [interviewExperience, setInterviewExperience] = useState({});
-
-  const [count, setCount] = useState(10);
 
   const { id } = useParams(); // curly brackets are imp
   // console.log(id);
@@ -43,23 +34,24 @@ function ReadExperience() {
     try {
       const response = await axios.get(`${SERVER_ORIGIN}${routes.READ}/${id}`);
       setIsLoading(false);
-      console.log(response.data.interviewExperience); // set loading to false
-      const temp = await response.data.interviewExperience;
+      // console.log(response.data.interviewExperience); // set loading to false
+      const data = await response.data.interviewExperience;
 
       setInterviewExperience({
-        companyName: temp.companyName,
-        roleName: temp.roleName,
-        monthName: temp.monthName,
-        year: temp.year,
-        difficulty: getStars(temp.difficulty),
-        timeStamp: getGoodDate(temp.timeStamp),
-        firstName: temp.firstName,
-        lastName: temp.lastName,
-        collegeName: temp.collegeName,
-        branchName: temp.branchName,
-        graduationYear: temp.graduationYear,
-        experience: temp.experience,
-        tip: temp.tip,
+        companyName: data.companyName,
+        roleName: data.roleName,
+        monthName: data.monthName,
+        year: data.year,
+        difficulty: getStars(data.difficulty),
+        opportunity: data.opportunity,
+        timeStamp: getGoodDate(data.timeStamp),
+        firstName: data.firstName,
+        lastName: data.lastName,
+        collegeName: data.collegeName,
+        branchName: data.branchName,
+        graduationYear: data.graduationYear,
+        experience: data.experience,
+        tip: data.tip,
       });
     } catch (error) {
       console.log(error);
@@ -67,7 +59,32 @@ function ReadExperience() {
     }
   }
 
+  async function requestServerToVerifyToken(token) {
+    try {
+      const response = await axios.get(
+        SERVER_ORIGIN + routes.VERIFY_TOKEN,
+        generateAxiosConfigHeader(token)
+      ); // read about Bearer schema in jwt docs
+      // console.log(response);
+      setIsSignedIn(true);
+    } catch (error) {
+      // either token is invalid or session expired, isSignedIn remains same
+      // console.log(error);
+    }
+  }
+
   useEffect(() => {
+    window.scrollTo(0, 0); // scroll to top after render
+    function verifySignInStatus() {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        // isSignedIn remains false
+      } else {
+        requestServerToVerifyToken(token);
+      }
+    }
+
+    verifySignInStatus();
     requestServerToReadInterviewExperience();
   }, []);
 
@@ -89,7 +106,7 @@ function ReadExperience() {
             {interviewExperience.year}
           </p>
           <p className={`${Read.roleText} ${Read.commonText}`}>
-            Difficulty level: {interviewExperience.opportunity}
+            Opportunity: {interviewExperience.opportunity}
           </p>
           <p className={`${Read.roleText} ${Read.commonText}`}>
             Difficulty level: {interviewExperience.difficulty}
@@ -105,7 +122,7 @@ function ReadExperience() {
           </p>
         </div>
         <pre className={`${Read.contentText} ${Read.commonText}`}>
-          <span className={Read.specialText}>Concluding Tips: </span>
+          <span className={Read.specialText}>Interview Experience: </span>
           {interviewExperience.experience}
         </pre>
         <pre className={`${Read.contentText} ${Read.commonText}`}>
@@ -118,7 +135,7 @@ function ReadExperience() {
 
   return (
     <div>
-      <Navbar />
+      <Navbar isSignedIn={isSignedIn} />
       {isLoading ? loader : element}
       <Toast />
       <Footer />

@@ -1,13 +1,15 @@
 import React from "react";
+import CredentialButton from "../components/CredentialButton.jsx";
 import experienceCard from "../css/experience-card.module.css";
 import { useNavigate } from "react-router-dom";
 
 // my modules
 import { routes } from "../utilities/ClientVarsUtility.js";
+import { getStars } from "../utilities/ClientUtility.js";
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-function resizeObject(props) {
+function resizeObjectOld(props) {
   let resizedObject = {
     companyName: props.companyName.substring(0, 12),
     roleName: props.roleName.substring(0, 28),
@@ -38,11 +40,12 @@ function resizeObject(props) {
 }
 
 function ExperienceCard(props) {
-  const resizedObject = resizeObject(props);
+  const resizedObject = resizeObjectOld(props);
+  // const resizedObject = resizeObject(props);
+
   const navigate = useNavigate();
 
   function handleClick() {
-    //  const navigate = useNavigate();
     const id = props.id;
     navigate(`${routes.READ}/${id}`);
   }
@@ -71,7 +74,8 @@ function ExperienceCard(props) {
         <p
           className={`${experienceCard.yearText} ${experienceCard.commonText}`}
         >
-          {`Difficulty level: ${props.difficulty}⭐`}
+          {/* {`Difficulty level: ${props.difficulty}⭐`} */}
+          {getStars(props.difficulty)}
         </p>
         <p
           className={`${experienceCard.authorText} ${experienceCard.commonText}`}
@@ -79,6 +83,7 @@ function ExperienceCard(props) {
           {resizedObject.fullName}, {resizedObject.collegeName}{" "}
           {resizedObject.branchName} '{resizedObject.graduationYear}
         </p>
+        <CredentialButton width="60%" height="40px" text="Read" />
       </div>
     </div>
   );

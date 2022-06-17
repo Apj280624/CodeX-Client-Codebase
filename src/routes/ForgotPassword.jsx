@@ -8,7 +8,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 // my modules
-import { validateForgotPasswordCredentials } from "../utilities/ValidationUtility.js";
+import { validateForgotPasswordCredentials } from "../utilities/ClientUtility.js";
 import { SERVER_ORIGIN } from "../utilities/ClientVarsUtility.js";
 import Toast, { toastOptions } from "../components/Toast.js";
 

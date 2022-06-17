@@ -9,6 +9,11 @@ import Footer from "../components/Footer.jsx";
 
 // my modules
 import { SERVER_ORIGIN, routes } from "../utilities/ClientVarsUtility.js";
+import {
+  generateAxiosConfigHeader,
+  resizeObject,
+} from "../utilities/ClientUtility.js";
+import { toastOptions } from "../components/Toast";
 
 const axios = require("axios").default;
 
@@ -23,18 +28,36 @@ from the data array recieved from the server side, create an array of components
 and just return that array inside the element var
 */
 
+function manipulateArray(dataArray) {
+  const resultArray = dataArray.map((dataObject) => {
+    dataObject = {
+      ...dataObject,
+      ...{ fullName: dataObject.firstName + dataObject.lastName },
+    };
+
+    delete dataObject.firstName;
+    delete dataObject.lastName;
+  });
+
+  return resultArray;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 function InterviewExperiences() {
   // when loading return a loader and when its loaded return cards
 
   const [isLoading, setIsLoading] = useState(true);
+  const [isSignedIn, setIsSignedIn] = useState(false);
   const [arrayOfInterviewExperiences, setArrayOfInterviewExperiences] =
     useState([]);
 
   async function requestServerToGetInterviewExperiences() {
     try {
-      const response = await axios.get(
+      var response = await axios.get(
         SERVER_ORIGIN + routes.INTERVIEW_EXPERIENCES
       );
+
       setIsLoading(false); // set loading to false, and fill cards with data
       // console.log(response.data.arrayOfInterviewExperiences);
       setArrayOfInterviewExperiences(response.data.arrayOfInterviewExperiences);
@@ -43,38 +66,65 @@ function InterviewExperiences() {
     }
   }
 
+  async function requestServerToVerifyToken(token) {
+    try {
+      const response = await axios.get(
+        SERVER_ORIGIN + routes.VERIFY_TOKEN,
+        generateAxiosConfigHeader(token)
+      ); // read about Bearer schema in jwt docs
+      // console.log(response);
+      setIsSignedIn(true);
+    } catch (error) {
+      // either token is invalid or session expired, isSignedIn remains same
+      // console.log(error);
+    }
+  }
+
   useEffect(() => {
+    window.scrollTo(0, 0); // scroll to top after render
+    function verifySignInStatus() {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        // isSignedIn remains false
+      } else {
+        requestServerToVerifyToken(token);
+      }
+    }
+
+    verifySignInStatus();
     requestServerToGetInterviewExperiences();
   }, []);
 
   const loader = (
     <div className={Intex.loaderDiv}>
-      <Loader />;
+      <Loader />
     </div>
   );
 
   const element = (
-    <div className={Intex.bottomDiv}>
-      <div className="">
-        <div className="row">
-          {arrayOfInterviewExperiences.map((interviewExperience) => (
-            <div key={interviewExperience._id} className="col-lg-4 col-md-6">
-              <ExperienceCard
-                id={interviewExperience._id}
-                companyName={interviewExperience.companyName}
-                roleName={interviewExperience.roleName}
-                monthName={interviewExperience.monthName}
-                year={interviewExperience.year}
-                opportunity={interviewExperience.opportunity}
-                difficulty={interviewExperience.difficulty}
-                firstName={interviewExperience.firstName}
-                lastName={interviewExperience.lastName}
-                collegeName={interviewExperience.collegeName}
-                branchName={interviewExperience.branchName}
-                graduationYear={interviewExperience.graduationYear}
-              />
-            </div>
-          ))}
+    <div className={Intex.whiteDiv}>
+      <div className={Intex.bottomDiv}>
+        <div className="">
+          <div className="row">
+            {arrayOfInterviewExperiences.map((interviewExperience) => (
+              <div key={interviewExperience._id} className="col-lg-4 col-md-6">
+                <ExperienceCard
+                  id={interviewExperience._id}
+                  companyName={interviewExperience.companyName}
+                  roleName={interviewExperience.roleName}
+                  monthName={interviewExperience.monthName}
+                  year={interviewExperience.year}
+                  opportunity={interviewExperience.opportunity}
+                  difficulty={interviewExperience.difficulty}
+                  firstName={interviewExperience.firstName}
+                  lastName={interviewExperience.lastName}
+                  collegeName={interviewExperience.collegeName}
+                  branchName={interviewExperience.branchName}
+                  graduationYear={interviewExperience.graduationYear}
+                />
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>
@@ -82,7 +132,7 @@ function InterviewExperiences() {
 
   return (
     <div>
-      <Navbar />
+      <Navbar isSignedIn={isSignedIn} />
       <div className={Intex.contributeCardExtraDivIntex}>
         <ContributeCard />
       </div>
@@ -96,3 +146,28 @@ function InterviewExperiences() {
 }
 
 export default InterviewExperiences;
+
+// <div className={Intex.bottomDiv}>
+//       <div className="">
+//         <div className="row">
+//           {arrayOfInterviewExperiences.map((interviewExperience) => (
+//             <div key={interviewExperience._id} className="col-lg-4 col-md-6">
+//               <ExperienceCard
+//                 id={interviewExperience._id}
+//                 companyName={interviewExperience.companyName}
+//                 roleName={interviewExperience.roleName}
+//                 monthName={interviewExperience.monthName}
+//                 year={interviewExperience.year}
+//                 opportunity={interviewExperience.opportunity}
+//                 difficulty={interviewExperience.difficulty}
+//                 firstName={interviewExperience.firstName}
+//                 lastName={interviewExperience.lastName}
+//                 collegeName={interviewExperience.collegeName}
+//                 branchName={interviewExperience.branchName}
+//                 graduationYear={interviewExperience.graduationYear}
+//               />
+//             </div>
+//           ))}
+//         </div>
+//       </div>
+//     </div>

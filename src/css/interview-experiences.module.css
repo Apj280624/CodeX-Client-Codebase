@@ -21,11 +21,22 @@
   /* border: 2px solid red; */
   /* width: 100%;
   padding: 0; */
+  padding: 100px 0 100px 0;
   width: 80%;
   margin: auto;
   margin-top: 100px;
   margin-bottom: 100px;
   text-align: center;
+}
+
+.whiteDiv {
+  /* background-color: white; */
+  /* background-color: #4a3e64; */
+  /* background-image: linear-gradient(
+    var(--dark-purple),
+    
+    var(--dark-purple)
+  ); */
 }
 
 /* mobile and tab ***************************************************************************************** */

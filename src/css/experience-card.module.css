@@ -1,18 +1,26 @@
 .outerDiv {
   /* margin: auto; */
   /* height: 200px; */
-  background-color: var(--light-purple);
   border-radius: var(--contri-btn-border-rad);
-  padding: 20px 10px 10px 10px;
+  border-radius: 14px;
+  padding: 20px 10px 30px 10px;
   margin-top: 12px;
   margin-bottom: 12px;
   background-color: var(--dark-purple);
+
   border: 2px solid var(--light-purple);
   cursor: pointer;
+
+  /* background-color: #232234; */
+
+  /* background-color: var(--light-purple); */
+  /* background: radial-gradient(#333, var(--bg-purple)); */
+  /* background-image: linear-gradient(to bottom right, #a769ea, #c680c1, #e3959a); */
 }
 
 .commonText {
   color: white;
+  /* color: #808080; */
 }
 
 .companyText {
@@ -32,6 +40,7 @@
 
 .authorText {
   margin-top: 30px;
+  margin-bottom: 40px;
   text-align: center;
   font-family: var(--desc-font);
   font-size: var(--desc-fsz);

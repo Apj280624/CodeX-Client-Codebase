@@ -11,55 +11,12 @@ import {
 
 const axios = require("axios").default;
 
+/* parent sets the sign in status on Navbar */
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-function Navbar(props) {
-  // pick token from browser and set the loggedin status and button data
-  // use link for relative paths and anchor tags for absolute ones like an external link, set routes using vars
-
-  const [isSignedIn, setIsSignedIn] = useState(false);
-  const [signOutSureText, setSignOutSureText] = useState("Sign Out");
-  const navigate = useNavigate();
-
-  async function requestServerToVerifyToken(token) {
-    try {
-      const response = await axios.get(
-        SERVER_ORIGIN + routes.VERIFY_TOKEN,
-        generateAxiosConfigHeader(token)
-      );
-      console.log(response);
-      setIsSignedIn(true);
-      props.showContributionForm();
-    } catch (error) {
-      console.log(error); // isSignedIn remains false
-      // navigate(-1);
-    }
-  }
-
-  function verifySignInStatus() {
-    const token = localStorage.getItem("token");
-    if (!token) {
-      // isSignedIn remains false
-    } else {
-      requestServerToVerifyToken(token);
-    }
-  }
-
-  useEffect(() => {
-    verifySignInStatus();
-  }, []);
-
-  function handleClickSignOut() {
-    setSignOutSureText("Sure ?");
-    setTimeout(() => {
-      setSignOutSureText("Sign Out");
-    }, 2000);
-  }
-
-  function handleClickSure() {
-    // signout now and navigate to the current route
-    localStorage.removeItem("token");
-  }
+function MyNavbar(props) {
+  // console.log(props);
 
   return (
     <div>
@@ -116,7 +73,7 @@ function Navbar(props) {
             {/* you can put buttons in two different list item, but the one i used looks good on mobile scrn */}
             <ul className="navbar-nav ms-auto">
               <li className="nav-item active">
-                {isSignedIn ? (
+                {props.isSignedIn === true ? (
                   <Link to="/account" className="nav-btn1 btn">
                     Account
                   </Link>
@@ -127,17 +84,8 @@ function Navbar(props) {
                 )}
               </li>
               <li className="nav-item active">
-                {isSignedIn ? (
-                  <button
-                    onClick={
-                      signOutSureText === "Sign Out"
-                        ? handleClickSignOut
-                        : handleClickSure
-                    }
-                    className="nav-btn2 btn"
-                  >
-                    {signOutSureText}
-                  </button>
+                {props.isSignedIn === true ? (
+                  <button className="nav-btn2 btn">Sign Out</button>
                 ) : (
                   <Link to="/auth/sign-up" className="nav-btn2 btn">
                     Sign Up
@@ -152,4 +100,4 @@ function Navbar(props) {
   );
 }
 
-export default Navbar;
+export default MyNavbar;

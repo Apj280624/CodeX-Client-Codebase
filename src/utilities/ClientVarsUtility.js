@@ -44,6 +44,7 @@ const routes = {
   SIGN_UP: "/auth/sign-up",
   SIGN_IN: "/auth/sign-in",
   FORGOT_PASSWORD: "/auth/forgot-password",
+  ACCOUNT_INTERVIEW_EXPERIENCES: "/account/interview-experiences",
   INTERVIEW_EXPERIENCES: "/interview-experiences",
   CONTRIBUTE: "/contribute",
   VOTP: "/auth/votp",
@@ -57,14 +58,4 @@ const routes = {
 to get all interview experiences on 
 */
 
-function generateAxiosConfigHeader(token) {
-  const axiosConfig = {
-    headers: {
-      Authorization: "Bearer " + token,
-    },
-  };
-
-  return axiosConfig;
-}
-
-export { SERVER_ORIGIN, routes, vars, generateAxiosConfigHeader };
+export { SERVER_ORIGIN, routes, vars };

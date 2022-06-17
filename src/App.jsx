@@ -10,6 +10,7 @@ import SignUp from "./routes/SignUp";
 import ForgotPassword from "./routes/ForgotPassword";
 import Contribute from "./routes/Contribute";
 import ReadExperience from "./routes/ReadExperience";
+import Account from "./routes/Account";
 import { routes } from "./utilities/ClientVarsUtility.js";
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -21,15 +22,19 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/cp" element={<CP />} />
         <Route path="/dsa" element={<DSA />} />
+
+        <Route path="/auth/sign-in" element={<SignIn />} />
+        <Route path="/auth/sign-up" element={<SignUp />} />
+        <Route path="/auth/forgot-password" element={<ForgotPassword />} />
+
         <Route
           path="/interview-experiences"
           element={<InterviewExperiences />}
         />
         <Route path={`${routes.READ}/:id`} element={<ReadExperience />} />
-        <Route path="/auth/sign-in" element={<SignIn />} />
-        <Route path="/auth/sign-up" element={<SignUp />} />
-        <Route path="/auth/forgot-password" element={<ForgotPassword />} />
         <Route path="/contribute" element={<Contribute />} />
+
+        <Route path="/account" element={<Account />} />
       </Routes>
     </BrowserRouter>
   );

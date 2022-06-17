@@ -11,7 +11,7 @@ import "react-toastify/dist/ReactToastify.css";
 import {
   validateSignUpCredentials,
   validateEmailAddress,
-} from "../utilities/ValidationUtility.js";
+} from "../utilities/ClientUtility.js";
 import { SERVER_ORIGIN, routes } from "../utilities/ClientVarsUtility.js";
 import Toast, { toastOptions } from "../components/Toast.js";
 

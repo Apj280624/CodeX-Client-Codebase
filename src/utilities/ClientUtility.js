@@ -5,18 +5,6 @@
 
 import { vars } from "./ClientVarsUtility.js";
 
-/////////////////////////////////////// TRIM OBJECTS ///////////////////////////////////////////
-
-// trims ending whitespaces from each string field in the object
-function trimObject(object) {
-  for (const property in object) {
-    // console.log(`${property}: ${object[property]}`);
-    object[property] = object[property].trim();
-  }
-
-  return object;
-}
-
 ///////////////////////////////////////// VALID, INVALID OBJECTS /////////////////////////////////////////////////
 
 function getValidObject() {
@@ -332,6 +320,98 @@ function validateInterviewExperience(constInterviewExperience) {
   return getValidObject();
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////// TRIM OBJECTS /////////////////////////////////////////////
+
+// trims ending whitespaces from each string field in the object
+function trimObject(object) {
+  for (const property in object) {
+    // console.log(`${property}: ${object[property]}`);
+    object[property] = object[property].trim();
+  }
+
+  return object;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+function getStars(n) {
+  var result = "";
+  for (var i = 0; i < n; i++) {
+    result += "⭐";
+  }
+
+  return result;
+}
+
+function getGoodDate(isoDateString) {
+  // var result =
+  //   isoDateString && isoDateString.length > 0
+  //     ? isoDateString.substr(0, 10)
+  //     : isoDateString;
+
+  // var n = result.length;
+  // for (var i = 0; i < n; i++) {
+  //   result[i] = result[i] ^ result[n - i - 1];
+  //   result[n - i - 1] = result[i] ^ result[n - i - 1];
+  //   result[i] = result[i] ^ result[n - i - 1];
+  // }
+
+  //  result = result.split("").reverse().join("");
+
+  var date = new Date("2013-03-10T02:00:00Z");
+
+  const delimiter = " ";
+
+  var result = (
+    date.getDate() +
+    delimiter +
+    vars.availableMonthNames[date.getMonth()] +
+    delimiter +
+    date.getFullYear()
+  ).toString(); //prints expected format.
+
+  return result;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+function generateAxiosConfigHeader(token) {
+  const axiosConfig = {
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  };
+
+  return axiosConfig;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+function resizeObject(object, iArray) {
+  // assuming that the no of fields = length of instructionsArray
+
+  var idx = 0;
+  for (const property in object) {
+    if (iArray[idx] >= 3) {
+      iArray[idx][1] -= 3; // -3 for 3 extra dots that we add at last
+    }
+    if (object[property].length > iArray[idx][1]) {
+      object[property] = object[property].substring(
+        iArray[idx][0],
+        iArray[idx][1]
+      );
+
+      object[property] += "...";
+    }
+
+    idx++;
+  }
+
+  return object;
+}
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 export {
@@ -340,4 +420,8 @@ export {
   validateForgotPasswordCredentials,
   validateEmailAddress,
   validateInterviewExperience,
+  getStars,
+  getGoodDate,
+  generateAxiosConfigHeader,
+  resizeObject,
 };

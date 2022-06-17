@@ -12,12 +12,11 @@ import jwtDecode from "jwt-decode";
 import { useNavigate } from "react-router-dom";
 
 // my modules
-import { validateInterviewExperience } from "../utilities/ValidationUtility.js";
 import {
-  SERVER_ORIGIN,
-  routes,
+  validateInterviewExperience,
   generateAxiosConfigHeader,
-} from "../utilities/ClientVarsUtility.js";
+} from "../utilities/ClientUtility.js";
+import { SERVER_ORIGIN, routes } from "../utilities/ClientVarsUtility.js";
 import Toast, { toastOptions } from "../components/Toast.js";
 
 const axios = require("axios").default;
@@ -40,39 +39,39 @@ if you dont put verifySignInStatus, navigate and requestServerToVerifyToken esli
 
 function Contribute() {
   const [isLoading, setIsLoading] = useState(true);
+  const [isSignedIn, setIsSignedIn] = useState(false);
   const navigate = useNavigate();
 
-  async function requestServerToVerifyToken(token) {
-    try {
-      const response = await axios.get(
-        SERVER_ORIGIN + routes.VERIFY_TOKEN,
-        generateAxiosConfigHeader(token)
-      ); // read about Bearer schema in jwt docs
-      // console.log(response);
-      setIsLoading(false); // user can access contribute page
-    } catch (error) {
-      // either token is invalid or session expired
-      // console.log(error);
-      navigate(routes.SIGN_IN); // redirect to sign in page
-    }
-  }
-
-  function verifySignInStatus() {
-    const token = localStorage.getItem("token");
-    if (!token) {
-      navigate(routes.SIGN_IN); // redirect to sign in page
-    } else {
-      requestServerToVerifyToken(token);
-    }
-  }
-
   useEffect(() => {
-    // verifySignInStatus();
-  }, []); // pass an empty array so that useEffect is called only on the first mount, else it will fall into an infinite loop
+    window.scrollTo(0, 0); // scroll to top after render
 
-  function showContributionForm() {
-    setIsLoading(false);
-  }
+    async function requestServerToVerifyToken(token) {
+      try {
+        const response = await axios.get(
+          SERVER_ORIGIN + routes.VERIFY_TOKEN,
+          generateAxiosConfigHeader(token)
+        ); // read about Bearer schema in jwt docs
+        // console.log(response);
+        setIsLoading(false); // user can access contribute page
+        setIsSignedIn(true);
+      } catch (error) {
+        // either token is invalid or session expired
+        // console.log(error);
+        navigate(routes.SIGN_IN); // redirect to sign in page
+      }
+    }
+
+    function verifySignInStatus() {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        navigate(routes.SIGN_IN); // redirect to sign in page
+      } else {
+        requestServerToVerifyToken(token);
+      }
+    }
+
+    verifySignInStatus();
+  }, [navigate]); // pass an empty array so that useEffect is called only on the first mount, else it will fall into an infinite loop
 
   const initialInterviewExperience = {
     companyName: "",
@@ -118,7 +117,7 @@ function Contribute() {
       } catch (error) {
         // console.log(error);
         toast(error.response.data, toastOptions);
-        // dont refresh the page if error occurred, he can reuse it
+        // dont refresh the page if error occurred, user can reuse it
       }
     }
   }
@@ -131,7 +130,6 @@ function Contribute() {
 
   const element = (
     <div>
-      <Navbar />
       <div className={contri.commonDiv}>
         <div className="container-fluid">
           <p className={`${contri.headingText} ${contri.commonText}`}>
@@ -251,7 +249,7 @@ function Contribute() {
 
   return (
     <div>
-      <Navbar showContributionForm={showContributionForm} />
+      <Navbar isSignedIn={isSignedIn} />
       {isLoading ? loader : element}
       <Footer />
       <Toast />
