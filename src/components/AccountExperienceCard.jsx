@@ -15,8 +15,8 @@ function AccountExperienceCard(props) {
   }
 
   return (
-    <div className="row">
-      <div className="col-lg-12">
+    <div className="">
+      <div className="">
         <div className={Acc.commonDiv}>
           <p style={{ marginTop: 0 }} className={Acc.commonText}>
             <span className={Acc.boldText}>Company name: </span>
@@ -47,8 +47,8 @@ function AccountExperienceCard(props) {
             {props.creationTimeStamp}
           </p>
         </div>
-      </div>
-      <div className="col-lg-12">
+        {/* </div> */}
+        {/* <div className="col-lg-12"> */}
         <div className={`${Acc.commonDiv} ${Acc.allBtnDiv}`}>
           <button onClick={handleReadClick} className={Acc.btn}>
             Read

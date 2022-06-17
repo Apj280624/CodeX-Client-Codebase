@@ -2,7 +2,11 @@ import React, { useState } from "react";
 import styles from "../css/credential-input.module.css";
 
 function CredentialInput(props) {
-  const [inputValue, setInputValue] = useState("");
+  var initialValue = "";
+  if (props.initialValue) {
+    initialValue = props.initialValue;
+  }
+  const [inputValue, setInputValue] = useState(initialValue);
 
   function handleChange(evt) {
     // console.log(evt.target.value);

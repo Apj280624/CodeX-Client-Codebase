@@ -121,7 +121,7 @@ function Account() {
           Here are your Contributions
         </p>
         <div className={Acc.detailsDiv}>
-          <div>
+          <div className="row">
             {arrayOfInterviewExperiences.map((interviewExperience) => (
               <div key={interviewExperience._id} class={Acc.marginDiv}>
                 <AccountExperienceCard

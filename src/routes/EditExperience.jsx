@@ -2,6 +2,9 @@ import React, { useEffect, useState } from "react";
 import Loader from "../components/Loader.jsx";
 import Navbar from "../components/Navbar.jsx";
 import Footer from "../components/Footer.jsx";
+import CredentialInput from "../components/CredentialInput.jsx";
+import CredentialButton from "../components/CredentialButton.jsx";
+import TextArea from "../components/TextArea.jsx";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -11,7 +14,7 @@ import contri from "../css/contribute.module.css";
 import { generateAxiosConfigHeader } from "../utilities/ClientUtility.js";
 import { SERVER_ORIGIN, routes } from "../utilities/ClientVarsUtility.js";
 import Toast, { toastOptions } from "../components/Toast.js";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const axios = require("axios").default;
 
@@ -22,7 +25,11 @@ function EditExperience() {
   const [isSignedIn, setIsSignedIn] = useState(false);
   const [interviewExperience, setInterviewExperience] = useState({});
 
+  const { id } = useParams(); // curly brackets are imp
+
   const navigate = useNavigate();
+
+  /////////////////////////////////////////////////////////////////////////////////////////
 
   useEffect(() => {
     window.scrollTo(0, 0); // scroll to top after render
@@ -30,7 +37,9 @@ function EditExperience() {
     async function requestServerToGetInterviewExperience(token) {
       try {
         const response = await axios.get(
-          SERVER_ORIGIN + routes.PARTICULAR_INTERVIEW_EXPERIENCE,
+          `${
+            SERVER_ORIGIN + routes.PARTICULAR_INTERVIEW_EXPERIENCE + "/" + id
+          }`,
           generateAxiosConfigHeader(token)
         );
         setIsLoading(false); // set loading to false, and fill cards with data
@@ -80,6 +89,17 @@ function EditExperience() {
     verifySignInStatus();
   }, [navigate]);
 
+  //////////////////////////////////////////////////////////////////////////////////////////////
+
+  function updateInterviewExperience(updatedField) {
+    setInterviewExperience((prevInterviewExperience) => ({
+      ...prevInterviewExperience,
+      ...updatedField,
+    }));
+
+    // console.log(interviewExperience);
+  }
+
   const loader = (
     <div className={contri.loaderDiv}>
       <Loader />;
@@ -88,7 +108,119 @@ function EditExperience() {
 
   const element = (
     <div>
-      <h1>sfnkjwejnfk</h1>
+      <div className={contri.commonDiv}>
+        <div className="container-fluid">
+          <p className={`${contri.headingText} ${contri.commonText}`}>
+            We appreciate you here !
+          </p>
+          <p className={`${contri.alertText} ${contri.commonText}`}>
+            Remember ! You must sign in to contribute
+          </p>
+        </div>
+      </div>
+      <div className={`${contri.detailsDiv} ${contri.commonDiv}`}>
+        <div className="container-fluid">
+          <div className="row">
+            <div className="col-lg-6">
+              <div className={contri.inputDiv}>
+                <CredentialInput
+                  name="companyName"
+                  placeholder="Company name *"
+                  width="100%"
+                  onChange={updateInterviewExperience}
+                />
+              </div>
+            </div>
+            <div className="col-lg-6">
+              <div className={contri.inputDiv}>
+                <CredentialInput
+                  name="roleName"
+                  placeholder="Role ( e.g. SDE, SWE, MTS etc ) *"
+                  width="100%"
+                  onChange={updateInterviewExperience}
+                />
+              </div>
+            </div>
+
+            <div className="col-lg-6">
+              <div className={contri.inputDiv}>
+                <CredentialInput
+                  name="monthName"
+                  placeholder="Month ( e.g. Jan ) *"
+                  width="100%"
+                  onChange={updateInterviewExperience}
+                />
+              </div>
+            </div>
+            <div className="col-lg-6">
+              <div className={contri.inputDiv}>
+                <CredentialInput
+                  name="year"
+                  placeholder="Year ( e.g. 2022, 2023 etc ) *"
+                  width="100%"
+                  onChange={updateInterviewExperience}
+                />
+              </div>
+            </div>
+
+            <div className="col-lg-6">
+              <div className={contri.inputDiv}>
+                <CredentialInput
+                  name="difficulty"
+                  placeholder="Difficulty level ( 1 - 5 ) *"
+                  width="100%"
+                  onChange={updateInterviewExperience}
+                />
+              </div>
+            </div>
+            <div className="col-lg-6">
+              <div className={contri.inputDiv}>
+                <CredentialInput
+                  name="opportunity"
+                  placeholder="Opportunity / Program ( e.g. Off campus, Martians etc ) *"
+                  width="100%"
+                  onChange={updateInterviewExperience}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className={contri.commonDiv}>
+        <div className="container-fluid">
+          <p className={`${contri.noteText}`}>
+            Tip: Please do considering using multiple paragraphs for a cleaner
+            representation
+          </p>
+        </div>
+      </div>
+
+      <div className={`${contri.contentDiv} ${contri.commonDiv}`}>
+        <div className="container-fluid">
+          <TextArea
+            name="experience"
+            rows="8"
+            placeholder="Interview Experience"
+            onChange={updateInterviewExperience}
+          />
+          <TextArea
+            name="tip"
+            rows="4"
+            placeholder="Concluding Tips"
+            onChange={updateInterviewExperience}
+          />
+        </div>
+        <div className={contri.contriButtonDiv}>
+          <div className="container-fluid">
+            <CredentialButton
+              text="Contribute Experience"
+              width="100%"
+              height="50px"
+            />
+          </div>
+        </div>
+      </div>
     </div>
   );
 

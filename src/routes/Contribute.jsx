@@ -40,7 +40,25 @@ if you dont put verifySignInStatus, navigate and requestServerToVerifyToken esli
 function Contribute() {
   const [isLoading, setIsLoading] = useState(true);
   const [isSignedIn, setIsSignedIn] = useState(false);
+  const initialInterviewExperience = {
+    companyName: "",
+    roleName: "",
+    monthName: "",
+    year: "",
+    difficulty: "",
+    opportunity: "",
+    experience: "",
+    tip: "",
+  };
+
+  // you can also pass an empty object instead of initialInterviewExperience
+  const [interviewExperience, setInterviewExperience] = useState(
+    initialInterviewExperience
+  );
+
   const navigate = useNavigate();
+
+  ////////////////////////////////////////////////////////////////////////////////////////////
 
   useEffect(() => {
     window.scrollTo(0, 0); // scroll to top after render
@@ -73,21 +91,7 @@ function Contribute() {
     verifySignInStatus();
   }, [navigate]); // pass an empty array so that useEffect is called only on the first mount, else it will fall into an infinite loop
 
-  const initialInterviewExperience = {
-    companyName: "",
-    roleName: "",
-    monthName: "",
-    year: "",
-    difficulty: "",
-    opportunity: "",
-    experience: "",
-    tip: "",
-  };
-
-  // you can also pass an empty object instead of initialInterviewExperience
-  const [interviewExperience, setInterviewExperience] = useState(
-    initialInterviewExperience
-  );
+  ////////////////////////////////////////////////////////////////////////////////////////////
 
   function updateInterviewExperience(updatedField) {
     setInterviewExperience((prevInterviewExperience) => ({
