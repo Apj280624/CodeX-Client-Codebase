@@ -40,11 +40,11 @@ function AccountExperienceCard(props) {
           </p>
           <p style={{ marginBottom: 0 }} className={Acc.commonText}>
             <span className={Acc.boldText}>Opportunity: </span>
-            {props.difficulty}
+            {props.opportunity}
           </p>
           <p style={{ marginBottom: 0 }} className={Acc.commonText}>
             <span className={Acc.boldText}>Contributed on: </span>
-            {props.timeStamp}
+            {props.creationTimeStamp}
           </p>
         </div>
       </div>

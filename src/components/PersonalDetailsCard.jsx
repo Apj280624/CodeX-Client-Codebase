@@ -36,7 +36,7 @@ function PersonalDetailsCard(props) {
             className={`${Acc.contriText} ${Acc.commonText} `}
           >
             <span className={Acc.boldText}>Joined us on: </span>
-            {props.timeStamp}
+            {props.creationTimeStamp}
           </p>
           <p className={`${Acc.contriText} ${Acc.commonText}`}>
             <span className={Acc.boldText}>Contributions </span>

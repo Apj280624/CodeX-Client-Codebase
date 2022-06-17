@@ -109,7 +109,7 @@ function Account() {
               collegeName={personalDetails.collegeName}
               branchName={personalDetails.branchName}
               graduationYear={personalDetails.graduationYear}
-              timeStamp={getGoodDate(personalDetails.timeStamp)}
+              creationTimeStamp={getGoodDate(personalDetails.creationTimeStamp)}
               noOfContributions={personalDetails.noOfContributions}
             />
           </div>
@@ -137,7 +137,9 @@ function Account() {
                   collegeName={interviewExperience.collegeName}
                   branchName={interviewExperience.branchName}
                   graduationYear={interviewExperience.graduationYear}
-                  timeStamp={getGoodDate(interviewExperience.timeStamp)}
+                  creationTimeStamp={getGoodDate(
+                    interviewExperience.creationTimeStamp
+                  )}
                 />
               </div>
             ))}

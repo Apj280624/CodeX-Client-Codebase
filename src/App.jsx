@@ -32,6 +32,7 @@ function App() {
           element={<InterviewExperiences />}
         />
         <Route path={`${routes.READ}/:id`} element={<ReadExperience />} />
+        <Route path={`${routes.EDIT}/:id`} element={<ReadExperience />} />
         <Route path="/contribute" element={<Contribute />} />
 
         <Route path="/account" element={<Account />} />

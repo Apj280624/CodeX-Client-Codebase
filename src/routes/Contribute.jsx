@@ -83,6 +83,8 @@ function Contribute() {
     experience: "",
     tip: "",
   };
+
+  // you can also pass an empty object instead of initialInterviewExperience
   const [interviewExperience, setInterviewExperience] = useState(
     initialInterviewExperience
   );

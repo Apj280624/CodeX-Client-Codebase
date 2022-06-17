@@ -52,6 +52,8 @@ const routes = {
   VERIFY_TOKEN: "/verify-token",
   CONTRIBUTIONS: "/contributions",
   READ: "/interview-experience/read",
+  EDIT: "/interview-experience/edit",
+  PARTICULAR_INTERVIEW_EXPERIENCE: "/particular-interview-experience",
 };
 
 /*

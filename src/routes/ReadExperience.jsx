@@ -30,9 +30,11 @@ function ReadExperience() {
   // console.log(id);
   // console.log(`${SERVER_ORIGIN}${routes.READ}/${id}`);
 
-  async function requestServerToReadInterviewExperience() {
+  async function requestServerToGetInterviewExperience() {
     try {
-      const response = await axios.get(`${SERVER_ORIGIN}${routes.READ}/${id}`);
+      const response = await axios.get(
+        `${SERVER_ORIGIN}${routes.PARTICULAR_INTERVIEW_EXPERIENCE}/${id}`
+      );
       setIsLoading(false);
       // console.log(response.data.interviewExperience); // set loading to false
       const data = await response.data.interviewExperience;
@@ -44,7 +46,7 @@ function ReadExperience() {
         year: data.year,
         difficulty: getStars(data.difficulty),
         opportunity: data.opportunity,
-        timeStamp: getGoodDate(data.timeStamp),
+        creationTimeStamp: getGoodDate(data.creationTimeStamp),
         firstName: data.firstName,
         lastName: data.lastName,
         collegeName: data.collegeName,
@@ -85,7 +87,7 @@ function ReadExperience() {
     }
 
     verifySignInStatus();
-    requestServerToReadInterviewExperience();
+    requestServerToGetInterviewExperience();
   }, []);
 
   const loader = (
@@ -112,7 +114,7 @@ function ReadExperience() {
             Difficulty level: {interviewExperience.difficulty}
           </p>
           <p className={`${Read.roleText} ${Read.commonText}`}>
-            Contributed on: {interviewExperience.timeStamp}
+            Contributed on: {interviewExperience.creationTimeStamp}
           </p>
 
           <p className={`${Read.nameText} ${Read.commonText}`}>
