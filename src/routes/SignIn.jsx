@@ -9,7 +9,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 // my modules
 import { validateSignInCredentials } from "../utilities/ClientUtility.js";
-import { SERVER_ORIGIN, routes } from "../utilities/ClientVarsUtility.js";
+import { SERVER_ORIGIN, routes, vars } from "../utilities/ClientVarsUtility.js";
 import Toast, { toastOptions } from "../components/Toast.js";
 
 const axios = require("axios").default;

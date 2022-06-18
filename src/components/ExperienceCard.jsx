@@ -9,67 +9,33 @@ import { getStars } from "../utilities/ClientUtility.js";
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-function resizeObjectOld(props) {
-  let resizedObject = {
-    companyName: props.companyName.substring(0, 12),
-    roleName: props.roleName.substring(0, 28),
-    monthName: props.monthName,
-    year: props.year,
-    opportunity: props.opportunity.substring(0, 30),
-    difficulty: props.difficulty,
-    fullName: (props.firstName + " " + props.lastName).substring(0, 15),
-    collegeName: props.collegeName,
-    branchName: props.branchName,
-    graduationYear: props.graduationYear.substring(2, 4),
-  };
-
-  if (props.companyName.length > 12) {
-    resizedObject.companyName += "... ";
-  }
-  if (props.roleName.length > 28) {
-    resizedObject.roleName += "... ";
-  }
-  if (props.opportunity.length > 30) {
-    resizedObject.opportunity += "... ";
-  }
-  if ((props.firstName + " " + props.lastName).length > 15) {
-    resizedObject.fullName += "... ";
-  }
-
-  return resizedObject;
-}
-
 function ExperienceCard(props) {
-  const resizedObject = resizeObjectOld(props);
-  // const resizedObject = resizeObject(props);
-
   const navigate = useNavigate();
 
-  function handleClick() {
+  function handleReadClick() {
     const id = props.id;
-    navigate(`${routes.READ}/${id}`);
+    navigate(`${routes.INTERVIEW_EXPERIENCE_READ}/${id}`);
   }
 
   //  console.log(resizeObject);
 
   return (
-    <div onClick={handleClick} className="">
+    <div onClick={handleReadClick} className="">
       <div className={experienceCard.outerDiv}>
         <p
           className={`${experienceCard.companyText} ${experienceCard.commonText}`}
         >
-          {resizedObject.companyName}
+          {props.companyName}
         </p>
         <p
           className={`${experienceCard.yearText} ${experienceCard.commonText}`}
         >
-          {resizedObject.roleName}, {resizedObject.monthName}{" "}
-          {resizedObject.year}
+          {props.roleName}, {props.monthName} {props.year}
         </p>
         <p
           className={`${experienceCard.yearText} ${experienceCard.commonText}`}
         >
-          {resizedObject.opportunity}
+          {props.opportunity}
         </p>
         <p
           className={`${experienceCard.yearText} ${experienceCard.commonText}`}
@@ -80,8 +46,8 @@ function ExperienceCard(props) {
         <p
           className={`${experienceCard.authorText} ${experienceCard.commonText}`}
         >
-          {resizedObject.fullName}, {resizedObject.collegeName}{" "}
-          {resizedObject.branchName} '{resizedObject.graduationYear}
+          {props.fullName}, {props.collegeName} {props.branchName} '
+          {props.graduationYear}
         </p>
         <CredentialButton width="60%" height="40px" text="Read" />
       </div>
@@ -90,3 +56,33 @@ function ExperienceCard(props) {
 }
 
 export default ExperienceCard;
+
+// function resizeObjectOld(props) {
+//   let resizedObject = {
+//     companyName: props.companyName.substring(0, 12),
+//     roleName: props.roleName.substring(0, 28),
+//     monthName: props.monthName,
+//     year: props.year,
+//     opportunity: props.opportunity.substring(0, 30),
+//     difficulty: props.difficulty,
+//     fullName: (props.firstName + " " + props.lastName).substring(0, 15),
+//     collegeName: props.collegeName,
+//     branchName: props.branchName,
+//     graduationYear: props.graduationYear.substring(2, 4),
+//   };
+
+//   if (props.companyName.length > 12) {
+//     resizedObject.companyName += "... ";
+//   }
+//   if (props.roleName.length > 28) {
+//     resizedObject.roleName += "... ";
+//   }
+//   if (props.opportunity.length > 30) {
+//     resizedObject.opportunity += "... ";
+//   }
+//   if ((props.firstName + " " + props.lastName).length > 15) {
+//     resizedObject.fullName += "... ";
+//   }
+
+//   return resizedObject;
+// }

@@ -9,11 +9,12 @@ import Navbar from "../components/Navbar.jsx";
 import Footer from "../components/Footer.jsx";
 
 // my modules
-import { SERVER_ORIGIN, routes } from "../utilities/ClientVarsUtility.js";
+import { SERVER_ORIGIN, routes, vars } from "../utilities/ClientVarsUtility.js";
 import {
   generateAxiosConfigHeader,
   getStars,
   getGoodDate,
+  resizeField,
 } from "../utilities/ClientUtility.js";
 import Toast, { toastOptions } from "../components/Toast.js";
 
@@ -40,17 +41,17 @@ function ReadExperience() {
       const data = await response.data.interviewExperience;
 
       setInterviewExperience({
-        companyName: data.companyName,
-        roleName: data.roleName,
+        companyName: resizeField(data.companyName, 0, 30),
+        roleName: resizeField(data.roleName, 0, 50),
         monthName: data.monthName,
         year: data.year,
         difficulty: getStars(data.difficulty),
-        opportunity: data.opportunity,
+        opportunity: resizeField(data.opportunity, 0, 50),
         creationTimeStamp: getGoodDate(data.creationTimeStamp),
-        firstName: data.firstName,
-        lastName: data.lastName,
-        collegeName: data.collegeName,
-        branchName: data.branchName,
+        firstName: resizeField(data.firstName, 0, 40),
+        lastName: resizeField(data.lastName, 0, 40),
+        collegeName: resizeField(data.collegeName, 0, 40),
+        branchName: resizeField(data.branchName, 0, 40),
         graduationYear: data.graduationYear,
         experience: data.experience,
         tip: data.tip,

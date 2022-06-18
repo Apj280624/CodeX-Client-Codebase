@@ -275,7 +275,7 @@ function validateInterviewExperience(constInterviewExperience) {
   const yearObject = validateFromAvailable(
     interviewExperience.year,
     "Year",
-    vars.availableYears
+    vars.availableInterviewExperienceYears
   );
   if (!yearObject.res) {
     return yearObject;
@@ -346,21 +346,7 @@ function getStars(n) {
 }
 
 function getGoodDate(isoDateString) {
-  // var result =
-  //   isoDateString && isoDateString.length > 0
-  //     ? isoDateString.substr(0, 10)
-  //     : isoDateString;
-
-  // var n = result.length;
-  // for (var i = 0; i < n; i++) {
-  //   result[i] = result[i] ^ result[n - i - 1];
-  //   result[n - i - 1] = result[i] ^ result[n - i - 1];
-  //   result[i] = result[i] ^ result[n - i - 1];
-  // }
-
-  //  result = result.split("").reverse().join("");
-
-  var date = new Date("2013-03-10T02:00:00Z");
+  var date = new Date(isoDateString);
 
   const delimiter = " ";
 
@@ -387,29 +373,47 @@ function generateAxiosConfigHeader(token) {
   return axiosConfig;
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////// DATA MANIPULATION /////////////////////////////////////////////////
 
-function resizeObject(object, iArray) {
-  // assuming that the no of fields = length of instructionsArray
+function resizeField(value, startIdx, maxLen) {
+  maxLen = Math.max(maxLen, 3); // to avoid any errors
+  const dotString = "... ";
 
-  var idx = 0;
-  for (const property in object) {
-    if (iArray[idx] >= 3) {
-      iArray[idx][1] -= 3; // -3 for 3 extra dots that we add at last
-    }
-    if (object[property].length > iArray[idx][1]) {
-      object[property] = object[property].substring(
-        iArray[idx][0],
-        iArray[idx][1]
-      );
+  if (!value) {
+    return value;
+  } else {
+    const resizedValue =
+      value.length > maxLen
+        ? value.substring(startIdx, maxLen - 3) + dotString
+        : value.substring(startIdx, maxLen);
 
-      object[property] += "...";
-    }
-
-    idx++;
+    return resizedValue;
   }
+}
 
-  return object;
+function manipulateInteviewExperiencesRoute(dataArray) {
+  // manipulate the data object itself because it has other fields also, here we have introduced a new field fullName
+
+  const resultArray = dataArray.map((dataObject) => {
+    dataObject.companyName = resizeField(dataObject.companyName, 0, 12);
+    dataObject.roleName = resizeField(dataObject.roleName, 0, 28);
+    dataObject.monthName = resizeField(dataObject.monthName, 0, 100); // 100 so there's no change in size
+    dataObject.year = resizeField(dataObject.year, 0, 100);
+    dataObject.opportunity = resizeField(dataObject.opportunity, 0, 30);
+    dataObject.difficulty = resizeField(dataObject.difficulty, 0, 100);
+    dataObject.fullName = resizeField(
+      dataObject.firstName + " " + dataObject.lastName,
+      0,
+      15
+    );
+    dataObject.collegeName = resizeField(dataObject.collegeName, 0, 100);
+    dataObject.branchName = resizeField(dataObject.branchName, 0, 100);
+    dataObject.graduationYear = resizeField(dataObject.graduationYear, 2, 5);
+
+    return dataObject;
+  });
+
+  return resultArray;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -423,5 +427,6 @@ export {
   getStars,
   getGoodDate,
   generateAxiosConfigHeader,
-  resizeObject,
+  manipulateInteviewExperiencesRoute,
+  resizeField,
 };

@@ -1,8 +1,14 @@
 import React, { useState } from "react";
 import contri from "../css/contribute.module.css";
+import { vars } from "../utilities/ClientVarsUtility";
 
 function TextArea(props) {
-  const [text, setText] = useState("");
+  var initialValue = "";
+  if (props.initialValue) {
+    initialValue = props.initialValue;
+  }
+
+  const [text, setText] = useState(initialValue);
 
   function handleChange(evt) {
     // console.log(evt.target.value);
@@ -18,6 +24,7 @@ function TextArea(props) {
         <textarea
           className={contri.contentTextArea}
           rows={props.rows}
+          maxLength={props.maxLength ? props.maxLength : vars.maxExperienceLen}
           placeholder={props.placeholder}
           value={text}
           onChange={handleChange}

@@ -11,12 +11,27 @@ import "react-toastify/dist/ReactToastify.css";
 import contri from "../css/contribute.module.css";
 
 // my modules
-import { generateAxiosConfigHeader } from "../utilities/ClientUtility.js";
+import {
+  generateAxiosConfigHeader,
+  validateInterviewExperience,
+} from "../utilities/ClientUtility.js";
 import { SERVER_ORIGIN, routes } from "../utilities/ClientVarsUtility.js";
 import Toast, { toastOptions } from "../components/Toast.js";
 import { useNavigate, useParams } from "react-router-dom";
 
 const axios = require("axios").default;
+
+/* 
+a person cannot visit this page if he is not signed in, but if he signed in  and visits this page and then signs 
+out from some other tab then there's no problem, user will just see an interview experience in the editable 
+form, he can read and edit but cannot save changes without logging in
+
+important case: lets say a user signs in with an email add 'X' and then visits this page and edits, logs out from
+other tab and then signs in with an email 'Y' and then make an edit request then also there's no problem
+because at the server side the search condition is email,id so it will ensure whether the interview
+experience belongs to the email or not
+
+*/
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -31,20 +46,18 @@ function EditExperience() {
 
   /////////////////////////////////////////////////////////////////////////////////////////
 
-  useEffect(() => {
-    window.scrollTo(0, 0); // scroll to top after render
-
-    async function requestServerToGetInterviewExperience(token) {
+  async function requestServerToGetInterviewExperience(token) {
+    if (!token) {
+      navigate(-1); // user might have signed out, isSignedIn remains false, navigate back
+    } else {
       try {
         const response = await axios.get(
-          `${
-            SERVER_ORIGIN + routes.PARTICULAR_INTERVIEW_EXPERIENCE + "/" + id
-          }`,
-          generateAxiosConfigHeader(token)
+          `${SERVER_ORIGIN + routes.PARTICULAR_INTERVIEW_EXPERIENCE + "/" + id}`
         );
         setIsLoading(false); // set loading to false, and fill cards with data
         // console.log(response.data.interviewExperience); // set loading to false
         const data = await response.data.interviewExperience;
+        console.log(data);
         setInterviewExperience({
           companyName: data.companyName,
           roleName: data.roleName,
@@ -60,7 +73,10 @@ function EditExperience() {
         toast(error.response.data, toastOptions);
       }
     }
+  }
 
+  useEffect(() => {
+    window.scrollTo(0, 0); // scroll to top after render
     async function requestServerToVerifyToken(token) {
       try {
         const response = await axios.get(
@@ -100,6 +116,35 @@ function EditExperience() {
     // console.log(interviewExperience);
   }
 
+  async function requestServerToEditInterviewExperience() {
+    // first validate at front end, don't bother the server unnecessarily
+    const { res, desc } = validateInterviewExperience(interviewExperience);
+    if (!res) {
+      toast(desc, toastOptions);
+    } else {
+      try {
+        const token = localStorage.getItem("token"); // pass token with contribution using generateAxiosConfig
+        if (!token) {
+          navigate(-1); // go back
+        }
+
+        const response = await axios.put(
+          `${SERVER_ORIGIN}${routes.INTERVIEW_EXPERIENCE_EDIT}/${id}`,
+          interviewExperience,
+          generateAxiosConfigHeader(token)
+        );
+        console.log(response);
+        toast(response.data, toastOptions);
+        // let fields remain same even if contribution is successful so user can still edit
+      } catch (error) {
+        console.log(error);
+        toast(error.response.data, toastOptions); // donot reset the fields
+      }
+    }
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////
+
   const loader = (
     <div className={contri.loaderDiv}>
       <Loader />;
@@ -127,6 +172,7 @@ function EditExperience() {
                   name="companyName"
                   placeholder="Company name *"
                   width="100%"
+                  initialValue={interviewExperience.companyName}
                   onChange={updateInterviewExperience}
                 />
               </div>
@@ -137,6 +183,7 @@ function EditExperience() {
                   name="roleName"
                   placeholder="Role ( e.g. SDE, SWE, MTS etc ) *"
                   width="100%"
+                  initialValue={interviewExperience.roleName}
                   onChange={updateInterviewExperience}
                 />
               </div>
@@ -148,6 +195,7 @@ function EditExperience() {
                   name="monthName"
                   placeholder="Month ( e.g. Jan ) *"
                   width="100%"
+                  initialValue={interviewExperience.monthName}
                   onChange={updateInterviewExperience}
                 />
               </div>
@@ -156,8 +204,9 @@ function EditExperience() {
               <div className={contri.inputDiv}>
                 <CredentialInput
                   name="year"
-                  placeholder="Year ( e.g. 2022, 2023 etc ) *"
+                  placeholder="Year ( e.g. 2022, 2023 etc )*"
                   width="100%"
+                  initialValue={interviewExperience.year}
                   onChange={updateInterviewExperience}
                 />
               </div>
@@ -169,6 +218,7 @@ function EditExperience() {
                   name="difficulty"
                   placeholder="Difficulty level ( 1 - 5 ) *"
                   width="100%"
+                  initialValue={interviewExperience.difficulty}
                   onChange={updateInterviewExperience}
                 />
               </div>
@@ -179,6 +229,7 @@ function EditExperience() {
                   name="opportunity"
                   placeholder="Opportunity / Program ( e.g. Off campus, Martians etc ) *"
                   width="100%"
+                  initialValue={interviewExperience.opportunity}
                   onChange={updateInterviewExperience}
                 />
               </div>
@@ -202,21 +253,24 @@ function EditExperience() {
             name="experience"
             rows="8"
             placeholder="Interview Experience"
+            initialValue={interviewExperience.experience}
             onChange={updateInterviewExperience}
           />
           <TextArea
             name="tip"
             rows="4"
             placeholder="Concluding Tips"
+            initialValue={interviewExperience.tip}
             onChange={updateInterviewExperience}
           />
         </div>
         <div className={contri.contriButtonDiv}>
           <div className="container-fluid">
             <CredentialButton
-              text="Contribute Experience"
+              text="Saves changes"
               width="100%"
-              height="50px"
+              // height="50px"
+              onClick={requestServerToEditInterviewExperience}
             />
           </div>
         </div>

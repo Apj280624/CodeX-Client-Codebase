@@ -12,7 +12,7 @@ import {
   validateSignUpCredentials,
   validateEmailAddress,
 } from "../utilities/ClientUtility.js";
-import { SERVER_ORIGIN, routes } from "../utilities/ClientVarsUtility.js";
+import { SERVER_ORIGIN, routes, vars } from "../utilities/ClientVarsUtility.js";
 import Toast, { toastOptions } from "../components/Toast.js";
 
 const axios = require("axios").default;
@@ -42,11 +42,8 @@ function SignUp() {
 
   async function requestServerToSendOTP() {
     // console.log(userCredentials.emailAddress);
-    const { res, desc } = await validateEmailAddress(
-      userCredentials.emailAddress
-    );
+    const { res, desc } = validateEmailAddress(userCredentials.emailAddress);
     if (!res) {
-      // show toast
       // console.log(desc);
       toast(desc, toastOptions);
     } else {
@@ -58,7 +55,7 @@ function SignUp() {
         toast(response.data, toastOptions);
       } catch (error) {
         // console.log(error.response.data);
-        // toast(error.response.data, toastOptions);
+        toast(error.response.data, toastOptions);
       }
     }
   }
@@ -66,7 +63,7 @@ function SignUp() {
   async function requestServerToSignUserUp() {
     // console.log(userCredentials);
     // first validate at front end, don't bother the server unnecessarily
-    const { res, desc } = await validateSignUpCredentials(userCredentials);
+    const { res, desc } = validateSignUpCredentials(userCredentials);
     // console.log(desc);
     if (!res) {
       toast(desc, toastOptions);
@@ -98,6 +95,7 @@ function SignUp() {
             placeholder="First name"
             name="firstName"
             width="49.5%"
+            maxLength={vars.maxNameLen}
             onChange={updateUserCredentials}
           />
           <div className={UserAuth.otpBtnHalfInputDiv}>
@@ -106,6 +104,7 @@ function SignUp() {
               placeholder="Last name"
               name="lastName"
               width="49.5%"
+              maxLength={vars.maxNameLen}
               onChange={updateUserCredentials}
             />
           </div>
@@ -158,6 +157,7 @@ function SignUp() {
             placeholder="OTP"
             name="OTP"
             width="49.5%"
+            maxLength={vars.maxOTPLen}
             onChange={updateUserCredentials}
           />
           <div className={UserAuth.otpBtnHalfInputDiv}>

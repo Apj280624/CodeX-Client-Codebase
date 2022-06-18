@@ -8,8 +8,11 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 // my modules
-import { validateForgotPasswordCredentials } from "../utilities/ClientUtility.js";
-import { SERVER_ORIGIN } from "../utilities/ClientVarsUtility.js";
+import {
+  validateForgotPasswordCredentials,
+  validateEmailAddress,
+} from "../utilities/ClientUtility.js";
+import { SERVER_ORIGIN, routes, vars } from "../utilities/ClientVarsUtility.js";
 import Toast, { toastOptions } from "../components/Toast.js";
 
 const axios = require("axios").default;
@@ -18,7 +21,6 @@ function ForgotPassword() {
   const [userCredentials, setUserCredentials] = useState({
     emailAddress: "",
     password: "",
-    confirmedPassword: "",
     OTP: "",
   });
 
@@ -32,28 +34,45 @@ function ForgotPassword() {
   }
 
   async function requestServerToSendOTP() {
-    //take reference from signup otp code
+    // console.log(userCredentials.emailAddress);
+    const { res, desc } = validateEmailAddress(userCredentials.emailAddress);
+    if (!res) {
+      // console.log(desc);
+      toast(desc, toastOptions);
+    } else {
+      try {
+        const response = await axios.put(SERVER_ORIGIN + routes.FOTP, {
+          emailAddress: userCredentials.emailAddress,
+        });
+        // console.log(response.data);
+        toast(response.data, toastOptions);
+      } catch (error) {
+        // console.log(error.response.data);
+        toast(error.response.data, toastOptions);
+      }
+    }
   }
 
   async function requestServerToUpdatePassword() {
     // console.log(userCredentials);
     // first validate at front end, don't bother the server unnecessarily
-    const { res, desc } = await validateForgotPasswordCredentials(
-      userCredentials
-    );
+    const { res, desc } = validateForgotPasswordCredentials(userCredentials);
     // console.log(desc);
     if (!res) {
-      // show toast for desc
       toast(desc, toastOptions);
     } else {
-      // request sign up, but first verify the otp at server side
-      // try {
-      //   const response = await axios.get(SERVER_ORIGIN + "/sign-up");
-      //   console.log(response);
-      //   // show toast
-      // } catch (error) {
-      //   console.error(error);
-      // }
+      // request password update, but first verify the otp at server side
+      try {
+        const response = await axios.post(
+          SERVER_ORIGIN + routes.FORGOT_PASSWORD,
+          userCredentials
+        );
+        // console.log(response);
+        toast(response.data, toastOptions);
+      } catch (error) {
+        console.log(error);
+        toast(error.response.data, toastOptions);
+      }
     }
   }
 
@@ -80,14 +99,15 @@ function ForgotPassword() {
             type="text"
             placeholder="OTP"
             name="OTP"
-            width="32%"
+            width="49.5%"
+            maxLength={vars.maxOTPLen}
             onChange={updateUserCredentials}
           />
           <div className={UserAuth.otpBtnHalfInputDiv}>
             <CredentialButton
               text="Send OTP"
               onClick={requestServerToSendOTP}
-              width="67%"
+              width="49.5%"
             />
           </div>
         </div>
@@ -99,7 +119,7 @@ function ForgotPassword() {
           />
         </div>
         <div className={UserAuth.textDiv}>
-          <Link to="/auth/sign-in" className={UserAuth.fpText}>
+          <Link to={routes.SIGN_IN} className={UserAuth.fpText}>
             Sign In
           </Link>
         </div>

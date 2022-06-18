@@ -11,6 +11,9 @@ import ForgotPassword from "./routes/ForgotPassword";
 import Contribute from "./routes/Contribute";
 import ReadExperience from "./routes/ReadExperience";
 import Account from "./routes/Account";
+import EditExperience from "./routes/EditExperience";
+
+// my modules
 import { routes } from "./utilities/ClientVarsUtility.js";
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -28,11 +31,17 @@ function App() {
         <Route path="/auth/forgot-password" element={<ForgotPassword />} />
 
         <Route
-          path="/interview-experiences"
+          path={routes.INTERVIEW_EXPERIENCES}
           element={<InterviewExperiences />}
         />
-        <Route path={`${routes.READ}/:id`} element={<ReadExperience />} />
-        <Route path={`${routes.EDIT}/:id`} element={<ReadExperience />} />
+        <Route
+          path={`${routes.INTERVIEW_EXPERIENCE_READ}/:id`}
+          element={<ReadExperience />}
+        />
+        <Route
+          path={`${routes.INTERVIEW_EXPERIENCE_EDIT}/:id`}
+          element={<EditExperience />}
+        />
         <Route path="/contribute" element={<Contribute />} />
 
         <Route path="/account" element={<Account />} />

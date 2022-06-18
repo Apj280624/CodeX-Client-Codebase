@@ -12,6 +12,7 @@ import { SERVER_ORIGIN, routes } from "../utilities/ClientVarsUtility.js";
 import {
   generateAxiosConfigHeader,
   resizeObject,
+  manipulateInteviewExperiencesRoute,
 } from "../utilities/ClientUtility.js";
 import { toastOptions } from "../components/Toast";
 
@@ -27,20 +28,6 @@ after fetching is completed, set isLoad ing to false, and display them on the ca
 from the data array recieved from the server side, create an array of components filled with that data using map
 and just return that array inside the element var
 */
-
-function manipulateArray(dataArray) {
-  const resultArray = dataArray.map((dataObject) => {
-    dataObject = {
-      ...dataObject,
-      ...{ fullName: dataObject.firstName + dataObject.lastName },
-    };
-
-    delete dataObject.firstName;
-    delete dataObject.lastName;
-  });
-
-  return resultArray;
-}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -60,7 +47,11 @@ function InterviewExperiences() {
 
       setIsLoading(false); // set loading to false, and fill cards with data
       // console.log(response.data.arrayOfInterviewExperiences);
-      setArrayOfInterviewExperiences(response.data.arrayOfInterviewExperiences);
+      setArrayOfInterviewExperiences(
+        manipulateInteviewExperiencesRoute(
+          response.data.arrayOfInterviewExperiences
+        )
+      ); // here we added a fullName field to the objects
     } catch (error) {
       // console.log(error);
     }
@@ -101,29 +92,36 @@ function InterviewExperiences() {
     </div>
   );
 
+  const list = arrayOfInterviewExperiences.map((interviewExperience) => (
+    <div key={interviewExperience._id} className="col-lg-4 col-md-6">
+      <ExperienceCard
+        id={interviewExperience._id}
+        companyName={interviewExperience.companyName}
+        roleName={interviewExperience.roleName}
+        monthName={interviewExperience.monthName}
+        year={interviewExperience.year}
+        opportunity={interviewExperience.opportunity}
+        difficulty={interviewExperience.difficulty}
+        fullName={interviewExperience.fullName}
+        collegeName={interviewExperience.collegeName}
+        branchName={interviewExperience.branchName}
+        graduationYear={interviewExperience.graduationYear}
+      />
+    </div>
+  ));
+
   const element = (
-    <div className={Intex.whiteDiv}>
+    <div className="">
       <div className={Intex.bottomDiv}>
         <div className="">
           <div className="row">
-            {arrayOfInterviewExperiences.map((interviewExperience) => (
-              <div key={interviewExperience._id} className="col-lg-4 col-md-6">
-                <ExperienceCard
-                  id={interviewExperience._id}
-                  companyName={interviewExperience.companyName}
-                  roleName={interviewExperience.roleName}
-                  monthName={interviewExperience.monthName}
-                  year={interviewExperience.year}
-                  opportunity={interviewExperience.opportunity}
-                  difficulty={interviewExperience.difficulty}
-                  firstName={interviewExperience.firstName}
-                  lastName={interviewExperience.lastName}
-                  collegeName={interviewExperience.collegeName}
-                  branchName={interviewExperience.branchName}
-                  graduationYear={interviewExperience.graduationYear}
-                />
-              </div>
-            ))}
+            {list.length > 0 ? (
+              list
+            ) : (
+              <p className={Intex.emptyText}>
+                Hey, you have the chance to be the first one to contribute !
+              </p>
+            )}
           </div>
         </div>
       </div>

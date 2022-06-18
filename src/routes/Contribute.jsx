@@ -16,7 +16,7 @@ import {
   validateInterviewExperience,
   generateAxiosConfigHeader,
 } from "../utilities/ClientUtility.js";
-import { SERVER_ORIGIN, routes } from "../utilities/ClientVarsUtility.js";
+import { SERVER_ORIGIN, routes, vars } from "../utilities/ClientVarsUtility.js";
 import Toast, { toastOptions } from "../components/Toast.js";
 
 const axios = require("axios").default;
@@ -111,6 +111,9 @@ function Contribute() {
       try {
         // console.log(interviewExperience);
         const token = localStorage.getItem("token"); // pass token with contribution using generateAxiosConfig
+        if (!token) {
+          navigate(-1); // go back
+        }
         const response = await axios.post(
           SERVER_ORIGIN + routes.CONTRIBUTE,
           interviewExperience,
@@ -123,10 +126,12 @@ function Contribute() {
       } catch (error) {
         // console.log(error);
         toast(error.response.data, toastOptions);
-        // dont refresh the page if error occurred, user can reuse it
+        // dont reset the fields if error occurred, user can reuse it
       }
     }
   }
+
+  /////////////////////////////////////////////////////////////////////////////////////////////////
 
   const loader = (
     <div className={contri.loaderDiv}>
@@ -155,6 +160,7 @@ function Contribute() {
                   name="companyName"
                   placeholder="Company name *"
                   width="100%"
+                  maxLength={vars.maxCompanyNameLen}
                   onChange={updateInterviewExperience}
                 />
               </div>
@@ -165,6 +171,7 @@ function Contribute() {
                   name="roleName"
                   placeholder="Role ( e.g. SDE, SWE, MTS etc ) *"
                   width="100%"
+                  maxLength={vars.maxRoleNameLen}
                   onChange={updateInterviewExperience}
                 />
               </div>
@@ -207,6 +214,7 @@ function Contribute() {
                   name="opportunity"
                   placeholder="Opportunity / Program ( e.g. Off campus, Martians etc ) *"
                   width="100%"
+                  maxLength={vars.maxOpportunityLen}
                   onChange={updateInterviewExperience}
                 />
               </div>
@@ -229,12 +237,14 @@ function Contribute() {
           <TextArea
             name="experience"
             rows="8"
+            maxLength={vars.maxExperienceLen}
             placeholder="Interview Experience"
             onChange={updateInterviewExperience}
           />
           <TextArea
             name="tip"
             rows="4"
+            maxLength={vars.maxTipLen}
             placeholder="Concluding Tips"
             onChange={updateInterviewExperience}
           />
@@ -244,7 +254,7 @@ function Contribute() {
             <CredentialButton
               text="Contribute Experience"
               width="100%"
-              height="50px"
+              // height="50px"
               onClick={requestServerToContribute}
             />
           </div>

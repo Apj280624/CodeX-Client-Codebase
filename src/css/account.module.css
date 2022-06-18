@@ -26,6 +26,7 @@
   font-weight: var(--big-desc-fwt);
   font-weight: 400;
   font-size: 1rem;
+  font-size: var(--tab-big-desc-fsz);
   margin-top: 8px;
   margin-bottom: 8px;
   overflow-wrap: break-word;

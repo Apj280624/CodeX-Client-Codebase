@@ -13,9 +13,9 @@ function Home() {
     <div>
       <Navbar />
       <SlideShow />
-      <Temp />
-      <ContributeCard />
-      <SearchBar />
+      <div className="good">
+        <div className="card"></div>
+      </div>
       <POTD />
       <Footer />
     </div>

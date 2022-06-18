@@ -5,6 +5,14 @@
   margin-top: 150px;
 }
 
+.emptyText {
+  color: white;
+  font-family: var(--heading-font);
+  font-size: var(--title-fsz);
+  font-weight: var(--title-fwt);
+  text-align: center;
+}
+
 .searchBarExtraDivIntex {
   margin-top: 120px;
 }

@@ -1,67 +1,12 @@
 :root {
   --dark-purple: #131022;
-  --light-purple: #7026b9;
-  /* --light-purple: #663399; */
-  /* --light-purple: var(--dark-purple); */
-
-  /* --light-purple: #642c9c; */
-
-  /* --light-purple: #230d38; */
-
-  /* --dark-purple: #181433; */
-  /* --light-purple: #353057; */
-
-  /* --light-purple: #383166; */
-
-  /* --light-purple: black; */
-  /* --dark-purple: #1a2448;
-  --light-purple: #05103a; */
-
-  /* --light-purple: #1a2448;
-  --dark-purple: #05103a; */
-
-  /* --dark-purple: #2d2a4a; */
-  /* --light-purple: #3f396c; */
+  --light-purple: #322b59;
+  --grey-purple: #232234;
 
   --heading-font: "Montserrat";
   --desc-font: "Montserrat";
-  --login-btn-fwt: 600;
-  --link-hover-color: var(--light-purple);
-  --light-button-hover-color: var(--dark-purple);
-  --login-btn-border-rad: 8px;
-  --contri-btn-border-rad: 14px;
-
-  --big-title-fsz: 3.5rem;
-  --title-fsz: 3rem;
-  --sub-title-fsz: 2.4rem;
-  --big-desc-fsz: 1.6rem;
-  --desc-fsz: 1rem;
-
-  --big-title-fwt: 700;
-  --title-fwt: 600;
-  --sub-title-fwt: 500;
-  --big-desc-fwt: 400;
-
-  --tab-big-title-fsz: 2.8rem;
-  --tab-title-fsz: 2.4rem;
-  --tab-sub-title-fsz: 1.8rem;
-  --tab-big-desc-fsz: 1rem;
-  --tab-desc-fsz: 0.8rem;
-
-  --tab-big-title-fwt: 600;
-  --tab-title-fwt: 500;
-  --tab-sub-title-fwt: 400;
-  --tab-big-desc-fwt: 400;
-
-  --good-width: 80%;
-
-  --tab-good-width: 90%;
-
-  --nav_h: 10px;
-
-  --loader-div-width: 120px;
 }
 
-body {
+.body {
   background-color: var(--dark-purple);
 }

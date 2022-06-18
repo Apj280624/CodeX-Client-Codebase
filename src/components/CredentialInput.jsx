@@ -24,6 +24,7 @@ function CredentialInput(props) {
     <input
       className={styles.credentialInput}
       style={inlineStyle}
+      maxLength={props.maxLength ? props.maxLength : 100}
       type={props.type}
       placeholder={props.placeholder}
       value={inputValue}

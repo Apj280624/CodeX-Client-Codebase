@@ -1,22 +1,77 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 import Acc from "../css/account.module.css";
 
 // my modules
-import { routes } from "../utilities/ClientVarsUtility.js";
+import { routes, SERVER_ORIGIN } from "../utilities/ClientVarsUtility.js";
+import { generateAxiosConfigHeader } from "../utilities/ClientUtility";
+import Toast, { toastOptions } from "../components/Toast.js";
+
+const axios = require("axios").default;
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 function AccountExperienceCard(props) {
+  const [deleteCode, setDeleteCode] = useState(0);
+
   const navigate = useNavigate();
   function handleReadClick() {
     const id = props.id;
-    navigate(`${routes.READ}/${id}`);
+    navigate(`${routes.INTERVIEW_EXPERIENCE_READ}/${id}`);
+  }
+
+  function handleEditClick() {
+    const id = props.id;
+    navigate(`${routes.INTERVIEW_EXPERIENCE_EDIT + "/" + id}`);
+  }
+
+  async function requestServerToDeleteInterviewExperience() {
+    const token = localStorage.getItem("token"); // pass token with contribution using generateAxiosConfig
+    if (!token) {
+      navigate(-1); // go back
+    } else {
+      try {
+        const id = props.id;
+        const response = await axios.delete(
+          `${SERVER_ORIGIN}${routes.INTERVIEW_EXPERIENCE_DELETE}/${id}`,
+          generateAxiosConfigHeader(token)
+        );
+        console.log(response);
+        toast(response.data, toastOptions);
+        navigate(routes.ACCOUNT);
+        // to alter parent state, we need a function
+        //props.onDelete();
+        // let fields remain same even if contribution is successful so user can still edit
+      } catch (error) {
+        console.log(error);
+        toast(error.response.data, toastOptions);
+      }
+    }
+  }
+
+  function handleDeleteClick() {
+    if (deleteCode === 0) {
+      setDeleteCode(1);
+      toast("Click again to confirm !", {
+        ...toastOptions,
+        ...{ autoClose: 1000 },
+      }); // overriding close time
+      setTimeout(() => {
+        setDeleteCode(0);
+      }, 3000);
+    } else {
+      console.log("deleted");
+      requestServerToDeleteInterviewExperience();
+    }
   }
 
   return (
     <div className="">
-      <div className="">
+      <Toast />
+      <div className={Acc.marginDiv}>
         <div className={Acc.commonDiv}>
           <p style={{ marginTop: 0 }} className={Acc.commonText}>
             <span className={Acc.boldText}>Company name: </span>
@@ -27,7 +82,7 @@ function AccountExperienceCard(props) {
             {props.roleName}
           </p>
           <p className={Acc.commonText}>
-            <span className={Acc.boldText}>Month name: </span>
+            <span className={Acc.boldText}>Month: </span>
             {props.monthName}
           </p>
           <p className={Acc.commonText}>
@@ -50,16 +105,19 @@ function AccountExperienceCard(props) {
         {/* </div> */}
         {/* <div className="col-lg-12"> */}
         <div className={`${Acc.commonDiv} ${Acc.allBtnDiv}`}>
-          <button onClick={handleReadClick} className={Acc.btn}>
+          <button className={Acc.btn} onClick={handleReadClick}>
             Read
           </button>
           <button
             style={{ marginLeft: "2%", marginRight: "2%" }}
             className={`${Acc.midBtn} ${Acc.btn}`}
+            onClick={handleEditClick}
           >
             Edit
           </button>
-          <button className={Acc.btn}>Delete</button>
+          <button className={Acc.btn} onClick={handleDeleteClick}>
+            {deleteCode === 0 ? "Delete" : "Sure ?"}
+          </button>
         </div>
       </div>
     </div>

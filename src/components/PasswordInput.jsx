@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styles from "../css/credential-input.module.css";
 import UserAuth from "../css/user-auth.module.css";
 import credentialButton from "../css/credential-button.module.css";
+import { vars } from "../utilities/ClientVarsUtility";
 
 function PasswordInput(props) {
   const [inputValue, setInputValue] = useState("");
@@ -21,6 +22,7 @@ function PasswordInput(props) {
       <input
         className={styles.credentialInput}
         style={{ width: "67%" }}
+        maxLength={vars.maxPassLen}
         type={hidden ? "password" : "text"}
         placeholder="Password"
         value={inputValue}
