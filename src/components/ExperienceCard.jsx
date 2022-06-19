@@ -49,7 +49,7 @@ function ExperienceCard(props) {
           {props.fullName}, {props.collegeName} {props.branchName} '
           {props.graduationYear}
         </p>
-        <CredentialButton width="60%" height="40px" text="Read" />
+        <CredentialButton width="50%" height="40px" text="Read" />
       </div>
     </div>
   );

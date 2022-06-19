@@ -1,21 +1,33 @@
+/*
+https://stackoverflow.com/questions/56577358/how-to-get-rid-of-gap-between-input-text-and-button-on-all-devices
+*/
+
 .search-box {
   background-color: var(--dark-purple);
   margin: auto;
   text-align: center;
   width: fit-content;
-  border-radius: 16px;
+  /* width: var(--good-width); */
+  /* border-radius: 8px; */
+  width: 500px;
+  display: flex;
+  padding: 5px;
 }
+
+/* if you dont put display: flex in search-box they wont align, refer the article on top*/
 
 .search-input {
   background: transparent;
-  width: 360px;
+  width: 80%;
   height: 60px;
   border: 2px solid var(--light-purple);
-  border-top-left-radius: 16px;
-  border-bottom-left-radius: 16px;
+  border-right: none;
   color: white;
   padding: 20px;
-  font-family: cursive;
+  /* border: none; */
+  font-family: var(--desc-font);
+  border-top-left-radius: 50px;
+  border-bottom-left-radius: 50px;
 }
 
 input:focus {
@@ -24,17 +36,73 @@ input:focus {
 /* remove default input white color border which occurs on click */
 
 .search-button {
-  background: var(--light-purple);
-  width: 120px;
+  /* background: var(--light-purple); */
+  background-color: transparent;
+  width: 10%;
   height: 60px;
+
   border: 2px solid var(--light-purple);
+  border-left: none;
   color: white;
-  border-top-right-radius: 16px;
-  border-bottom-right-radius: 16px;
+  font-family: var(--desc-font);
+
+  padding: 0;
+  outline: none;
+  border-top-right-radius: 50px;
+  border-bottom-right-radius: 50px;
+}
+
+.cross-button {
+  background-color: transparent;
+  width: 10%;
+  height: 60px;
+  border: none;
+  outline: none;
+  border-top: 2px solid var(--light-purple);
+  border-bottom: 2px solid var(--light-purple);
+  color: white;
+  font-family: var(--desc-font);
+}
+
+.search-icon {
+  background-color: var(--light-purple);
+  width: 40px;
+  height: 40px;
+  /* margin: 5px; */
+  margin: auto;
+  border-radius: 20px;
+  text-align: center;
+  margin-right: 10px;
+  /* display: inline; */
+}
+
+.cross-icon {
+  /* background-color: var(--light-purple); */
+  width: 30px;
+  height: 30px;
+  /* width: 100%;
+  height: 100%; */
+  /* margin: 5px; */
+  margin: auto;
+  border-radius: 20px;
+  text-align: center;
+  margin-right: 10px;
+  /* display: inline; */
+}
+
+.icon-text {
+  line-height: 40px;
+  color: white;
+  /* display: flex; */
+}
+
+.cross-text {
+  line-height: 30px;
+  /* line-height: 60px; */
 }
 
 .search-button:active {
-  border: 2px solid white;
+  /* border: 2px solid white; */
 }
 
 /* this gives us a one second click effect, can be used when posting something */
@@ -43,4 +111,28 @@ input:focus {
   color: black;
 }
 
+.icon-text:hover {
+  color: var(--dark-purple);
+}
+
 /* this gives the same effect on hovering upon the bootstrap navbar signout button  */
+
+@media (max-width: 600px) {
+  .search-box {
+    width: 90%;
+  }
+
+  .search-input {
+    width: 75%;
+  }
+
+  .search-button {
+    width: 15%;
+  }
+
+  .cross-button {
+    width: 10%;
+  }
+}
+
+/* if required add breakpoint at  350px */

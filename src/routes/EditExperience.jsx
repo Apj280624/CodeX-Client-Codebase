@@ -15,7 +15,7 @@ import {
   generateAxiosConfigHeader,
   validateInterviewExperience,
 } from "../utilities/ClientUtility.js";
-import { SERVER_ORIGIN, routes } from "../utilities/ClientVarsUtility.js";
+import { SERVER_ORIGIN, routes, vars } from "../utilities/ClientVarsUtility.js";
 import Toast, { toastOptions } from "../components/Toast.js";
 import { useNavigate, useParams } from "react-router-dom";
 
@@ -57,7 +57,7 @@ function EditExperience() {
         setIsLoading(false); // set loading to false, and fill cards with data
         // console.log(response.data.interviewExperience); // set loading to false
         const data = await response.data.interviewExperience;
-        console.log(data);
+        // console.log(data);
         setInterviewExperience({
           companyName: data.companyName,
           roleName: data.roleName,
@@ -88,7 +88,7 @@ function EditExperience() {
         requestServerToGetInterviewExperience(token);
       } catch (error) {
         // either token is invalid or session expired, isSignedIn remains same
-        console.log(error.response.data);
+        // console.log(error.response.data);
         navigate(-1); // isSignedIn remains false, navigate back
       }
     }
@@ -133,11 +133,11 @@ function EditExperience() {
           interviewExperience,
           generateAxiosConfigHeader(token)
         );
-        console.log(response);
+        // console.log(response);
         toast(response.data, toastOptions);
         // let fields remain same even if contribution is successful so user can still edit
       } catch (error) {
-        console.log(error);
+        // console.log(error);
         toast(error.response.data, toastOptions); // donot reset the fields
       }
     }
@@ -153,125 +153,129 @@ function EditExperience() {
 
   const element = (
     <div>
-      <div className={contri.commonDiv}>
-        <div className="container-fluid">
-          <p className={`${contri.headingText} ${contri.commonText}`}>
-            We appreciate you here !
-          </p>
-          <p className={`${contri.alertText} ${contri.commonText}`}>
-            Remember ! You must sign in to contribute
-          </p>
+      <div className={contri.allDiv}>
+        <div className={contri.commonDiv}>
+          <div className="container-fluid">
+            <p className={`${contri.headingText} ${contri.commonText}`}>
+              Edit it here !
+            </p>
+            <p className={`${contri.alertText} ${contri.commonText}`}>
+              Remember ! You must sign in to edit
+            </p>
+          </div>
         </div>
-      </div>
-      <div className={`${contri.detailsDiv} ${contri.commonDiv}`}>
-        <div className="container-fluid">
-          <div className="row">
-            <div className="col-lg-6">
-              <div className={contri.inputDiv}>
-                <CredentialInput
-                  name="companyName"
-                  placeholder="Company name *"
-                  width="100%"
-                  initialValue={interviewExperience.companyName}
-                  onChange={updateInterviewExperience}
-                />
+        <div className={`${contri.detailsDiv} ${contri.commonDiv}`}>
+          <div className="container-fluid">
+            <div className="row">
+              <div className="col-lg-6">
+                <div className={contri.inputDiv}>
+                  <CredentialInput
+                    name="companyName"
+                    placeholder="Company name *"
+                    width="100%"
+                    initialValue={interviewExperience.companyName}
+                    onChange={updateInterviewExperience}
+                  />
+                </div>
               </div>
-            </div>
-            <div className="col-lg-6">
-              <div className={contri.inputDiv}>
-                <CredentialInput
-                  name="roleName"
-                  placeholder="Role ( e.g. SDE, SWE, MTS etc ) *"
-                  width="100%"
-                  initialValue={interviewExperience.roleName}
-                  onChange={updateInterviewExperience}
-                />
+              <div className="col-lg-6">
+                <div className={contri.inputDiv}>
+                  <CredentialInput
+                    name="roleName"
+                    placeholder="Role ( e.g. SDE, SWE, MTS etc ) *"
+                    width="100%"
+                    initialValue={interviewExperience.roleName}
+                    onChange={updateInterviewExperience}
+                  />
+                </div>
               </div>
-            </div>
 
-            <div className="col-lg-6">
-              <div className={contri.inputDiv}>
-                <CredentialInput
-                  name="monthName"
-                  placeholder="Month ( e.g. Jan ) *"
-                  width="100%"
-                  initialValue={interviewExperience.monthName}
-                  onChange={updateInterviewExperience}
-                />
+              <div className="col-lg-6">
+                <div className={contri.inputDiv}>
+                  <CredentialInput
+                    name="monthName"
+                    placeholder="Month ( e.g. Jan ) *"
+                    width="100%"
+                    initialValue={interviewExperience.monthName}
+                    onChange={updateInterviewExperience}
+                  />
+                </div>
               </div>
-            </div>
-            <div className="col-lg-6">
-              <div className={contri.inputDiv}>
-                <CredentialInput
-                  name="year"
-                  placeholder="Year ( e.g. 2022, 2023 etc )*"
-                  width="100%"
-                  initialValue={interviewExperience.year}
-                  onChange={updateInterviewExperience}
-                />
+              <div className="col-lg-6">
+                <div className={contri.inputDiv}>
+                  <CredentialInput
+                    name="year"
+                    placeholder="Year ( e.g. 2022, 2023 etc )*"
+                    width="100%"
+                    initialValue={interviewExperience.year}
+                    onChange={updateInterviewExperience}
+                  />
+                </div>
               </div>
-            </div>
 
-            <div className="col-lg-6">
-              <div className={contri.inputDiv}>
-                <CredentialInput
-                  name="difficulty"
-                  placeholder="Difficulty level ( 1 - 5 ) *"
-                  width="100%"
-                  initialValue={interviewExperience.difficulty}
-                  onChange={updateInterviewExperience}
-                />
+              <div className="col-lg-6">
+                <div className={contri.inputDiv}>
+                  <CredentialInput
+                    name="difficulty"
+                    placeholder="Difficulty level ( 1 - 5 ) *"
+                    width="100%"
+                    initialValue={interviewExperience.difficulty}
+                    onChange={updateInterviewExperience}
+                  />
+                </div>
               </div>
-            </div>
-            <div className="col-lg-6">
-              <div className={contri.inputDiv}>
-                <CredentialInput
-                  name="opportunity"
-                  placeholder="Opportunity / Program ( e.g. Off campus, Martians etc ) *"
-                  width="100%"
-                  initialValue={interviewExperience.opportunity}
-                  onChange={updateInterviewExperience}
-                />
+              <div className="col-lg-6">
+                <div className={contri.inputDiv}>
+                  <CredentialInput
+                    name="opportunity"
+                    placeholder="Opportunity / Program ( e.g. Off campus, Martians etc ) *"
+                    width="100%"
+                    initialValue={interviewExperience.opportunity}
+                    onChange={updateInterviewExperience}
+                  />
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <div className={contri.commonDiv}>
-        <div className="container-fluid">
-          <p className={`${contri.noteText}`}>
-            Tip: Please do considering using multiple paragraphs for a cleaner
-            representation
-          </p>
-        </div>
-      </div>
-
-      <div className={`${contri.contentDiv} ${contri.commonDiv}`}>
-        <div className="container-fluid">
-          <TextArea
-            name="experience"
-            rows="8"
-            placeholder="Interview Experience"
-            initialValue={interviewExperience.experience}
-            onChange={updateInterviewExperience}
-          />
-          <TextArea
-            name="tip"
-            rows="4"
-            placeholder="Concluding Tips"
-            initialValue={interviewExperience.tip}
-            onChange={updateInterviewExperience}
-          />
-        </div>
-        <div className={contri.contriButtonDiv}>
+        <div className={contri.commonDiv}>
           <div className="container-fluid">
-            <CredentialButton
-              text="Saves changes"
-              width="100%"
-              // height="50px"
-              onClick={requestServerToEditInterviewExperience}
+            <p className={`${contri.noteText}`}>
+              Tip: Please do considering using multiple paragraphs for a cleaner
+              representation
+            </p>
+          </div>
+        </div>
+
+        <div className={`${contri.contentDiv} ${contri.commonDiv}`}>
+          <div className="container-fluid">
+            <TextArea
+              name="experience"
+              rows="8"
+              placeholder="Interview Experience"
+              maxLength={vars.maxExperienceLen}
+              initialValue={interviewExperience.experience}
+              onChange={updateInterviewExperience}
             />
+            <TextArea
+              name="tip"
+              rows="4"
+              maxLength={vars.maxTipLen}
+              placeholder="Concluding Tips"
+              initialValue={interviewExperience.tip}
+              onChange={updateInterviewExperience}
+            />
+          </div>
+          <div className={contri.contriButtonDiv}>
+            <div className="container-fluid">
+              <CredentialButton
+                text="Saves changes"
+                width="100%"
+                // height="50px"
+                onClick={requestServerToEditInterviewExperience}
+              />
+            </div>
           </div>
         </div>
       </div>

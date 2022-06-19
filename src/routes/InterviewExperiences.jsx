@@ -6,6 +6,10 @@ import ExperienceCard from "../components/ExperienceCard";
 import Loader from "../components/Loader.jsx";
 import Navbar from "../components/Navbar.jsx";
 import Footer from "../components/Footer.jsx";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 // my modules
 import { SERVER_ORIGIN, routes } from "../utilities/ClientVarsUtility.js";
@@ -13,8 +17,11 @@ import {
   generateAxiosConfigHeader,
   resizeObject,
   manipulateInteviewExperiencesRoute,
+  transformText,
 } from "../utilities/ClientUtility.js";
-import { toastOptions } from "../components/Toast";
+
+import Toast, { toastOptions } from "../components/Toast.js";
+import CredentialButton from "../components/CredentialButton";
 
 const axios = require("axios").default;
 
@@ -36,13 +43,14 @@ function InterviewExperiences() {
 
   const [isLoading, setIsLoading] = useState(true);
   const [isSignedIn, setIsSignedIn] = useState(false);
+  const [isSearched, setIsSearched] = useState(false);
   const [arrayOfInterviewExperiences, setArrayOfInterviewExperiences] =
     useState([]);
 
   async function requestServerToGetInterviewExperiences() {
     try {
       var response = await axios.get(
-        SERVER_ORIGIN + routes.INTERVIEW_EXPERIENCES
+        `${SERVER_ORIGIN}${routes.INTERVIEW_EXPERIENCES}/${"all"}`
       );
 
       setIsLoading(false); // set loading to false, and fill cards with data
@@ -71,6 +79,8 @@ function InterviewExperiences() {
     }
   }
 
+  //////////////////////////////////////////////////////////////////////////////////////////////
+
   useEffect(() => {
     window.scrollTo(0, 0); // scroll to top after render
     function verifySignInStatus() {
@@ -82,9 +92,52 @@ function InterviewExperiences() {
       }
     }
 
+    // AOS.init({
+    //   offset: 300,
+    //   duration: 800,
+    // });
+
     verifySignInStatus();
     requestServerToGetInterviewExperiences();
   }, []);
+
+  //////////////////////////////////////////////////////////////////////////////////////////////////
+
+  async function requestServerToGetSearchResults(keyword) {
+    keyword = keyword.trim();
+    keyword = transformText(keyword);
+    console.log(keyword);
+
+    if (!keyword || keyword.length === 0) {
+      toast("Please enter something", toastOptions); // express won't be able to handle an empty param
+    } else {
+      setIsLoading(true);
+
+      try {
+        var response = await axios.get(
+          `${SERVER_ORIGIN}${routes.INTERVIEW_EXPERIENCES}/${keyword}`
+        );
+
+        setIsLoading(false); // set loading to false, and fill cards with data
+        setIsSearched(true);
+        // console.log(response.data.arrayOfInterviewExperiences);
+        setArrayOfInterviewExperiences(
+          manipulateInteviewExperiencesRoute(
+            response.data.arrayOfInterviewExperiences
+          )
+        ); // here we added a fullName field to the objects
+      } catch (error) {
+        // console.log(error);
+      }
+    }
+  }
+
+  function handleClearSearchResultsClick() {
+    setIsSearched(false);
+    requestServerToGetInterviewExperiences();
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////
 
   const loader = (
     <div className={Intex.loaderDiv}>
@@ -119,7 +172,9 @@ function InterviewExperiences() {
               list
             ) : (
               <p className={Intex.emptyText}>
-                Hey, you have the chance to be the first one to contribute !
+                {isSearched
+                  ? "Sorry! we found nothing matching your search"
+                  : "Hey, you have the chance to be the first one to contribute !"}
               </p>
             )}
           </div>
@@ -135,9 +190,15 @@ function InterviewExperiences() {
         <ContributeCard />
       </div>
       <div className={Intex.searchBarExtraDivIntex}>
-        <SearchBar />
+        <SearchBar onClick={requestServerToGetSearchResults} />
       </div>
+      {isSearched ? (
+        <div onClick={handleClearSearchResultsClick} className={Intex.clearDiv}>
+          <p className={Intex.clearText}>Clear search results</p>
+        </div>
+      ) : null}
       {isLoading ? loader : element}
+      <Toast />
       <Footer />
     </div>
   );

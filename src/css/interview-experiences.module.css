@@ -1,8 +1,16 @@
+.loaderDiv {
+  margin: auto;
+  width: var(--loader-div-width);
+  margin-top: 220px;
+  text-align: center;
+  margin-bottom: 360px;
+}
+
 .contributeCardExtraDivIntex {
   /* border: 2px solid red; */
   width: var(--good-width);
   margin: auto;
-  margin-top: 150px;
+  margin-top: var(--nav-margin);
 }
 
 .emptyText {
@@ -17,34 +25,43 @@
   margin-top: 120px;
 }
 
-.loaderDiv {
-  margin: auto;
-  width: var(--loader-div-width);
-  margin-top: 220px;
-  text-align: center;
-  margin-bottom: 360px;
-}
-
 .bottomDiv {
   /* border: 2px solid red; */
   /* width: 100%;
   padding: 0; */
-  padding: 100px 0 100px 0;
+  padding: 50px 0 50px 0;
   width: 80%;
   margin: auto;
-  margin-top: 100px;
+  margin-top: 50px;
   margin-bottom: 100px;
   text-align: center;
 }
 
-.whiteDiv {
-  /* background-color: white; */
-  /* background-color: #4a3e64; */
-  /* background-image: linear-gradient(
-    var(--dark-purple),
-    
-    var(--dark-purple)
-  ); */
+.clearDiv {
+  width: var(--good-width);
+  margin: auto;
+  text-align: center;
+  margin-top: 50px;
+}
+
+.clearText {
+  width: var(--good-width);
+  margin: auto;
+  margin-top: 50px;
+  border-radius: 50px;
+  background-color: var(--light-purple);
+
+  color: white;
+  line-height: 50px;
+  padding: 0 30px 0 30px;
+  width: fit-content;
+  font-family: var(--desc-font);
+  font-weight: var(--login-btn-fwt);
+  cursor: pointer;
+}
+
+.clearText:hover {
+  color: var(--light-button-hover-color);
 }
 
 /* mobile and tab ***************************************************************************************** */
@@ -56,5 +73,15 @@
 
   .contributeCardExtraDivIntex {
     width: var(--tab-good-width);
+    margin-top: var(--tab-nav-margin);
+  }
+
+  .bottomDiv {
+    margin-top: 0;
+  }
+
+  .emptyText {
+    font-size: var(--tab-big-desc-fsz);
+    font-weight: var(--sub-title-fwt);
   }
 }

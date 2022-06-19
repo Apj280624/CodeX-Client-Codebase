@@ -40,6 +40,7 @@ function AccountExperienceCard(props) {
           generateAxiosConfigHeader(token)
         );
         console.log(response);
+        props.onDelete(props.id);
         toast(response.data, toastOptions);
         navigate(routes.ACCOUNT);
         // to alter parent state, we need a function

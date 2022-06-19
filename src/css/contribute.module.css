@@ -13,6 +13,13 @@
 .commonDiv {
   width: var(--good-width);
   margin: auto;
+
+  padding: 0;
+  height: fit-content;
+}
+
+.allDiv {
+  margin-top: var(--nav-margin);
 }
 
 .headingText {
@@ -20,7 +27,7 @@
   font-size: var(--title-fsz);
   font-weight: var(--title-fwt);
   text-align: center;
-  margin-top: 150px;
+  /* margin-top: 150px; */
 }
 
 .alertText {
@@ -65,6 +72,7 @@
   margin: auto; */
   margin-top: 0;
   margin-bottom: 0;
+  padding: 0;
 }
 
 .contentTextArea {
@@ -73,12 +81,16 @@
   color: white;
   font-family: var(--heading-font);
   font-size: var(--big-desc-fsz);
+  /* font-size: 100px; */
   padding: 20px 20px 20px 20px;
   border: 2px solid var(--light-purple);
   border-radius: var(--contri-btn-border-rad);
+  /* border: 2px solid red; */
   margin-top: 20px;
   margin-bottom: 16px;
 }
+
+/* dont change padding bottom = 16px because there's some margin/padding already */
 
 /* resize: none; to disable the resize option on the bottom right in textarea */
 
@@ -97,5 +109,26 @@
 @media (max-width: 767px) {
   .commonDiv {
     width: var(--tab-good-width);
+  }
+
+  .contentTextArea {
+    /* font-size: var(--tab-big-desc-fsz); */
+    font-size: 1rem;
+  }
+
+  .headingText {
+    font-size: var(--tab-title-fsz);
+  }
+
+  .alertText {
+    font-size: var(--tab-big-desc-fsz);
+  }
+
+  .allDiv {
+    margin-top: var(--tab-nav-margin);
+  }
+
+  .detailsDiv {
+    margin-top: 50px;
   }
 }

@@ -41,7 +41,7 @@ function PersonalDetailsCard(props) {
           <p className={`${Acc.contriText} ${Acc.commonText}`}>
             <span className={Acc.boldText}>Contributions </span>
           </p>
-          <div className={Acc.circleDiv}>
+          <div className="">
             <p className={`${Acc.countText} ${Acc.commonText}`}>
               {props.noOfContributions}
             </p>

@@ -7,6 +7,7 @@ import {
   generateAxiosConfigHeader,
   routes,
   SERVER_ORIGIN,
+  vars,
 } from "../utilities/ClientVarsUtility.js";
 
 const axios = require("axios").default;
@@ -22,14 +23,9 @@ function MyNavbar(props) {
     <div>
       <nav className="navbar-custom navbar navbar-expand-lg navbar-dark fixed-top">
         <div className="container-fluid">
-          <a className="custom-brand navbar-brand" href="/">
-            <img
-              src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg"
-              className="logo d-inline-block align-top"
-              alt=""
-            />
-            CodeX
-          </a>
+          <Link className="custom-brand navbar-brand" to={routes.HOME}>
+            <p className="brand-name">{vars.brandName}</p>
+          </Link>
 
           <button
             className="navbar-toggler"
@@ -46,27 +42,15 @@ function MyNavbar(props) {
           <div className="collapse navbar-collapse" id="navbarNav">
             <ul className="alignment navbar-nav ms-auto">
               <li className="nav-item active">
-                <a className="nav-link" href="#pricing">
-                  CP
-                </a>
-              </li>
-
-              <li className="nav-item active">
-                <a className="nav-link" href="#footer">
-                  DSA
-                </a>
-              </li>
-
-              <li className="nav-item active">
                 <Link to={routes.INTERVIEW_EXPERIENCES} className="nav-link">
                   Interview Experiences
                 </Link>
               </li>
 
-              <li className="nav-item active">
-                <a className="nav-link" href="#cta">
-                  FAQ
-                </a>
+              <li className="nav-item">
+                <Link to="#" className="nav-link">
+                  Coming Soon
+                </Link>
               </li>
             </ul>
 

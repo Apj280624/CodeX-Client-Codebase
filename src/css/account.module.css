@@ -6,7 +6,7 @@
   /* background-color: #7858a6; */
   /* background-color: #353057; */
 
-  width: 80%;
+  width: var(--good-width);
   margin: auto;
   margin-top: 150px;
 }
@@ -24,9 +24,9 @@
   font-size: var(--desc-font);
   font-family: var(--desc-font);
   font-weight: var(--big-desc-fwt);
-  font-weight: 400;
-  font-size: 1rem;
-  font-size: var(--tab-big-desc-fsz);
+
+  /* font-size: 1rem; */
+  /* font-size: var(--tab-big-desc-fsz); */
   margin-top: 8px;
   margin-bottom: 8px;
   overflow-wrap: break-word;
@@ -40,7 +40,7 @@
 }
 
 .detailsDiv {
-  margin-top: 30px;
+  margin-top: 50px;
   /* margin should be 50 here same as sign in pages but rest of the maring is provided by margin divs */
 }
 
@@ -49,16 +49,22 @@
 }
 
 .commonDiv {
+  margin-top: 13px;
+  margin-bottom: 13px;
   padding: 20px 20px 20px 20px;
   border-radius: var(--contri-btn-border-rad);
   background-color: #232234;
 }
 
 .marginDiv {
-  padding-top: 20px;
-  padding-bottom: 20px;
+  /* padding-top: 20px;
+  padding-bottom: 16px; */
+  margin-top: 22px;
+  margin-bottom: 22px;
   /* border: 2px solid red; */
 }
+
+/* even though margin above corresponds to the TextAreas let it be 22px to make them equal */
 
 .allBtnDiv {
   /* padding: 20px; */
@@ -96,24 +102,34 @@
   background-color: transparent;
 }
 
-.circleDiv {
-  border: 0px solid var(--light-purple);
-  border-radius: 40px;
-  width: 70px;
-  /* height: 200px; */
-  text-align: center;
-  margin: auto;
-}
-
 .countText {
   text-align: center;
-  /* font-size: 5rem; */
-  /* display: block; */
   font-size: 2.4rem;
   line-height: 60px;
   margin: auto;
   font-weight: 600;
 }
+
 .contriText {
   text-align: center;
+}
+
+/* mobile and tab ***************************************************************************************** */
+
+@media (max-width: 767px) {
+  .allDiv {
+    width: var(--tab-good-width);
+    margin-top: var(--tab-nav-margin);
+  }
+
+  .contributeCardExtraDivIntex {
+    width: var(--tab-good-width);
+  }
+
+  .headingText {
+    font-family: var(--heading-font);
+    font-size: var(--tab-title-fsz);
+    font-weight: var(--title-fwt);
+    text-align: center;
+  }
 }

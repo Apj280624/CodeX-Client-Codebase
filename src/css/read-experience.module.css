@@ -49,8 +49,9 @@
   padding: 20px 10px 10px 10px;
 }
 
+/* dont use var for font size here */
 .contentText {
-  font-size: 1.2rem;
+  font-size: 1.2rem; 
   font-weight: var(-big-desc-fwt);
   /* font-weight: 300; */
   margin: auto;
@@ -58,6 +59,7 @@
   text-align: left;
   /* border: 2px solid var(--light-purple); */
   background-color: #232234;
+  background-color: var(--grey-purple);
   border-radius: var(--contri-btn-border-rad);
   padding: 20px 20px 20px 20px;
   white-space: pre-wrap;
@@ -72,13 +74,17 @@
 .allDiv {
   width: var(--good-width);
   margin: auto;
-  margin-top: 150px;
+  margin-top: var(--nav-margin);
   margin-bottom: 100px;
 }
 
 /* mobile and tab ***************************************************************************************** */
 
 @media (max-width: 767px) {
+  .allDiv {
+    margin-top: var(--tab-nav-margin);
+  }
+
   .companyText {
     font-size: var(--tab-title-fsz);
     font-weight: var(--tab-title-fwt);
@@ -94,6 +100,7 @@
     font-weight: var(-tab-big-desc-fwt);
   }
 
+  /* dont use var for font size here */
   .contentText {
     font-size: 1rem;
   }

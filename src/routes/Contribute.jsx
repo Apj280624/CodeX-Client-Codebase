@@ -141,122 +141,124 @@ function Contribute() {
 
   const element = (
     <div>
-      <div className={contri.commonDiv}>
-        <div className="container-fluid">
-          <p className={`${contri.headingText} ${contri.commonText}`}>
-            We appreciate you here !
-          </p>
-          <p className={`${contri.alertText} ${contri.commonText}`}>
-            Remember ! You must sign in to contribute
-          </p>
+      <div className={contri.allDiv}>
+        <div className={contri.commonDiv}>
+          <div className="container-fluid">
+            <p className={`${contri.headingText} ${contri.commonText}`}>
+              We appreciate you here !
+            </p>
+            <p className={`${contri.alertText} ${contri.commonText}`}>
+              Remember ! You must sign in to contribute
+            </p>
+          </div>
         </div>
-      </div>
-      <div className={`${contri.detailsDiv} ${contri.commonDiv}`}>
-        <div className="container-fluid">
-          <div className="row">
-            <div className="col-lg-6">
-              <div className={contri.inputDiv}>
-                <CredentialInput
-                  name="companyName"
-                  placeholder="Company name *"
-                  width="100%"
-                  maxLength={vars.maxCompanyNameLen}
-                  onChange={updateInterviewExperience}
-                />
+        <div className={`${contri.detailsDiv} ${contri.commonDiv}`}>
+          <div className="container-fluid">
+            <div className="row">
+              <div className="col-lg-6">
+                <div className={contri.inputDiv}>
+                  <CredentialInput
+                    name="companyName"
+                    placeholder="Company name *"
+                    width="100%"
+                    maxLength={vars.maxCompanyNameLen}
+                    onChange={updateInterviewExperience}
+                  />
+                </div>
               </div>
-            </div>
-            <div className="col-lg-6">
-              <div className={contri.inputDiv}>
-                <CredentialInput
-                  name="roleName"
-                  placeholder="Role ( e.g. SDE, SWE, MTS etc ) *"
-                  width="100%"
-                  maxLength={vars.maxRoleNameLen}
-                  onChange={updateInterviewExperience}
-                />
+              <div className="col-lg-6">
+                <div className={contri.inputDiv}>
+                  <CredentialInput
+                    name="roleName"
+                    placeholder="Role ( e.g. SDE, SWE, MTS etc ) *"
+                    width="100%"
+                    maxLength={vars.maxRoleNameLen}
+                    onChange={updateInterviewExperience}
+                  />
+                </div>
               </div>
-            </div>
 
-            <div className="col-lg-6">
-              <div className={contri.inputDiv}>
-                <CredentialInput
-                  name="monthName"
-                  placeholder="Month ( e.g. Jan ) *"
-                  width="100%"
-                  onChange={updateInterviewExperience}
-                />
+              <div className="col-lg-6">
+                <div className={contri.inputDiv}>
+                  <CredentialInput
+                    name="monthName"
+                    placeholder="Month ( e.g. Jan ) *"
+                    width="100%"
+                    onChange={updateInterviewExperience}
+                  />
+                </div>
               </div>
-            </div>
-            <div className="col-lg-6">
-              <div className={contri.inputDiv}>
-                <CredentialInput
-                  name="year"
-                  placeholder="Year ( e.g. 2022, 2023 etc ) *"
-                  width="100%"
-                  onChange={updateInterviewExperience}
-                />
+              <div className="col-lg-6">
+                <div className={contri.inputDiv}>
+                  <CredentialInput
+                    name="year"
+                    placeholder="Year ( e.g. 2022, 2023 etc ) *"
+                    width="100%"
+                    onChange={updateInterviewExperience}
+                  />
+                </div>
               </div>
-            </div>
 
-            <div className="col-lg-6">
-              <div className={contri.inputDiv}>
-                <CredentialInput
-                  name="difficulty"
-                  placeholder="Difficulty level ( 1 - 5 ) *"
-                  width="100%"
-                  onChange={updateInterviewExperience}
-                />
+              <div className="col-lg-6">
+                <div className={contri.inputDiv}>
+                  <CredentialInput
+                    name="difficulty"
+                    placeholder="Difficulty level ( 1 - 5 ) *"
+                    width="100%"
+                    onChange={updateInterviewExperience}
+                  />
+                </div>
               </div>
-            </div>
-            <div className="col-lg-6">
-              <div className={contri.inputDiv}>
-                <CredentialInput
-                  name="opportunity"
-                  placeholder="Opportunity / Program ( e.g. Off campus, Martians etc ) *"
-                  width="100%"
-                  maxLength={vars.maxOpportunityLen}
-                  onChange={updateInterviewExperience}
-                />
+              <div className="col-lg-6">
+                <div className={contri.inputDiv}>
+                  <CredentialInput
+                    name="opportunity"
+                    placeholder="Opportunity / Program ( e.g. Off campus, Martians etc ) *"
+                    width="100%"
+                    maxLength={vars.maxOpportunityLen}
+                    onChange={updateInterviewExperience}
+                  />
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <div className={contri.commonDiv}>
-        <div className="container-fluid">
-          <p className={`${contri.noteText}`}>
-            Tip: Please do considering using multiple paragraphs for a cleaner
-            representation
-          </p>
-        </div>
-      </div>
-
-      <div className={`${contri.contentDiv} ${contri.commonDiv}`}>
-        <div className="container-fluid">
-          <TextArea
-            name="experience"
-            rows="8"
-            maxLength={vars.maxExperienceLen}
-            placeholder="Interview Experience"
-            onChange={updateInterviewExperience}
-          />
-          <TextArea
-            name="tip"
-            rows="4"
-            maxLength={vars.maxTipLen}
-            placeholder="Concluding Tips"
-            onChange={updateInterviewExperience}
-          />
-        </div>
-        <div className={contri.contriButtonDiv}>
+        <div className={contri.commonDiv}>
           <div className="container-fluid">
-            <CredentialButton
-              text="Contribute Experience"
-              width="100%"
-              // height="50px"
-              onClick={requestServerToContribute}
+            <p className={`${contri.noteText}`}>
+              Tip: Please do considering using multiple paragraphs for a cleaner
+              representation
+            </p>
+          </div>
+        </div>
+
+        <div className={`${contri.contentDiv} ${contri.commonDiv}`}>
+          <div className="container-fluid">
+            <TextArea
+              name="experience"
+              rows="8"
+              maxLength={vars.maxExperienceLen}
+              placeholder="Interview Experience"
+              onChange={updateInterviewExperience}
             />
+            <TextArea
+              name="tip"
+              rows="4"
+              maxLength={vars.maxTipLen}
+              placeholder="Concluding Tips"
+              onChange={updateInterviewExperience}
+            />
+          </div>
+          <div className={contri.contriButtonDiv}>
+            <div className="container-fluid">
+              <CredentialButton
+                text="Contribute Experience"
+                width="100%"
+                // height="50px"
+                onClick={requestServerToContribute}
+              />
+            </div>
           </div>
         </div>
       </div>

@@ -334,6 +334,26 @@ function trimObject(object) {
   return object;
 }
 
+// below two functions are to be used only for names, not for text
+
+function keepSingleSpace(str) {
+  return str.replace(/\s\s+/g, " "); // only one white space between any two words
+}
+
+function transformText(str) {
+  var splitStr = str.toLowerCase().split(" ");
+  // console.log(splitStr);
+  for (var i = 0; i < splitStr.length; i++) {
+    splitStr[i] =
+      splitStr[i].charAt(0).toUpperCase() + splitStr[i].substring(1);
+  }
+
+  var result = splitStr.join(" ");
+  result = keepSingleSpace(result); // only one white space between any two words
+
+  return result;
+}
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 function getStars(n) {
@@ -429,4 +449,5 @@ export {
   generateAxiosConfigHeader,
   manipulateInteviewExperiencesRoute,
   resizeField,
+  transformText,
 };

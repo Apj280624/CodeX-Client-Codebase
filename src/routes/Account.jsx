@@ -57,7 +57,14 @@ function Account() {
     }
   }
 
-  async function updateAccountDetails() {}
+  function deleteInterviewExperienceFromArray(id) {
+    console.log(id);
+    setArrayOfInterviewExperiences((prevArray) => {
+      return prevArray.filter(
+        (prevInterviewExperience) => prevInterviewExperience._id !== id
+      );
+    });
+  }
 
   ////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -103,10 +110,7 @@ function Account() {
   const element = (
     <div className={Acc.allDiv}>
       <div className="container-fluid">
-        <p
-          style={{ marginTop: "150px" }}
-          className={`${Acc.headingText} ${Acc.commonText}`}
-        >
+        <p className={`${Acc.headingText} ${Acc.commonText}`}>
           Here's your Personal details
         </p>
         <div className={Acc.detailsDiv}>
@@ -159,7 +163,7 @@ function Account() {
                   creationTimeStamp={getGoodDate(
                     interviewExperience.creationTimeStamp
                   )}
-                  onDelete={updateAccountDetails}
+                  onDelete={deleteInterviewExperienceFromArray}
                 />
               </div>
             ))}
