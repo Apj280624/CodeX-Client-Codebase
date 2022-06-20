@@ -31,37 +31,6 @@ function ReadExperience() {
   // console.log(id);
   // console.log(`${SERVER_ORIGIN}${routes.READ}/${id}`);
 
-  async function requestServerToGetInterviewExperience() {
-    try {
-      const response = await axios.get(
-        `${SERVER_ORIGIN}${routes.PARTICULAR_INTERVIEW_EXPERIENCE}/${id}`
-      );
-      setIsLoading(false);
-      // console.log(response.data.interviewExperience); // set loading to false
-      const data = await response.data.interviewExperience;
-
-      setInterviewExperience({
-        companyName: resizeField(data.companyName, 0, 30),
-        roleName: resizeField(data.roleName, 0, 50),
-        monthName: data.monthName,
-        year: data.year,
-        difficulty: getStars(data.difficulty),
-        opportunity: resizeField(data.opportunity, 0, 50),
-        creationTimeStamp: getGoodDate(data.creationTimeStamp),
-        firstName: resizeField(data.firstName, 0, 40),
-        lastName: resizeField(data.lastName, 0, 40),
-        collegeName: resizeField(data.collegeName, 0, 40),
-        branchName: resizeField(data.branchName, 0, 40),
-        graduationYear: data.graduationYear,
-        experience: data.experience,
-        tip: data.tip,
-      });
-    } catch (error) {
-      console.log(error);
-      toast(error.response.data, toastOptions);
-    }
-  }
-
   async function requestServerToVerifyToken(token) {
     try {
       const response = await axios.get(
@@ -87,9 +56,40 @@ function ReadExperience() {
       }
     }
 
+    async function requestServerToGetInterviewExperience() {
+      try {
+        const response = await axios.get(
+          `${SERVER_ORIGIN}${routes.PARTICULAR_INTERVIEW_EXPERIENCE}/${id}`
+        );
+        setIsLoading(false);
+        // console.log(response.data.interviewExperience); // set loading to false
+        const data = await response.data.interviewExperience;
+
+        setInterviewExperience({
+          companyName: resizeField(data.companyName, 0, 30),
+          roleName: resizeField(data.roleName, 0, 50),
+          monthName: data.monthName,
+          year: data.year,
+          difficulty: getStars(data.difficulty),
+          opportunity: resizeField(data.opportunity, 0, 50),
+          creationTimeStamp: getGoodDate(data.creationTimeStamp),
+          firstName: resizeField(data.firstName, 0, 40),
+          lastName: resizeField(data.lastName, 0, 40),
+          collegeName: resizeField(data.collegeName, 0, 40),
+          branchName: resizeField(data.branchName, 0, 40),
+          graduationYear: data.graduationYear,
+          experience: data.experience,
+          tip: data.tip,
+        });
+      } catch (error) {
+        console.log(error);
+        toast(error.response.data, toastOptions);
+      }
+    }
+
     verifySignInStatus();
     requestServerToGetInterviewExperience();
-  }, []);
+  }, [id]);
 
   const loader = (
     <div className={Read.loaderDiv}>

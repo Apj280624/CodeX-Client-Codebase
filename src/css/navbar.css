@@ -52,6 +52,7 @@
   font-family: var(--desc-font);
   font-weight: var(--login-btn-fwt);
   margin-right: 6px;
+  outline: none;
 }
 
 .nav-btn2 {
@@ -60,20 +61,34 @@
   margin-bottom: 0px;
   font-family: var(--desc-font);
   font-weight: var(--login-btn-fwt);
+  outline: none;
+  text-decoration: none;
+  /* border: none; */
+  /* border-style: outset;
+  border-radius: var(--login-btn-border-rad);
+  height: 40px;
+  padding-left: 8px;
+  padding-right: 8px; */
 }
+
+/* mobile and tab ***************************************************************************************** */
 
 @media (max-width: 990px) {
   .nav-btn1 {
+    /* background-color: transparent; */
     margin-left: 10px;
     margin-top: 5px;
     margin-bottom: 5px;
+    /* font-weight: 400; */
     /* margin: 5px; */
   }
 
   .nav-btn2 {
+    /* background-color: transparent; */
     margin-left: 10px;
     margin-top: 5px;
-    margin-bottom: 5px;
+    margin-bottom: 30px;
+    /* font-weight: 400; */
     /* margin: 5px; */
   }
 

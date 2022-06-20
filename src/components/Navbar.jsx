@@ -58,11 +58,11 @@ function MyNavbar(props) {
             <ul className="navbar-nav ms-auto">
               <li className="nav-item active">
                 {props.isSignedIn === true ? (
-                  <Link to="/account" className="nav-btn1 btn">
+                  <Link to={routes.ACCOUNT} className="nav-btn1 btn">
                     Account
                   </Link>
                 ) : (
-                  <Link to="/auth/sign-in" className="nav-btn1 btn">
+                  <Link to={routes.SIGN_IN} className="nav-btn1 btn">
                     Sign In
                   </Link>
                 )}
@@ -71,7 +71,7 @@ function MyNavbar(props) {
                 {props.isSignedIn === true ? (
                   <button className="nav-btn2 btn">Sign Out</button>
                 ) : (
-                  <Link to="/auth/sign-up" className="nav-btn2 btn">
+                  <Link to={routes.SIGN_UP} className="nav-btn2 btn">
                     Sign Up
                   </Link>
                 )}

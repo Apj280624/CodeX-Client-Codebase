@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "../css/credential-input.module.css";
 import UserAuth from "../css/user-auth.module.css";
 import credentialButton from "../css/credential-button.module.css";
@@ -16,6 +16,12 @@ function PasswordInput(props) {
   function handleClick() {
     setHidden((prevHidden) => !prevHidden);
   }
+
+  useEffect(() => {
+    if (props.isDone) {
+      setInputValue("");
+    }
+  }, [props.isDone]);
 
   return (
     <div className={UserAuth.passwordDiv}>

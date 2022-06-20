@@ -111,10 +111,10 @@ function Account() {
     <div className={Acc.allDiv}>
       <div className="container-fluid">
         <p className={`${Acc.headingText} ${Acc.commonText}`}>
-          Here's your Personal details
+          Here's your Personal Details
         </p>
         <div className={Acc.detailsDiv}>
-          <div class={Acc.marginDiv}>
+          <div className={Acc.marginDiv}>
             <PersonalDetailsCard
               firstName={personalDetails.firstName}
               lastName={personalDetails.lastName}

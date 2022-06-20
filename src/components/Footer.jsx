@@ -1,25 +1,18 @@
 import React from "react";
 import "../css/footer.css";
-import { vars } from "../utilities/ClientVarsUtility.js";
+import { routes, vars } from "../utilities/ClientVarsUtility.js";
+import { Link } from "react-router-dom";
 
 function Footer() {
   return (
     <div>
       <footer>
-        <div class="footer container-fluid">
-          <p class="footer-heading">Important links</p>
-          <a class="footer-tab" href="/">
-            Competitive Programming
-          </a>
-          <a class="footer-tab" href="/">
-            Data Structures and Algorithms
-          </a>
-          <a class="footer-tab" href="/">
+        <div className="footer container-fluid">
+          <p className="footer-heading">Important links</p>
+
+          <Link to={routes.INTERVIEW_EXPERIENCES} className="footer-tab">
             Interview Experiences
-          </a>
-          <a class="footer-tab" href="/">
-            Frequently Asked Questions
-          </a>
+          </Link>
           <p className="copyright-tab">{`${
             vars.brandName
           } © ${new Date().getFullYear()}`}</p>

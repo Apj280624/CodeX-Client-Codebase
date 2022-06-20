@@ -12,6 +12,7 @@ function CredentialButton(props) {
       style={inlineStyle}
       className={credentialButton.credentialButton}
       onClick={props.onClick}
+      disabled={props.isDisabled ? true : false}
     >
       {props.text}
     </button>

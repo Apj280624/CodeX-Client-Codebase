@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "../css/credential-input.module.css";
 
 function CredentialInput(props) {
@@ -15,6 +15,12 @@ function CredentialInput(props) {
     // console.log(props.name + evt.target.name);
     props.onChange({ [props.name]: evt.target.value });
   }
+
+  useEffect(() => {
+    if (props.isDone) {
+      setInputValue("");
+    }
+  }, [props.isDone]);
 
   const inlineStyle = {
     width: props.width,

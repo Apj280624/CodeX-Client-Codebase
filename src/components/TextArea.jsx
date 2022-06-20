@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import contri from "../css/contribute.module.css";
 import { vars } from "../utilities/ClientVarsUtility";
 
@@ -17,6 +17,12 @@ function TextArea(props) {
     // console.log(props.name + evt.target.name);
     props.onChange({ [props.name]: evt.target.value });
   }
+
+  useEffect(() => {
+    if (props.isDone) {
+      setText("");
+    }
+  }, [props.isDone]);
 
   return (
     <div>

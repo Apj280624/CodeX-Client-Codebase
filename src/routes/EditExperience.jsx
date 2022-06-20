@@ -13,6 +13,7 @@ import contri from "../css/contribute.module.css";
 // my modules
 import {
   generateAxiosConfigHeader,
+  transformInterviewExperienceObject,
   validateInterviewExperience,
 } from "../utilities/ClientUtility.js";
 import { SERVER_ORIGIN, routes, vars } from "../utilities/ClientVarsUtility.js";
@@ -38,45 +39,59 @@ experience belongs to the email or not
 function EditExperience() {
   const [isLoading, setIsLoading] = useState(true);
   const [isSignedIn, setIsSignedIn] = useState(false);
-  const [interviewExperience, setInterviewExperience] = useState({});
+  const [isSaveDisabled, setIsSaveDisabled] = useState(false);
+  const [isDone, setIsDone] = useState(false);
 
-  const { id } = useParams(); // curly brackets are imp
+  const [interviewExperience, setInterviewExperience] = useState({
+    companyName: "",
+    roleName: "",
+    monthName: "",
+    year: "",
+    difficulty: "",
+    opportunity: "",
+    experience: "",
+    tip: "",
+  });
 
+  let { id } = useParams(); // curly brackets are imp
   const navigate = useNavigate();
 
   /////////////////////////////////////////////////////////////////////////////////////////
 
-  async function requestServerToGetInterviewExperience(token) {
-    if (!token) {
-      navigate(-1); // user might have signed out, isSignedIn remains false, navigate back
-    } else {
-      try {
-        const response = await axios.get(
-          `${SERVER_ORIGIN + routes.PARTICULAR_INTERVIEW_EXPERIENCE + "/" + id}`
-        );
-        setIsLoading(false); // set loading to false, and fill cards with data
-        // console.log(response.data.interviewExperience); // set loading to false
-        const data = await response.data.interviewExperience;
-        // console.log(data);
-        setInterviewExperience({
-          companyName: data.companyName,
-          roleName: data.roleName,
-          monthName: data.monthName,
-          year: data.year,
-          difficulty: data.difficulty,
-          opportunity: data.opportunity,
-          experience: data.experience,
-          tip: data.tip,
-        });
-      } catch (error) {
-        // console.log(error);
-        toast(error.response.data, toastOptions);
-      }
-    }
-  }
-
   useEffect(() => {
     window.scrollTo(0, 0); // scroll to top after render
+
+    async function requestServerToGetInterviewExperience(token) {
+      if (!token) {
+        navigate(routes.INTERVIEW_EXPERIENCES); // user might have signed out, isSignedIn remains false, navigate back
+      } else {
+        try {
+          const response = await axios.get(
+            `${
+              SERVER_ORIGIN + routes.PARTICULAR_INTERVIEW_EXPERIENCE + "/" + id
+            }`
+          );
+          setIsLoading(false); // set loading to false, and fill cards with data
+          // console.log(response.data.interviewExperience); // set loading to false
+          const data = await response.data.interviewExperience;
+          // console.log(data);
+          setInterviewExperience({
+            companyName: data.companyName,
+            roleName: data.roleName,
+            monthName: data.monthName,
+            year: data.year,
+            difficulty: data.difficulty,
+            opportunity: data.opportunity,
+            experience: data.experience,
+            tip: data.tip,
+          });
+        } catch (error) {
+          // console.log(error);
+          toast(error.response.data, toastOptions);
+        }
+      }
+    }
+
     async function requestServerToVerifyToken(token) {
       try {
         const response = await axios.get(
@@ -102,10 +117,20 @@ function EditExperience() {
       }
     }
 
+    setIsDone(false);
+
+    /* use effect wont fall into an infinite loop even if isDone is in the dependency array and is being changed 
+    inside use effect because it only the works if the previous value of isDone is not equal to the new value
+    here new value will remain false until someone successfully posts, after that it would run once and 
+    isDone remains false, until some one posts again
+    */
+
     verifySignInStatus();
-  }, [navigate]);
+  }, [navigate, id, isDone]);
 
   //////////////////////////////////////////////////////////////////////////////////////////////
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////
 
   function updateInterviewExperience(updatedField) {
     setInterviewExperience((prevInterviewExperience) => ({
@@ -117,28 +142,36 @@ function EditExperience() {
   }
 
   async function requestServerToEditInterviewExperience() {
-    // first validate at front end, don't bother the server unnecessarily
+    // first transform and validate at front end, don't bother the server unnecessarily
+    await setInterviewExperience((prevInterviewExperience) =>
+      transformInterviewExperienceObject(prevInterviewExperience)
+    );
+
     const { res, desc } = validateInterviewExperience(interviewExperience);
     if (!res) {
       toast(desc, toastOptions);
     } else {
-      try {
-        const token = localStorage.getItem("token"); // pass token with contribution using generateAxiosConfig
-        if (!token) {
-          navigate(-1); // go back
+      const token = localStorage.getItem("token"); // pass token with contribution using generateAxiosConfig
+      if (!token) {
+        navigate(-1); // go back
+      } else {
+        setIsSaveDisabled(true);
+        try {
+          const response = await axios.put(
+            `${SERVER_ORIGIN}${routes.INTERVIEW_EXPERIENCE_EDIT}/${id}`,
+            transformInterviewExperienceObject(interviewExperience),
+            generateAxiosConfigHeader(token)
+          );
+          // console.log(response);
+          setIsSaveDisabled(false);
+          setIsDone(true);
+          toast(response.data, toastOptions);
+          // let fields remain same even if contribution is successful so user can still edit
+        } catch (error) {
+          // console.log(error);
+          setIsSaveDisabled(false);
+          toast(error.response.data, toastOptions); // donot reset the fields
         }
-
-        const response = await axios.put(
-          `${SERVER_ORIGIN}${routes.INTERVIEW_EXPERIENCE_EDIT}/${id}`,
-          interviewExperience,
-          generateAxiosConfigHeader(token)
-        );
-        // console.log(response);
-        toast(response.data, toastOptions);
-        // let fields remain same even if contribution is successful so user can still edit
-      } catch (error) {
-        // console.log(error);
-        toast(error.response.data, toastOptions); // donot reset the fields
       }
     }
   }
@@ -175,6 +208,7 @@ function EditExperience() {
                     width="100%"
                     initialValue={interviewExperience.companyName}
                     onChange={updateInterviewExperience}
+                    isDone={isDone}
                   />
                 </div>
               </div>
@@ -186,6 +220,7 @@ function EditExperience() {
                     width="100%"
                     initialValue={interviewExperience.roleName}
                     onChange={updateInterviewExperience}
+                    isDone={isDone}
                   />
                 </div>
               </div>
@@ -198,6 +233,7 @@ function EditExperience() {
                     width="100%"
                     initialValue={interviewExperience.monthName}
                     onChange={updateInterviewExperience}
+                    isDone={isDone}
                   />
                 </div>
               </div>
@@ -209,6 +245,7 @@ function EditExperience() {
                     width="100%"
                     initialValue={interviewExperience.year}
                     onChange={updateInterviewExperience}
+                    isDone={isDone}
                   />
                 </div>
               </div>
@@ -221,6 +258,7 @@ function EditExperience() {
                     width="100%"
                     initialValue={interviewExperience.difficulty}
                     onChange={updateInterviewExperience}
+                    isDone={isDone}
                   />
                 </div>
               </div>
@@ -232,6 +270,7 @@ function EditExperience() {
                     width="100%"
                     initialValue={interviewExperience.opportunity}
                     onChange={updateInterviewExperience}
+                    isDone={isDone}
                   />
                 </div>
               </div>
@@ -257,6 +296,7 @@ function EditExperience() {
               maxLength={vars.maxExperienceLen}
               initialValue={interviewExperience.experience}
               onChange={updateInterviewExperience}
+              isDone={isDone}
             />
             <TextArea
               name="tip"
@@ -265,6 +305,7 @@ function EditExperience() {
               placeholder="Concluding Tips"
               initialValue={interviewExperience.tip}
               onChange={updateInterviewExperience}
+              isDone={isDone}
             />
           </div>
           <div className={contri.contriButtonDiv}>
@@ -274,6 +315,7 @@ function EditExperience() {
                 width="100%"
                 // height="50px"
                 onClick={requestServerToEditInterviewExperience}
+                isDisabled={isSaveDisabled}
               />
             </div>
           </div>

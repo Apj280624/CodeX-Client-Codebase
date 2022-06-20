@@ -20,7 +20,7 @@ function ExperienceCard(props) {
   //  console.log(resizeObject);
 
   return (
-    <div onClick={handleReadClick} className="">
+    <div className="">
       <div className={experienceCard.outerDiv}>
         <p
           className={`${experienceCard.companyText} ${experienceCard.commonText}`}
@@ -49,7 +49,12 @@ function ExperienceCard(props) {
           {props.fullName}, {props.collegeName} {props.branchName} '
           {props.graduationYear}
         </p>
-        <CredentialButton width="50%" height="40px" text="Read" />
+        <CredentialButton
+          onClick={handleReadClick}
+          width="50%"
+          height="40px"
+          text="Read"
+        />
       </div>
     </div>
   );

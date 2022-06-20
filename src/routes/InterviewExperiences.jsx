@@ -17,7 +17,7 @@ import {
   generateAxiosConfigHeader,
   resizeObject,
   manipulateInteviewExperiencesRoute,
-  transformText,
+  transformToTitleCase,
 } from "../utilities/ClientUtility.js";
 
 import Toast, { toastOptions } from "../components/Toast.js";
@@ -105,8 +105,8 @@ function InterviewExperiences() {
 
   async function requestServerToGetSearchResults(keyword) {
     keyword = keyword.trim();
-    keyword = transformText(keyword);
-    console.log(keyword);
+    keyword = transformToTitleCase(keyword);
+    // console.log(keyword);
 
     if (!keyword || keyword.length === 0) {
       toast("Please enter something", toastOptions); // express won't be able to handle an empty param

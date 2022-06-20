@@ -11,7 +11,6 @@ https://stackoverflow.com/questions/56577358/how-to-get-rid-of-gap-between-input
   /* border-radius: 8px; */
   width: 500px;
   display: flex;
-  padding: 5px;
 }
 
 /* if you dont put display: flex in search-box they wont align, refer the article on top*/

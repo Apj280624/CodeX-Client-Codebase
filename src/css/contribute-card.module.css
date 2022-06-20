@@ -1,5 +1,6 @@
 .commonText {
   color: white;
+  overflow-wrap: break-word;
 }
 
 .titleText {
@@ -36,7 +37,7 @@
 
   .titleText {
     font-size: 2.4rem;
-    font-size: var(--tab-big-title-fsz);
+    font-size: var(--tab-title-fsz);
   }
 
   .subTitleText {

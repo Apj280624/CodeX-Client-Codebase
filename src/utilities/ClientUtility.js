@@ -24,13 +24,13 @@ function getInValidObject(result, description) {
 ///////////////////////////////////////// FIRST, LAST, COMPANY, ROLE NAME //////////////////////////////////////////////////
 
 function validateName(name, what, maxLen) {
-  if (name.length > maxLen) {
+  if (!name || name.length === 0) {
+    return getInValidObject(false, `${what} is not valid`);
+  } else if (name.length > maxLen) {
     return getInValidObject(
       false,
       `Length of ${what} should not exceed ${maxLen}`
     );
-  } else if (name.length === 0) {
-    return getInValidObject(false, `${what} is not valid`);
   }
 
   return getValidObject();
@@ -39,7 +39,7 @@ function validateName(name, what, maxLen) {
 ///////////////////////////////////////// COLLEGE, BRANCH, GRAD, MONTH, YEAR, DIFF ///////////////////////////////////////////
 
 function validateFromAvailable(name, what, available) {
-  if (!available.includes(name)) {
+  if (!name || !available.includes(name)) {
     var desc = `${what} should match one of `;
     var n = available.length; // assuming n>=2
     for (var i = 0; i < n; i++) {
@@ -60,13 +60,17 @@ function validateFromAvailable(name, what, available) {
 ///////////////////////////////////////////////// EMAIL ////////////////////////////////////////////////////
 
 function validateEmailAddress(emailAddress) {
-  if (emailAddress.length > vars.maxEmailAddressLen) {
+  if (
+    !emailAddress ||
+    emailAddress.length === 0 ||
+    !emailAddress.includes("@")
+  ) {
+    return getInValidObject(false, "Email Address is not valid");
+  } else if (emailAddress.length > vars.maxEmailAddressLen) {
     return getInValidObject(
       false,
       `Length of email address should not exceed ${vars.maxEmailAddressLen}`
     );
-  } else if (emailAddress.length === 0 || !emailAddress.includes("@")) {
-    return getInValidObject(false, "Email Address is not valid");
   }
 
   return getValidObject();
@@ -75,15 +79,15 @@ function validateEmailAddress(emailAddress) {
 //////////////////////////////////////////////// PASSWORD //////////////////////////////////////////////////
 
 function validatePassword(password) {
-  if (password.length > vars.maxPassLen) {
-    return getInValidObject(
-      false,
-      `Length of password should not exceed ${vars.maxPassLen}`
-    );
-  } else if (password.length < vars.minPassLen) {
+  if (!password || password.length < vars.minPassLen) {
     return getInValidObject(
       false,
       `Length of password should be atleast ${vars.minPassLen}`
+    );
+  } else if (password.length > vars.maxPassLen) {
+    return getInValidObject(
+      false,
+      `Length of password should not exceed ${vars.maxPassLen}`
     );
   }
 
@@ -95,7 +99,7 @@ function validatePassword(password) {
 ///////////////////////////////////////////////// OTP //////////////////////////////////////////////////////
 
 function validateOTP(OTP) {
-  if (OTP.length !== 6) {
+  if (!OTP || OTP.length !== 6) {
     return getInValidObject(false, "Length of the OTP should be 6");
   }
 
@@ -107,13 +111,13 @@ function validateOTP(OTP) {
 ////////////////////////////////////////// EXPERIENCE AND TIPS ////////////////////////////////////////////
 
 function validateExpTip(text, what, maxLen) {
-  if (text.length > maxLen) {
+  if (!text || text.length === 0) {
+    return getInValidObject(false, `${what} should not be empty`);
+  } else if (text.length > maxLen) {
     return getInValidObject(
       false,
       `Length of ${what} should not exceed ${maxLen}`
     );
-  } else if (text.length === 0) {
-    return getInValidObject(false, `${what} should not be empty`);
   }
 
   // add valiators like number of words
@@ -123,10 +127,7 @@ function validateExpTip(text, what, maxLen) {
 
 //////////////////////////////////////////// SIGNUP VALIDATION ///////////////////////////////////////////
 
-function validateSignUpCredentials(constUserCredentials) {
-  // the user credentials passed as an arguement are const and we cannot trim a const object so we use this way
-  let userCredentials = trimObject(constUserCredentials);
-
+function validateSignUpCredentials(userCredentials) {
   const firstNameObject = validateName(
     userCredentials.firstName,
     "First name",
@@ -193,10 +194,7 @@ function validateSignUpCredentials(constUserCredentials) {
 
 //////////////////////////////////////////// SIGNIN VALIDATION ///////////////////////////////////////////
 
-function validateSignInCredentials(constUserCredentials) {
-  // the user credentials passed as an arguement are const and we cannot trim a const object so we use this way
-  let userCredentials = trimObject(constUserCredentials);
-
+function validateSignInCredentials(userCredentials) {
   const emailAdressObject = validateEmailAddress(userCredentials.emailAddress);
   if (!emailAdressObject.res) {
     return emailAdressObject;
@@ -213,10 +211,7 @@ function validateSignInCredentials(constUserCredentials) {
 
 //////////////////////////////////////////// FORGOT PASSWORD VALIDATION ///////////////////////////////////////////
 
-function validateForgotPasswordCredentials(constUserCredentials) {
-  // the user credentials passed as an arguement are const and we cannot trim a const object so we use this way
-  let userCredentials = trimObject(constUserCredentials);
-
+function validateForgotPasswordCredentials(userCredentials) {
   const emailAdressObject = validateEmailAddress(userCredentials.emailAddress);
   if (!emailAdressObject.res) {
     return emailAdressObject;
@@ -238,13 +233,7 @@ function validateForgotPasswordCredentials(constUserCredentials) {
 
 ////////////////////////////////////////  CONTRIBUTION DETAILS VALIDATION //////////////////////////////////////
 
-function validateInterviewExperience(constInterviewExperience) {
-  // console.log(constInterviewExperience);
-  // the user credentials passed as an arguement are const and we cannot trim a const object so we use this way
-  let interviewExperience = trimObject(constInterviewExperience);
-
-  // console.log(interviewExperience);
-
+function validateInterviewExperience(interviewExperience) {
   const companyNameObject = validateName(
     interviewExperience.companyName,
     "Company name",
@@ -334,13 +323,17 @@ function trimObject(object) {
   return object;
 }
 
-// below two functions are to be used only for names, not for text
+function trimField(str) {
+  return str ? str.trim() : str;
+}
+
+// below two functions are to be used only for first, last and company name, not for text
 
 function keepSingleSpace(str) {
   return str.replace(/\s\s+/g, " "); // only one white space between any two words
 }
 
-function transformText(str) {
+function transformToTitleCase(str) {
   var splitStr = str.toLowerCase().split(" ");
   // console.log(splitStr);
   for (var i = 0; i < splitStr.length; i++) {
@@ -352,6 +345,76 @@ function transformText(str) {
   result = keepSingleSpace(result); // only one white space between any two words
 
   return result;
+}
+
+// this function doesnot convert remaining to lower case, for role name, reduces space
+function capitalizeFirstLetterOfEachWord(str) {
+  var splitStr = str.split(" ");
+  // console.log(splitStr);
+  for (var i = 0; i < splitStr.length; i++) {
+    splitStr[i] =
+      splitStr[i].charAt(0).toUpperCase() + splitStr[i].substring(1);
+  }
+
+  var result = splitStr.join(" ");
+  result = keepSingleSpace(result); // only one white space between any two words
+
+  return result;
+}
+
+// for opportunity, reduces space
+function capitalizeFirstLetterOfString(str) {
+  var splitStr = str.split(" ");
+
+  if (splitStr && splitStr[0]) {
+    splitStr[0] =
+      splitStr[0].charAt(0).toUpperCase() + splitStr[0].substring(1);
+  }
+
+  var result = splitStr.join(" ");
+  result = keepSingleSpace(result); // only one white space between any two words
+
+  return result;
+}
+
+function capitalizeAllLetters(str) {
+  return str ? str.toUpperCase() : str;
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+function transformInterviewExperienceObject(obj) {
+  // if (obj) {
+  obj = trimObject(obj);
+
+  obj.companyName = transformToTitleCase(obj.companyName);
+  obj.roleName = capitalizeFirstLetterOfEachWord(obj.roleName);
+  obj.monthName = transformToTitleCase(obj.monthName);
+  obj.opportunity = capitalizeFirstLetterOfString(obj.opportunity);
+
+  return obj;
+}
+
+function transformSignUpObject(obj) {
+  obj = trimObject(obj);
+  obj.firstName = transformToTitleCase(obj.firstName);
+  obj.lastName = transformToTitleCase(obj.lastName);
+  obj.collegeName = capitalizeAllLetters(obj.collegeName);
+  obj.branchName = capitalizeAllLetters(obj.branchName);
+
+  return obj;
+}
+
+function transformSignInObject(obj) {
+  obj = trimObject(obj);
+
+  return obj;
+}
+
+function transformForgotPasswordObject(obj) {
+  obj = trimObject(obj);
+
+  return obj;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -449,5 +512,13 @@ export {
   generateAxiosConfigHeader,
   manipulateInteviewExperiencesRoute,
   resizeField,
-  transformText,
+  transformToTitleCase,
+  capitalizeFirstLetterOfEachWord,
+  capitalizeFirstLetterOfString,
+  trimObject,
+  trimField,
+  transformInterviewExperienceObject,
+  transformSignUpObject,
+  transformSignInObject,
+  transformForgotPasswordObject,
 };

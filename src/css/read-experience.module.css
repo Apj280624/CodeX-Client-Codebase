@@ -17,7 +17,7 @@
   overflow-wrap: break-word;
 }
 
-/* overflow-wrap: break-word; workf perfect as of now it also breaks if needed and add space and all */
+/* overflow-wrap: break-word; works perfect as of now it also breaks if needed and add space and all */
 
 .companyText {
   font-size: var(--title-fsz);
@@ -51,7 +51,7 @@
 
 /* dont use var for font size here */
 .contentText {
-  font-size: 1.2rem; 
+  font-size: 1.2rem;
   font-weight: var(-big-desc-fwt);
   /* font-weight: 300; */
   margin: auto;

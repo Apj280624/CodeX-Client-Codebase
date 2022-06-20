@@ -15,6 +15,7 @@ import { useNavigate } from "react-router-dom";
 import {
   validateInterviewExperience,
   generateAxiosConfigHeader,
+  transformInterviewExperienceObject,
 } from "../utilities/ClientUtility.js";
 import { SERVER_ORIGIN, routes, vars } from "../utilities/ClientVarsUtility.js";
 import Toast, { toastOptions } from "../components/Toast.js";
@@ -33,14 +34,8 @@ if you dont put verifySignInStatus, navigate and requestServerToVerifyToken esli
   empty array which could be seen in detail on hovering
   has been talked about in: 
   https://stackoverflow.com/questions/55840294/how-to-fix-missing-dependency-warning-when-using-useeffect-react-hook
-*/
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-function Contribute() {
-  const [isLoading, setIsLoading] = useState(true);
-  const [isSignedIn, setIsSignedIn] = useState(false);
-  const initialInterviewExperience = {
+const initialInterviewExperience = {
     companyName: "",
     roleName: "",
     monthName: "",
@@ -51,10 +46,27 @@ function Contribute() {
     tip: "",
   };
 
+*/
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+function Contribute() {
+  const [isLoading, setIsLoading] = useState(true);
+  const [isSignedIn, setIsSignedIn] = useState(false);
+  const [isContriDisabled, setIsContriDisabled] = useState(false);
+  const [isDone, setIsDone] = useState(false);
+
   // you can also pass an empty object instead of initialInterviewExperience
-  const [interviewExperience, setInterviewExperience] = useState(
-    initialInterviewExperience
-  );
+  const [interviewExperience, setInterviewExperience] = useState({
+    companyName: "",
+    roleName: "",
+    monthName: "",
+    year: "",
+    difficulty: "",
+    opportunity: "",
+    experience: "",
+    tip: "",
+  });
 
   const navigate = useNavigate();
 
@@ -88,8 +100,16 @@ function Contribute() {
       }
     }
 
+    setIsDone(false);
+
+    /* use effect wont fall into an infinite loop even if isDone is in the dependency array and is being changed 
+    inside use effect because it only the works if the previous value of isDone is not equal to the new value
+    here new value will remain false until someone successfully posts, after that it would run once and 
+    isDone remains false, until some one posts again
+    */
+
     verifySignInStatus();
-  }, [navigate]); // pass an empty array so that useEffect is called only on the first mount, else it will fall into an infinite loop
+  }, [navigate, isDone]); // pass an empty array so that useEffect is called only on the first mount, else it will fall into an infinite loop
 
   ////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -103,30 +123,44 @@ function Contribute() {
   }
 
   async function requestServerToContribute() {
-    // first validate at front end, don't bother the server unnecessarily
+    // first transform and validate at front end, don't bother the server unnecessarily
+    // console.log(interviewExperience);
+
+    await setInterviewExperience((prevInterviewExperience) =>
+      transformInterviewExperienceObject(prevInterviewExperience)
+    );
+
     const { res, desc } = validateInterviewExperience(interviewExperience);
     if (!res) {
       toast(desc, toastOptions);
     } else {
-      try {
-        // console.log(interviewExperience);
-        const token = localStorage.getItem("token"); // pass token with contribution using generateAxiosConfig
-        if (!token) {
-          navigate(-1); // go back
+      const token = localStorage.getItem("token"); // pass token with contribution using generateAxiosConfig
+      if (!token) {
+        navigate(routes.INTERVIEW_EXPERIENCES); // go back
+      } else {
+        setIsContriDisabled(true);
+        try {
+          // console.log(interviewExperience);
+
+          const response = await axios.post(
+            SERVER_ORIGIN + routes.CONTRIBUTE,
+            interviewExperience,
+            generateAxiosConfigHeader(token)
+          );
+          // console.log(response);
+          setIsContriDisabled(false);
+
+          setIsDone(true);
+
+          toast(response.data, toastOptions);
+          // setInterviewExperience(initialInterviewExperience);
+          // reset fields if contribution is successful so user cannot contribute the same thing
+        } catch (error) {
+          console.log(error);
+          setIsContriDisabled(false);
+          toast(error.response.data, toastOptions);
+          // dont reset the fields if error occurred, user can reuse it
         }
-        const response = await axios.post(
-          SERVER_ORIGIN + routes.CONTRIBUTE,
-          interviewExperience,
-          generateAxiosConfigHeader(token)
-        );
-        // console.log(response);
-        toast(response.data, toastOptions);
-        // setInterviewExperience(initialInterviewExperience);
-        // reset fields if contribution is successful so user cannot contribute the same thing
-      } catch (error) {
-        // console.log(error);
-        toast(error.response.data, toastOptions);
-        // dont reset the fields if error occurred, user can reuse it
       }
     }
   }
@@ -163,6 +197,7 @@ function Contribute() {
                     width="100%"
                     maxLength={vars.maxCompanyNameLen}
                     onChange={updateInterviewExperience}
+                    isDone={isDone}
                   />
                 </div>
               </div>
@@ -174,6 +209,7 @@ function Contribute() {
                     width="100%"
                     maxLength={vars.maxRoleNameLen}
                     onChange={updateInterviewExperience}
+                    isDone={isDone}
                   />
                 </div>
               </div>
@@ -185,6 +221,7 @@ function Contribute() {
                     placeholder="Month ( e.g. Jan ) *"
                     width="100%"
                     onChange={updateInterviewExperience}
+                    isDone={isDone}
                   />
                 </div>
               </div>
@@ -195,6 +232,7 @@ function Contribute() {
                     placeholder="Year ( e.g. 2022, 2023 etc ) *"
                     width="100%"
                     onChange={updateInterviewExperience}
+                    isDone={isDone}
                   />
                 </div>
               </div>
@@ -206,6 +244,7 @@ function Contribute() {
                     placeholder="Difficulty level ( 1 - 5 ) *"
                     width="100%"
                     onChange={updateInterviewExperience}
+                    isDone={isDone}
                   />
                 </div>
               </div>
@@ -217,6 +256,7 @@ function Contribute() {
                     width="100%"
                     maxLength={vars.maxOpportunityLen}
                     onChange={updateInterviewExperience}
+                    isDone={isDone}
                   />
                 </div>
               </div>
@@ -241,6 +281,7 @@ function Contribute() {
               maxLength={vars.maxExperienceLen}
               placeholder="Interview Experience"
               onChange={updateInterviewExperience}
+              isDone={isDone}
             />
             <TextArea
               name="tip"
@@ -248,6 +289,7 @@ function Contribute() {
               maxLength={vars.maxTipLen}
               placeholder="Concluding Tips"
               onChange={updateInterviewExperience}
+              isDone={isDone}
             />
           </div>
           <div className={contri.contriButtonDiv}>
@@ -257,6 +299,7 @@ function Contribute() {
                 width="100%"
                 // height="50px"
                 onClick={requestServerToContribute}
+                isDisabled={isContriDisabled}
               />
             </div>
           </div>

@@ -8,7 +8,10 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 // my modules
-import { validateSignInCredentials } from "../utilities/ClientUtility.js";
+import {
+  transformSignInObject,
+  validateSignInCredentials,
+} from "../utilities/ClientUtility.js";
 import { SERVER_ORIGIN, routes, vars } from "../utilities/ClientVarsUtility.js";
 import Toast, { toastOptions } from "../components/Toast.js";
 
@@ -25,7 +28,6 @@ const axios = require("axios").default;
 
 function SignIn() {
   const navigate = useNavigate();
-  const location = useLocation();
 
   const [userCredentials, setUserCredentials] = useState({
     emailAddress: "",
@@ -44,6 +46,11 @@ function SignIn() {
   async function requestServerToSignUserIn() {
     // console.log(userCredentials);
     // first validate at front end, don't bother the server unnecessarily
+
+    await setUserCredentials((prevUserCredentials) =>
+      transformSignInObject(prevUserCredentials)
+    );
+
     const { res, desc } = await validateSignInCredentials(userCredentials);
     // console.log(desc);
     if (!res) {
@@ -59,11 +66,11 @@ function SignIn() {
         if (response.data.token) {
           // console.log(response.data.token);
           localStorage.setItem("token", response.data.token); // store or replace token on client side
-          toast(response.data.statusText);
+          // toast(response.data.statusText);
           navigate(routes.INTERVIEW_EXPERIENCES);
         }
       } catch (error) {
-        console.log(error);
+        // console.log(error);
         toast(error.response.data);
       }
     }
@@ -100,6 +107,10 @@ function SignIn() {
           />
         </div>
         <div className={UserAuth.textDiv}>
+          <Link to={routes.HOME} className={UserAuth.fpText}>
+            Home
+          </Link>
+          <p className={UserAuth.dotText}> • </p>
           <Link to={routes.FORGOT_PASSWORD} className={UserAuth.fpText}>
             Forgot password
           </Link>

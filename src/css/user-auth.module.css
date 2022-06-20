@@ -9,7 +9,7 @@
 .headingDiv {
   margin: auto;
   margin-top: 50px;
-  width: 90%;
+  width: 80%;
 }
 
 .signInDiv {
@@ -40,9 +40,9 @@
   margin: 15px auto 15px auto;
 }
 
-.otpButton:hover {
+/* .otpButton:hover {
   color: var(--light-button-hover-color);
-}
+} */
 
 .buttonDiv {
   margin: 40px 0 40px 0;
@@ -79,12 +79,13 @@
 
 /* mobile and tab ***************************************************************************************** */
 
-/* @media (min-width: 768px) and (max-width: 1080px) {
-  .signInDiv {
+@media (max-width: 768px) and (min-width: 600px) {
+  .heading {
+    font-size: var(--tab-title-fsz);
   }
-} */
+}
 
-@media (max-width: 600px) {
+@media (max-width: 600px) and (min-width: 500px) {
   .signInDiv {
     width: var(--tab-good-width);
     /* reduce text size */
@@ -93,5 +94,26 @@
   .signUpDiv {
     width: var(--tab-good-width);
     /* reduce text size */
+  }
+
+  .heading {
+    font-size: var(--tab-title-fsz);
+  }
+}
+
+@media (max-width: 500px) {
+  .signInDiv {
+    width: var(--tab-good-width);
+    margin-top: 100px;
+    /* reduce text size */
+  }
+
+  .signUpDiv {
+    width: var(--tab-good-width);
+    /* reduce text size */
+  }
+
+  .heading {
+    font-size: var(--tab-title-fsz);
   }
 }

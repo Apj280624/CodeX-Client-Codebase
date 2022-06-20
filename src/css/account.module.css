@@ -24,6 +24,7 @@
   font-size: var(--desc-font);
   font-family: var(--desc-font);
   font-weight: var(--big-desc-fwt);
+  /* font-weight: 300; */
 
   /* font-size: 1rem; */
   /* font-size: var(--tab-big-desc-fsz); */
@@ -127,9 +128,6 @@
   }
 
   .headingText {
-    font-family: var(--heading-font);
     font-size: var(--tab-title-fsz);
-    font-weight: var(--title-fwt);
-    text-align: center;
   }
 }

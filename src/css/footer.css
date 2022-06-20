@@ -29,5 +29,6 @@
 
 .copyright-tab {
   margin-top: 40px;
-  font-weight: var(--login-btn-fwt);
+  font-size: 1rem;
+  font-weight: var(--sub-title-fwt);
 }

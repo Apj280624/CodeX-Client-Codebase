@@ -11,6 +11,8 @@ import "react-toastify/dist/ReactToastify.css";
 import {
   validateSignUpCredentials,
   validateEmailAddress,
+  transformSignUpObject,
+  trimField,
 } from "../utilities/ClientUtility.js";
 import { SERVER_ORIGIN, routes, vars } from "../utilities/ClientVarsUtility.js";
 import Toast, { toastOptions } from "../components/Toast.js";
@@ -20,6 +22,10 @@ const axios = require("axios").default;
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 function SignUp() {
+  const [isSignUpDisabled, setIsSignUpDisabled] = useState(false);
+  const [isOTPDisabled, setIsOTPDisabled] = useState(false);
+  const [isDone, setIsDone] = useState(false);
+
   const [userCredentials, setUserCredentials] = useState({
     firstName: "",
     lastName: "",
@@ -42,19 +48,25 @@ function SignUp() {
 
   async function requestServerToSendOTP() {
     // console.log(userCredentials.emailAddress);
-    const { res, desc } = validateEmailAddress(userCredentials.emailAddress);
+    // no need to transform object here
+    const { res, desc } = validateEmailAddress(
+      trimField(userCredentials.emailAddress)
+    );
     if (!res) {
       // console.log(desc);
       toast(desc, toastOptions);
     } else {
+      setIsOTPDisabled(true);
       try {
         const response = await axios.put(SERVER_ORIGIN + routes.VOTP, {
-          emailAddress: userCredentials.emailAddress,
+          emailAddress: trimField(userCredentials.emailAddress),
         });
         // console.log(response.data);
+        setIsOTPDisabled(false);
         toast(response.data, toastOptions);
       } catch (error) {
         // console.log(error.response.data);
+        setIsOTPDisabled(false);
         toast(error.response.data, toastOptions);
       }
     }
@@ -62,22 +74,32 @@ function SignUp() {
 
   async function requestServerToSignUserUp() {
     // console.log(userCredentials);
-    // first validate at front end, don't bother the server unnecessarily
+    // first transform and validate at front end, don't bother the server unnecessarily
+
+    await setUserCredentials((prevUserCredentials) =>
+      transformSignUpObject(prevUserCredentials)
+    );
+
     const { res, desc } = validateSignUpCredentials(userCredentials);
+
     // console.log(desc);
     if (!res) {
       toast(desc, toastOptions);
     } else {
       // console.log(userCredentials);
+      setIsSignUpDisabled(true);
       try {
         const response = await axios.post(
           SERVER_ORIGIN + routes.SIGN_UP,
           userCredentials
         );
         // console.log(response);
+        setIsSignUpDisabled(false);
+        setIsDone(true);
         toast(response.data, toastOptions);
       } catch (error) {
         // console.log(error);
+        setIsSignUpDisabled(false);
         toast(error.response.data, toastOptions);
       }
     }
@@ -96,6 +118,7 @@ function SignUp() {
             name="firstName"
             width="49.5%"
             maxLength={vars.maxNameLen}
+            isDone={isDone}
             onChange={updateUserCredentials}
           />
           <div className={UserAuth.otpBtnHalfInputDiv}>
@@ -105,6 +128,7 @@ function SignUp() {
               name="lastName"
               width="49.5%"
               maxLength={vars.maxNameLen}
+              isDone={isDone}
               onChange={updateUserCredentials}
             />
           </div>
@@ -116,6 +140,7 @@ function SignUp() {
             placeholder="College name ( only LNCT / LNCTS / LNCTE )"
             name="collegeName"
             width="100%"
+            isDone={isDone}
             onChange={updateUserCredentials}
           />
         </div>
@@ -126,6 +151,7 @@ function SignUp() {
             placeholder="Branch name ( e.g. CS, IT, EC etc )"
             name="branchName"
             width="100%"
+            isDone={isDone}
             onChange={updateUserCredentials}
           />
         </div>
@@ -136,6 +162,7 @@ function SignUp() {
             placeholder="Graduation year ( e.g. 2022, 2023 etc )"
             name="graduationYear"
             width="100%"
+            isDone={isDone}
             onChange={updateUserCredentials}
           />
         </div>
@@ -146,10 +173,15 @@ function SignUp() {
             placeholder="Email address"
             name="emailAddress"
             width="100%"
+            isDone={isDone}
             onChange={updateUserCredentials}
           />
         </div>
-        <PasswordInput name="password" onChange={updateUserCredentials} />
+        <PasswordInput
+          name="password"
+          onChange={updateUserCredentials}
+          isDone={isDone}
+        />
 
         <div className={UserAuth.otpDiv}>
           <CredentialInput
@@ -158,6 +190,7 @@ function SignUp() {
             name="OTP"
             width="49.5%"
             maxLength={vars.maxOTPLen}
+            isDone={isDone}
             onChange={updateUserCredentials}
           />
           <div className={UserAuth.otpBtnHalfInputDiv}>
@@ -165,6 +198,7 @@ function SignUp() {
               text="Send OTP"
               onClick={requestServerToSendOTP}
               width="49.5%"
+              isDisabled={isOTPDisabled}
             />
           </div>
         </div>
@@ -174,10 +208,15 @@ function SignUp() {
             text="Sign Up"
             onClick={requestServerToSignUserUp}
             width="100%"
+            isDisabled={isSignUpDisabled}
           />
         </div>
 
         <div className={UserAuth.textDiv}>
+          <Link to={routes.HOME} className={UserAuth.fpText}>
+            Home
+          </Link>
+          <p className={UserAuth.dotText}> • </p>
           <Link to={routes.SIGN_IN} className={UserAuth.fpText}>
             Sign In
           </Link>

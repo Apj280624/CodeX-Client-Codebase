@@ -12,7 +12,7 @@ const vars = {
   maxCollegeNameLen: 60,
   maxEmailAddressLen: 400,
   maxCompanyNameLen: 60,
-  maxRoleNameLen: 40,
+  maxRoleNameLen: 50,
   maxOpportunityLen: 60,
   maxExperienceLen: 10000,
   maxTipLen: 2000,
