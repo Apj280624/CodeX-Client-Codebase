@@ -46,6 +46,12 @@ const initialInterviewExperience = {
     tip: "",
   };
 
+
+when contribution is successful, we reset the interview object and setIsDone is called which resets the input values
+then useeffect is called as it is dependent upon isDone, and again nav verification is done and isDone is set to false
+if isDone remains true we wont be able to make the next contribution just after the first one, we would need a 
+refresh, we dont want to refresh
+
 */
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -56,8 +62,7 @@ function Contribute() {
   const [isContriDisabled, setIsContriDisabled] = useState(false);
   const [isDone, setIsDone] = useState(false);
 
-  // you can also pass an empty object instead of initialInterviewExperience
-  const [interviewExperience, setInterviewExperience] = useState({
+  const initialInterviewExperienceObject = {
     companyName: "",
     roleName: "",
     monthName: "",
@@ -66,7 +71,12 @@ function Contribute() {
     opportunity: "",
     experience: "",
     tip: "",
-  });
+  };
+
+  // you can also pass an empty object instead of initialInterviewExperience
+  const [interviewExperience, setInterviewExperience] = useState(
+    initialInterviewExperienceObject
+  );
 
   const navigate = useNavigate();
 
@@ -102,14 +112,8 @@ function Contribute() {
 
     setIsDone(false);
 
-    /* use effect wont fall into an infinite loop even if isDone is in the dependency array and is being changed 
-    inside use effect because it only the works if the previous value of isDone is not equal to the new value
-    here new value will remain false until someone successfully posts, after that it would run once and 
-    isDone remains false, until some one posts again
-    */
-
     verifySignInStatus();
-  }, [navigate, isDone]); // pass an empty array so that useEffect is called only on the first mount, else it will fall into an infinite loop
+  }, [navigate]); // pass an empty array so that useEffect is called only on the first mount, else it will fall into an infinite loop
 
   ////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -140,20 +144,18 @@ function Contribute() {
       } else {
         setIsContriDisabled(true);
         try {
-          // console.log(interviewExperience);
-
           const response = await axios.post(
             SERVER_ORIGIN + routes.CONTRIBUTE,
             interviewExperience,
             generateAxiosConfigHeader(token)
           );
-          // console.log(response);
-          setIsContriDisabled(false);
 
+          setInterviewExperience(initialInterviewExperienceObject);
+          setIsContriDisabled(false);
           setIsDone(true);
 
           toast(response.data, toastOptions);
-          // setInterviewExperience(initialInterviewExperience);
+
           // reset fields if contribution is successful so user cannot contribute the same thing
         } catch (error) {
           console.log(error);

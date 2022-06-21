@@ -32,6 +32,9 @@ other tab and then signs in with an email 'Y' and then make an edit request then
 because at the server side the search condition is email,id so it will ensure whether the interview
 experience belongs to the email or not
 
+refer to contribution component if need to know about resetting interview experience fields
+here we are allowing the user to reedit even after saving changes
+
 */
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -42,7 +45,7 @@ function EditExperience() {
   const [isSaveDisabled, setIsSaveDisabled] = useState(false);
   const [isDone, setIsDone] = useState(false);
 
-  const [interviewExperience, setInterviewExperience] = useState({
+  const initialInterviewExperienceObject = {
     companyName: "",
     roleName: "",
     monthName: "",
@@ -51,7 +54,11 @@ function EditExperience() {
     opportunity: "",
     experience: "",
     tip: "",
-  });
+  };
+
+  const [interviewExperience, setInterviewExperience] = useState(
+    initialInterviewExperienceObject
+  );
 
   let { id } = useParams(); // curly brackets are imp
   const navigate = useNavigate();
@@ -117,16 +124,10 @@ function EditExperience() {
       }
     }
 
-    setIsDone(false);
-
-    /* use effect wont fall into an infinite loop even if isDone is in the dependency array and is being changed 
-    inside use effect because it only the works if the previous value of isDone is not equal to the new value
-    here new value will remain false until someone successfully posts, after that it would run once and 
-    isDone remains false, until some one posts again
-    */
+    // setIsDone(false);
 
     verifySignInStatus();
-  }, [navigate, id, isDone]);
+  }, [navigate, id]);
 
   //////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -163,10 +164,12 @@ function EditExperience() {
             generateAxiosConfigHeader(token)
           );
           // console.log(response);
+
           setIsSaveDisabled(false);
-          setIsDone(true);
           toast(response.data, toastOptions);
-          // let fields remain same even if contribution is successful so user can still edit
+          /* let fields remain same even if edit is successful so user can still edit, if you wanna reset fields on
+          refer to the contribution component
+          */
         } catch (error) {
           // console.log(error);
           setIsSaveDisabled(false);
