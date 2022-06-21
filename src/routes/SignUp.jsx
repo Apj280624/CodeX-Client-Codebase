@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import CredentialInput from "../components/CredentialInput";
 import CredentialButton from "../components/CredentialButton";
 import PasswordInput from "../components/PasswordInput";
@@ -26,7 +26,7 @@ function SignUp() {
   const [isOTPDisabled, setIsOTPDisabled] = useState(false);
   const [isDone, setIsDone] = useState(false);
 
-  const [userCredentials, setUserCredentials] = useState({
+  const initialSignUpObject = {
     firstName: "",
     lastName: "",
     collegeName: "",
@@ -35,7 +35,9 @@ function SignUp() {
     emailAddress: "",
     password: "",
     OTP: "",
-  });
+  };
+
+  const [userCredentials, setUserCredentials] = useState(initialSignUpObject);
 
   async function updateUserCredentials(updatedField) {
     await setUserCredentials((prevUserCredentials) => ({
@@ -94,6 +96,7 @@ function SignUp() {
           userCredentials
         );
         // console.log(response);
+        setUserCredentials(initialSignUpObject);
         setIsSignUpDisabled(false);
         setIsDone(true);
         toast(response.data, toastOptions);
@@ -105,10 +108,14 @@ function SignUp() {
     }
   }
 
+  useEffect(() => {
+    window.scrollTo(0, 0); // scroll to top after render
+  }, []); // put an empty dep array else it might run on every time you type
+
   return (
     <div>
       <div className={UserAuth.headingDiv}>
-        <p className={UserAuth.heading}>Join CodeX today</p>
+        <p className={UserAuth.heading}>Join {vars.brandName} today</p>
       </div>
       <div className={UserAuth.signUpDiv}>
         <div className={UserAuth.otpDiv}>
@@ -181,6 +188,7 @@ function SignUp() {
           name="password"
           onChange={updateUserCredentials}
           isDone={isDone}
+          text="Password"
         />
 
         <div className={UserAuth.otpDiv}>

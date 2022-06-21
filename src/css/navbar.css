@@ -53,6 +53,7 @@
   font-weight: var(--login-btn-fwt);
   margin-right: 6px;
   outline: none;
+  box-shadow: none !important;
 }
 
 .nav-btn2 {
@@ -63,13 +64,10 @@
   font-weight: var(--login-btn-fwt);
   outline: none;
   text-decoration: none;
-  /* border: none; */
-  /* border-style: outset;
-  border-radius: var(--login-btn-border-rad);
-  height: 40px;
-  padding-left: 8px;
-  padding-right: 8px; */
+  box-shadow: none !important;
 }
+
+/* box-shadow: none !important; to remove the click effect */
 
 /* mobile and tab ***************************************************************************************** */
 

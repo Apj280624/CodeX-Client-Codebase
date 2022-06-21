@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, HashRouter } from "react-router-dom";
 
 import Home from "./routes/Home";
 import InterviewExperiences from "./routes/InterviewExperiences";
@@ -18,7 +18,7 @@ import { routes, vars } from "./utilities/ClientVarsUtility.js";
 
 function App() {
   return (
-    <BrowserRouter>
+    <HashRouter>
       <Routes>
         {/* <Route path="/" element={<Home />} /> */}
         <Route path={routes.HOME} element={<Home />} />
@@ -51,7 +51,7 @@ function App() {
         {/* <Route path="/account" element={<Account />} /> */}
         <Route path={routes.ACCOUNT} element={<Account />} />
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 

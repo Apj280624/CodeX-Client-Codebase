@@ -48,6 +48,7 @@ function InterviewExperiences() {
     useState([]);
 
   async function requestServerToGetInterviewExperiences() {
+    setIsLoading(true);
     try {
       var response = await axios.get(
         `${SERVER_ORIGIN}${routes.INTERVIEW_EXPERIENCES}/${"all"}`
@@ -92,10 +93,10 @@ function InterviewExperiences() {
       }
     }
 
-    // AOS.init({
-    //   offset: 300,
-    //   duration: 800,
-    // });
+    AOS.init({
+      offset: 200,
+      duration: 800,
+    });
 
     verifySignInStatus();
     requestServerToGetInterviewExperiences();
@@ -146,7 +147,11 @@ function InterviewExperiences() {
   );
 
   const list = arrayOfInterviewExperiences.map((interviewExperience) => (
-    <div key={interviewExperience._id} className="col-lg-4 col-md-6">
+    <div
+      data-aos="zoom-in"
+      key={interviewExperience._id}
+      className="col-lg-4 col-md-6"
+    >
       <ExperienceCard
         id={interviewExperience._id}
         companyName={interviewExperience.companyName}
@@ -173,7 +178,7 @@ function InterviewExperiences() {
             ) : (
               <p className={Intex.emptyText}>
                 {isSearched
-                  ? "Sorry! we found nothing matching your search"
+                  ? "Sorry ! we found nothing matching your search"
                   : "Hey, you have the chance to be the first one to contribute !"}
               </p>
             )}
@@ -189,7 +194,7 @@ function InterviewExperiences() {
       <div className={Intex.contributeCardExtraDivIntex}>
         <ContributeCard />
       </div>
-      <div className={Intex.searchBarExtraDivIntex}>
+      <div data-aos="zoom-in" className={Intex.searchBarExtraDivIntex}>
         <SearchBar onClick={requestServerToGetSearchResults} />
       </div>
       {isSearched ? (

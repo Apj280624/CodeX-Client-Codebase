@@ -64,7 +64,21 @@
 
 /* mobile and tab ***************************************************************************************** */
 
-@media (max-width: 992px) and (min-width: 768px) {
+/* @media (max-width: 1500px) and (min-width: 992px) {
+  .cardDiv {
+    width: 70%;
+  }
+
+  .leftDiv {
+    margin-left: 0;
+  }
+
+  .rightDiv {
+    margin-right: 0;
+  }
+} */
+
+@media (max-width: 991.33px) and (min-width: 768px) {
   .topText {
     font-size: var(--tab-big-title-fsz);
     font-weight: var(--tab-big-title-fwt);

@@ -2,12 +2,7 @@ import React, { useState } from "react";
 import "../css/searchbar.css";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
-import {
-  faSocks,
-  faXmark,
-  faMagnifyingGlass,
-} from "@fortawesome/free-solid-svg-icons";
+import { faXmark, faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 
 function SearchBar(props) {
   const [keyword, setKeyword] = useState("");

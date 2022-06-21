@@ -19,6 +19,20 @@ const axios = require("axios").default;
 function MyNavbar(props) {
   // console.log(props);
 
+  const navigate = useNavigate();
+
+  function handleSignOutClick() {
+    localStorage.removeItem("token");
+    if (props.onSignOutClick) {
+      /* this check is imp because only the home function provides this function as a prop, because we do navigate 
+      to  homepage on signout, but if we signout from the home page itself navbar account/signout button wont update
+      to signin/signout, that's why we have passed a function from home, which allow navbar to alter its state
+      */
+      props.onSignOutClick();
+    }
+    navigate(routes.HOME);
+  }
+
   return (
     <div>
       <nav className="navbar-custom navbar navbar-expand-lg navbar-dark fixed-top">
@@ -58,7 +72,7 @@ function MyNavbar(props) {
             <ul className="navbar-nav ms-auto">
               <li className="nav-item active">
                 {props.isSignedIn === true ? (
-                  <Link to={routes.ACCOUNT} className="nav-btn1 btn">
+                  <Link to={routes.ACCOUNT} className="btn nav-btn1">
                     Account
                   </Link>
                 ) : (
@@ -69,7 +83,9 @@ function MyNavbar(props) {
               </li>
               <li className="nav-item active">
                 {props.isSignedIn === true ? (
-                  <button className="nav-btn2 btn">Sign Out</button>
+                  <button className="nav-btn2 btn" onClick={handleSignOutClick}>
+                    Sign Out
+                  </button>
                 ) : (
                   <Link to={routes.SIGN_UP} className="nav-btn2 btn">
                     Sign Up

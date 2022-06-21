@@ -29,10 +29,12 @@ const axios = require("axios").default;
 function SignIn() {
   const navigate = useNavigate();
 
-  const [userCredentials, setUserCredentials] = useState({
+  const initialSignInObject = {
     emailAddress: "",
     password: "",
-  });
+  };
+
+  const [userCredentials, setUserCredentials] = useState(initialSignInObject);
 
   async function updateUserCredentials(updatedField) {
     await setUserCredentials((prevUserCredentials) => ({
@@ -63,18 +65,29 @@ function SignIn() {
           userCredentials
         );
         // console.log(response.data);
+
         if (response.data.token) {
           // console.log(response.data.token);
+          setUserCredentials(initialSignInObject);
           localStorage.setItem("token", response.data.token); // store or replace token on client side
           // toast(response.data.statusText);
           navigate(routes.INTERVIEW_EXPERIENCES);
+        } else {
+          toast(
+            "We were to unable to sign you up. Please try again",
+            toastOptions
+          );
         }
       } catch (error) {
         // console.log(error);
-        toast(error.response.data);
+        toast(error.response.data, toastOptions);
       }
     }
   }
+
+  useEffect(() => {
+    window.scrollTo(0, 0); // scroll to top after render
+  }, []); // put an empty dep array else it might run on every time you type
 
   // useEffect(() => {
   //   window.onpopstate = (e) => {
@@ -86,7 +99,7 @@ function SignIn() {
   return (
     <div>
       <div className={UserAuth.headingDiv}>
-        <p className={UserAuth.heading}>Sign In to CodeX</p>
+        <p className={UserAuth.heading}>Sign In to {vars.brandName}</p>
       </div>
       <div className={UserAuth.signInDiv}>
         <div className={UserAuth.inputDiv}>
@@ -98,7 +111,11 @@ function SignIn() {
             onChange={updateUserCredentials}
           />
         </div>
-        <PasswordInput name="password" onChange={updateUserCredentials} />
+        <PasswordInput
+          name="password"
+          onChange={updateUserCredentials}
+          text="Password"
+        />
         <div className={UserAuth.buttonDiv}>
           <CredentialButton
             text="Sign In"

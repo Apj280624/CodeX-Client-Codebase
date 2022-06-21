@@ -54,16 +54,21 @@ function Home() {
     }
 
     AOS.init({
-      offset: 120,
+      offset: 200,
       duration: 800,
     });
 
     verifySignInStatus();
   }, []);
 
+  // only the home component provides this function to navbar
+  function updateSignInStatus() {
+    setIsSignedIn(false);
+  }
+
   return (
     <div>
-      <Navbar isSignedIn={isSignedIn} />
+      <Navbar isSignedIn={isSignedIn} onSignOutClick={updateSignInStatus} />
       <div className={Temp.topDiv}>
         <p className={`${Temp.topText} ${Temp.commonText}`}>
           Confused with the resources around the web. Don't worry we got you
@@ -76,13 +81,20 @@ function Home() {
           <div className="row">
             <div className="col-lg-6">
               <div className={Temp.marginDiv}>
-                <div className={`${Temp.cardDiv} ${Temp.leftDiv}`}>
+                <div
+                  data-aos="flip-up"
+                  className={`${Temp.cardDiv} ${Temp.leftDiv}`}
+                >
                   <p className={`${Temp.cardText} ${Temp.commonText}`}>
                     Stay tuned, we've got a lot coming up for you
                   </p>
                 </div>
               </div>
-              <div className={`${Temp.cardDiv} ${Temp.rightDiv}`}>
+
+              <div
+                data-aos="flip-up"
+                className={`${Temp.cardDiv} ${Temp.rightDiv}`}
+              >
                 <p className={`${Temp.cardText} ${Temp.commonText}`}>
                   Just Sign Up and make your first contribution
                 </p>
@@ -96,13 +108,21 @@ function Home() {
                 </div>
               </div>
             </div>
+
             <div className="col-lg-6">
-              <div className={`${Temp.cardDiv} ${Temp.leftDiv}`}>
+              <div
+                data-aos="flip-up"
+                className={`${Temp.cardDiv} ${Temp.leftDiv}`}
+              >
                 <p className={`${Temp.cardText} ${Temp.commonText}`}>
                   We are here as a medium cease up the communication gap
                 </p>
               </div>
-              <div className={`${Temp.cardDiv} ${Temp.rightDiv}`}>
+
+              <div
+                data-aos="flip-up"
+                className={`${Temp.cardDiv} ${Temp.rightDiv}`}
+              >
                 <p className={`${Temp.cardText} ${Temp.commonText}`}>
                   Our Interview Experience section might help you get insights
                   of real interviews

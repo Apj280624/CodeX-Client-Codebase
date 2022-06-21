@@ -384,9 +384,7 @@ function capitalizeAllLetters(str) {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 function transformInterviewExperienceObject(obj) {
-  // if (obj) {
   obj = trimObject(obj);
-
   obj.companyName = transformToTitleCase(obj.companyName);
   obj.roleName = capitalizeFirstLetterOfEachWord(obj.roleName);
   obj.monthName = transformToTitleCase(obj.monthName);

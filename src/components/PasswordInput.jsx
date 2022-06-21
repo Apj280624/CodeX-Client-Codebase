@@ -3,6 +3,9 @@ import styles from "../css/credential-input.module.css";
 import UserAuth from "../css/user-auth.module.css";
 import credentialButton from "../css/credential-button.module.css";
 import { vars } from "../utilities/ClientVarsUtility";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { faEye } from "@fortawesome/free-solid-svg-icons";
+// import { faEyeSlash } from "@fortawesome/free-regular-svg-icons";
 
 function PasswordInput(props) {
   const [inputValue, setInputValue] = useState("");
@@ -30,7 +33,7 @@ function PasswordInput(props) {
         style={{ width: "67%" }}
         maxLength={vars.maxPassLen}
         type={hidden ? "password" : "text"}
-        placeholder="Password"
+        placeholder={props.text ? props.text : "Password"}
         value={inputValue}
         onChange={handleChange}
       />

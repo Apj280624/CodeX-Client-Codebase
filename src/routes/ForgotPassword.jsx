@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import UserAuth from "../css/user-auth.module.css";
 import CredentialInput from "../components/CredentialInput";
 import CredentialButton from "../components/CredentialButton";
@@ -19,11 +19,15 @@ import Toast, { toastOptions } from "../components/Toast.js";
 const axios = require("axios").default;
 
 function ForgotPassword() {
-  const [userCredentials, setUserCredentials] = useState({
+  const initialForgotPasswordObject = {
     emailAddress: "",
     password: "",
     OTP: "",
-  });
+  };
+
+  const [userCredentials, setUserCredentials] = useState(
+    initialForgotPasswordObject
+  );
 
   const [isUpdatePasswordDisabled, setIsUpdatePasswordDisabled] =
     useState(false);
@@ -83,6 +87,7 @@ function ForgotPassword() {
           userCredentials
         );
         // console.log(response);
+        setUserCredentials(initialForgotPasswordObject);
         setIsUpdatePasswordDisabled(false);
         setIsDone(true);
         toast(response.data, toastOptions);
@@ -93,6 +98,10 @@ function ForgotPassword() {
       }
     }
   }
+
+  useEffect(() => {
+    window.scrollTo(0, 0); // scroll to top after render
+  }, []); // put an empty dep array else it might run on every time you type
 
   return (
     <div>
@@ -115,6 +124,7 @@ function ForgotPassword() {
           name="password"
           onChange={updateUserCredentials}
           isDone={isDone}
+          text="New password"
         />
 
         <div className={UserAuth.otpDiv}>

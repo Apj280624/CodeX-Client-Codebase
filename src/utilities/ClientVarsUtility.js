@@ -6,7 +6,7 @@ const vars = {
   darkPurple: "#131022",
   lightPurple: "#7026b9",
   maxNameLen: 40,
-  minPassLen: 2, // 6 for production
+  minPassLen: 6, // 6 for production
   maxPassLen: 16,
   maxOTPLen: 6,
   maxCollegeNameLen: 60,
@@ -18,7 +18,7 @@ const vars = {
   maxTipLen: 2000,
   availableCollegeNames: ["LNCT", "LNCTS", "LNCTE"],
   availableBranchNames: ["CS", "IT", "EC"],
-  availableGraduationYears: ["2020", "2021", "2022", "2023"],
+  availableGraduationYears: ["2019", "2020", "2021", "2022", "2023"],
   availableMonthNames: [
     "Jan",
     "Feb",
@@ -60,9 +60,5 @@ const routes = {
   ACCOUNT: "/account",
   PARTICULAR_INTERVIEW_EXPERIENCE: "/particular-interview-experience",
 };
-
-/*
-to get all interview experiences on 
-*/
 
 export { SERVER_ORIGIN, routes, vars };

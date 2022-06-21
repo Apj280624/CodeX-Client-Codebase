@@ -87,14 +87,14 @@ function Contribute() {
       } catch (error) {
         // either token is invalid or session expired
         // console.log(error);
-        navigate(routes.SIGN_IN); // redirect to sign in page
+        navigate(routes.INTERVIEW_EXPERIENCES); // redirect to sign in page
       }
     }
 
     function verifySignInStatus() {
       const token = localStorage.getItem("token");
       if (!token) {
-        navigate(routes.SIGN_IN); // redirect to sign in page
+        navigate(routes.INTERVIEW_EXPERIENCES); // redirect to sign in page
       } else {
         requestServerToVerifyToken(token);
       }

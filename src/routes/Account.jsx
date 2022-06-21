@@ -22,8 +22,9 @@ const axios = require("axios").default;
 
 /*
 user data could be displayed only if he is signed in
-*/
 
+put a single toast with the parent itself, if each child has toast then it would get called multiple times
+*/
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 function Account() {
@@ -58,7 +59,7 @@ function Account() {
   }
 
   function deleteInterviewExperienceFromArray(id) {
-    console.log(id);
+    // console.log(id);
     setArrayOfInterviewExperiences((prevArray) => {
       return prevArray.filter(
         (prevInterviewExperience) => prevInterviewExperience._id !== id
@@ -90,7 +91,7 @@ function Account() {
     function verifySignInStatus() {
       const token = localStorage.getItem("token");
       if (!token) {
-        navigate(-1); // isSignedIn remains false, navigate back
+        navigate(routes.HOME); // isSignedIn remains false, navigate back
       } else {
         requestServerToVerifyToken(token);
       }

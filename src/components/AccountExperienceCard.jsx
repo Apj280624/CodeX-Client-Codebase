@@ -39,7 +39,7 @@ function AccountExperienceCard(props) {
           `${SERVER_ORIGIN}${routes.INTERVIEW_EXPERIENCE_DELETE}/${id}`,
           generateAxiosConfigHeader(token)
         );
-        console.log(response);
+        // console.log(response);
         props.onDelete(props.id);
         toast(response.data, toastOptions);
         navigate(routes.ACCOUNT);
@@ -47,7 +47,7 @@ function AccountExperienceCard(props) {
         //props.onDelete();
         // let fields remain same even if contribution is successful so user can still edit
       } catch (error) {
-        console.log(error);
+        // console.log(error);
         toast(error.response.data, toastOptions);
       }
     }
@@ -56,22 +56,23 @@ function AccountExperienceCard(props) {
   function handleDeleteClick() {
     if (deleteCode === 0) {
       setDeleteCode(1);
+
       toast("Click again to confirm !", {
         ...toastOptions,
         ...{ autoClose: 1000 },
       }); // overriding close time
+
       setTimeout(() => {
         setDeleteCode(0);
       }, 3000);
     } else {
-      console.log("deleted");
+      // console.log("deleted");
       requestServerToDeleteInterviewExperience();
     }
   }
 
   return (
     <div className="">
-      <Toast />
       <div className={Acc.marginDiv}>
         <div className={Acc.commonDiv}>
           <p style={{ marginTop: 0 }} className={Acc.commonText}>
