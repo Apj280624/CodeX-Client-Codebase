@@ -46,12 +46,6 @@ const initialInterviewExperience = {
     tip: "",
   };
 
-
-when contribution is successful, we reset the interview object and setIsDone is called which resets the input values
-then useeffect is called as it is dependent upon isDone, and again nav verification is done and isDone is set to false
-if isDone remains true we wont be able to make the next contribution just after the first one, we would need a 
-refresh, we dont want to refresh
-
 */
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -110,7 +104,7 @@ function Contribute() {
       }
     }
 
-    setIsDone(false);
+    setIsDone(false); // donot include it in the dependency array, else new cases will arise
 
     verifySignInStatus();
   }, [navigate]); // pass an empty array so that useEffect is called only on the first mount, else it will fall into an infinite loop
