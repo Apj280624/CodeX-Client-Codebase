@@ -116,13 +116,31 @@ input:focus {
 
 /* this gives the same effect on hovering upon the bootstrap navbar signout button  */
 
-@media (max-width: 600px) {
+@media (max-width: 600px) and (min-width: 500px) {
   .search-box {
     width: 90%;
   }
 
   .search-input {
-    width: 75%;
+    width: 78%;
+  }
+
+  .search-button {
+    width: 12%;
+  }
+
+  .cross-button {
+    width: 10%;
+  }
+}
+
+@media (max-width: 500px) {
+  .search-box {
+    width: 90%;
+  }
+
+  .search-input {
+    width: 70%;
   }
 
   .search-button {
@@ -130,7 +148,7 @@ input:focus {
   }
 
   .cross-button {
-    width: 10%;
+    width: 15%;
   }
 }
 

@@ -104,8 +104,7 @@ function AccountExperienceCard(props) {
             {props.creationTimeStamp}
           </p>
         </div>
-        {/* </div> */}
-        {/* <div className="col-lg-12"> */}
+
         <div className={`${Acc.commonDiv} ${Acc.allBtnDiv}`}>
           <button className={Acc.btn} onClick={handleReadClick}>
             Read

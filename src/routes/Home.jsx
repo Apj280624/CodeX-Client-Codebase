@@ -12,12 +12,15 @@ import { Link } from "react-router-dom";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 
 // my modules
 import { SERVER_ORIGIN, routes } from "../utilities/ClientVarsUtility.js";
 import { generateAxiosConfigHeader } from "../utilities/ClientUtility.js";
+import Toast, { toastOptions } from "../components/Toast.js";
 
 const axios = require("axios").default;
 
@@ -54,7 +57,7 @@ function Home() {
     }
 
     AOS.init({
-      offset: 200,
+      offset: 400,
       duration: 800,
     });
 
@@ -86,7 +89,7 @@ function Home() {
                   className={`${Temp.cardDiv} ${Temp.leftDiv}`}
                 >
                   <p className={`${Temp.cardText} ${Temp.commonText}`}>
-                    Stay tuned, we've got a lot coming up for you
+                    Stay tuned, we've got a lot more coming up for you
                   </p>
                 </div>
               </div>
@@ -140,6 +143,7 @@ function Home() {
           </div>
         </div>
       </div>
+      <Toast />
       <Footer />
     </div>
   );

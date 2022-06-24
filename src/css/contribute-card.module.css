@@ -34,17 +34,6 @@
   .commonText {
     text-align: center;
   }
-
-  .titleText {
-    font-size: 2.4rem;
-    font-size: var(--tab-title-fsz);
-  }
-
-  .subTitleText {
-    font-size: 1.2rem;
-    font-size: var(--tab-big-desc-fsz);
-  }
-
   .contriImage {
     width: 30%;
     margin: auto;
@@ -59,5 +48,31 @@
     width: 25%;
     margin: auto;
     display: block;
+  }
+}
+
+@media (max-width: 767px) and (min-width: 600px) {
+  .titleText {
+    font-size: 2.4rem;
+    font-size: var(--tab-big-title-fsz);
+    font-weight: var(--tab-big-title-fwt);
+  }
+
+  .subTitleText {
+    font-size: 1.2rem;
+    font-size: var(--tab-big-desc-fsz);
+  }
+}
+
+@media (max-width: 600px) {
+  .titleText {
+    font-size: 2.4rem;
+    font-size: var(--tab-sub-title-fsz);
+    font-weight: var(--tab-big-title-fwt);
+  }
+
+  .subTitleText {
+    font-size: 1.2rem;
+    font-size: var(--tab-feather-fsz);
   }
 }

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../css/navbar.css";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 // my modules
 import {
@@ -9,6 +11,7 @@ import {
   SERVER_ORIGIN,
   vars,
 } from "../utilities/ClientVarsUtility.js";
+import Toast, { toastOptions } from "../components/Toast.js";
 
 const axios = require("axios").default;
 
@@ -19,18 +22,38 @@ const axios = require("axios").default;
 function MyNavbar(props) {
   // console.log(props);
 
+  const [signOutCode, setSignOutCode] = useState(0);
+
   const navigate = useNavigate();
 
   function handleSignOutClick() {
-    localStorage.removeItem("token");
-    if (props.onSignOutClick) {
-      /* this check is imp because only the home function provides this function as a prop, because we do navigate 
+    if (signOutCode === 0) {
+      setSignOutCode(1);
+
+      // console.log(signOutCode);
+
+      toast("Click again to confirm !", {
+        ...toastOptions,
+        ...{ autoClose: 1000 },
+        position: "bottom-center",
+      }); // overriding close time
+
+      setTimeout(() => {
+        setSignOutCode(0);
+      }, 3000);
+    } else {
+      // console.log("deleted");
+
+      localStorage.removeItem("token");
+      if (props.onSignOutClick) {
+        /* this check is imp because only the home function provides this function as a prop, because we do navigate 
       to  homepage on signout, but if we signout from the home page itself navbar account/signout button wont update
       to signin/signout, that's why we have passed a function from home, which allow navbar to alter its state
       */
-      props.onSignOutClick();
+        props.onSignOutClick();
+      }
+      navigate(routes.HOME);
     }
-    navigate(routes.HOME);
   }
 
   return (
@@ -84,7 +107,7 @@ function MyNavbar(props) {
               <li className="nav-item active">
                 {props.isSignedIn === true ? (
                   <button className="nav-btn2 btn" onClick={handleSignOutClick}>
-                    Sign Out
+                    {signOutCode === 0 ? "Sign Out" : "Sure ?"}
                   </button>
                 ) : (
                   <Link to={routes.SIGN_UP} className="nav-btn2 btn">
@@ -99,5 +122,7 @@ function MyNavbar(props) {
     </div>
   );
 }
+
+// dont include a toast here parent already has one
 
 export default MyNavbar;

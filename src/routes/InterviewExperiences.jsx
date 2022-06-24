@@ -94,7 +94,7 @@ function InterviewExperiences() {
     }
 
     AOS.init({
-      offset: 200,
+      offset: 300,
       duration: 800,
     });
 
