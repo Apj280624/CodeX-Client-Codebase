@@ -284,8 +284,9 @@ function EditExperience() {
         <div className={contri.commonDiv}>
           <div className="container-fluid">
             <p className={`${contri.noteText}`}>
-              Tip: Please do considering using multiple paragraphs for a cleaner
-              representation
+              Tip: Please do consider using multiple paragraphs for a cleaner
+              representation. You can increase the text box height by dragging
+              the bottom-right corner downwards.
             </p>
           </div>
         </div>
