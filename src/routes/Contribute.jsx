@@ -91,22 +91,23 @@ function Contribute() {
       } catch (error) {
         // either token is invalid or session expired
         // console.log(error);
-        navigate(routes.INTERVIEW_EXPERIENCES); // redirect to sign in page
+        // this page now needs no authorization
+        // navigate(routes.INTERVIEW_EXPERIENCES); // redirect to sign in page
       }
     }
 
     function verifySignInStatus() {
       const token = localStorage.getItem("token");
       if (!token) {
-        navigate(routes.INTERVIEW_EXPERIENCES); // redirect to sign in page
+        // this page now needs no authorization
+        // navigate(routes.INTERVIEW_EXPERIENCES); // redirect to sign in page
       } else {
         requestServerToVerifyToken(token);
       }
     }
 
     setIsDone(false); // donot include it in the dependency array, else new cases will arise
-    // verifySignInStatus(); // let the user visit this page
-    setIsLoading(false); // if you call verifySignInStatus then remove this line
+    verifySignInStatus(); // let the user visit this page
   }, [navigate]); // pass an empty array so that useEffect is called only on the first mount, else it will fall into an infinite loop
 
   ////////////////////////////////////////////////////////////////////////////////////////////
