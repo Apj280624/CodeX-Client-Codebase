@@ -92,6 +92,7 @@ function Contribute() {
         // either token is invalid or session expired
         // console.log(error);
         // this page now needs no authorization
+        setIsLoading(false);
         // navigate(routes.INTERVIEW_EXPERIENCES); // redirect to sign in page
       }
     }
