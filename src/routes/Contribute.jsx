@@ -105,8 +105,8 @@ function Contribute() {
     }
 
     setIsDone(false); // donot include it in the dependency array, else new cases will arise
-
-    verifySignInStatus();
+    // verifySignInStatus(); // let the user visit this page
+    setIsLoading(false); // if you call verifySignInStatus then remove this line
   }, [navigate]); // pass an empty array so that useEffect is called only on the first mount, else it will fall into an infinite loop
 
   ////////////////////////////////////////////////////////////////////////////////////////////
@@ -134,7 +134,9 @@ function Contribute() {
     } else {
       const token = localStorage.getItem("token"); // pass token with contribution using generateAxiosConfig
       if (!token) {
-        navigate(routes.INTERVIEW_EXPERIENCES); // go back
+        // no action
+        // navigate(routes.INTERVIEW_EXPERIENCES); // go back
+        toast("Please sign in to contribute", toastOptions);
       } else {
         setIsContriDisabled(true);
         try {
