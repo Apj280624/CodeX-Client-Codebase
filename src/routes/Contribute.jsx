@@ -101,6 +101,7 @@ function Contribute() {
       const token = localStorage.getItem("token");
       if (!token) {
         // this page now needs no authorization
+        setIsLoading(false);
         // navigate(routes.INTERVIEW_EXPERIENCES); // redirect to sign in page
       } else {
         requestServerToVerifyToken(token);
